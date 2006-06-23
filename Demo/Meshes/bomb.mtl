@@ -1,0 +1,22 @@
+# Blender MTL File: bomb_high.blend
+# Material Count: 2
+newmtl Fuse
+Ns 125.0
+Ka 0.0 0.0 0.0
+Kd 0.74373 0.74373 0.74373
+Ks 0.373904 0.373904 0.373904
+Ni 1.0
+d 1.0
+illum 2
+
+
+newmtl Bomb
+Ns 96.0
+Ka 0.0 0.0 0.0
+Kd 0.158958 0.158958 0.158958
+Ks 1.129282 1.129282 1.129282
+Ni 1.0
+d 1.0
+illum 2
+
+

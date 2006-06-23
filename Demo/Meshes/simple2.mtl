@@ -1,0 +1,52 @@
+# Blender MTL File: untitled.blend
+# Material Count: 5
+newmtl Plane
+Ns 96.0
+Ka 0.0 0.0 0.0
+Kd 0.64 0.64 0.64
+Ks 0.5 0.5 0.5
+Ni 1.0
+d 1.0
+illum 2
+
+
+newmtl Cube2
+Ns 96.0
+Ka 0.0 0.0 0.0
+Kd 0.0 0.64 0.0
+Ks 0.5 0.5 0.5
+Ni 1.0
+d 1.0
+illum 2
+
+
+newmtl Cube1
+Ns 96.0
+Ka 0.0 0.0 0.0
+Kd 0.64 0.0 0.0
+Ks 0.5 0.5 0.5
+Ni 1.0
+d 1.0
+illum 2
+
+
+newmtl Cube3
+Ns 96.0
+Ka 0.0 0.0 0.0
+Kd 0.0 0.0 0.64
+Ks 0.5 0.5 0.5
+Ni 1.0
+d 1.0
+illum 2
+
+
+newmtl Cube4
+Ns 96.0
+Ka 0.0 0.0 0.0
+Kd 0.64 0.0 0.64
+Ks 0.5 0.5 0.5
+Ni 1.0
+d 1.0
+illum 2
+
+
