@@ -28,9 +28,9 @@
 import DataManager
 import Interface
 import Log
+import Event
 
 from Graphics import *
-from Event import *
 
 from math import sin, sqrt, pow, degrees, pi
 
@@ -130,43 +130,45 @@ class Player(GameObject):
 		elif self.moving.right:
 			newpos.x = self.x + Interface.tdiff * self.speed
 		# Check if we are allowed to move there!
-		radius = 0.5
 		allow_x = True
 		allow_y = True
+		mesh1 = DataManager.meshes[self.mesh]
 		for player in level.players:
 			if player != self:
-				xdiff = newpos.x - player.x
-				ydiff = newpos.y - player.y
+				mesh2 = DataManager.meshes[player.mesh]
+				xdiff = (newpos.x + mesh1.center.x) - (player.x + mesh2.center.x)
+				ydiff = (newpos.y + mesh1.center.y) - (player.y + mesh2.center.y)
 				length = sqrt(xdiff * xdiff + ydiff * ydiff)
-				if length < (radius * 2):
+				if length < (mesh1.radius + mesh2.radius) - 0.5:
 					# Handle collision!
 					allow_x = False
 					allow_y = False
 		
 		for item in level.items:
-			length = sqrt(pow(newpos.x - item.x, 2) + pow(newpos.y - item.y, 2))
-			length2 = sqrt(pow(self.x - item.x, 2) + pow(self.y - item.y, 2))
-			if length < length2:
-				if length < (radius * 2):
+			mesh2 = DataManager.meshes[item.mesh]
+			length = sqrt(pow((newpos.x + mesh1.center.x) - (item.x + mesh2.center.x), 2) + pow((newpos.y + mesh1.center.y) - (item.y + mesh2.center.y), 2))
+			length2 = sqrt(pow((self.x + mesh1.center.x) - (item.x + mesh2.center.x), 2) + pow((self.y + mesh1.center.y) - (item.y + mesh2.center.y), 2))
+			if length < length2 - 0.05:
+				if length < (mesh1.radius + mesh2.radius):
 					allow_x = False
 					allow_y = False
 		
 		mesh = DataManager.meshes[level.mesh]
 		for poly in mesh.polygons:
 			center = Point3d()
-			v1 = mesh.vertices[poly.vertices[0][0]]
-			v2 = mesh.vertices[poly.vertices[1][0]]
-			v3 = mesh.vertices[poly.vertices[2][0]]
-			center.x = (v1[0] + v2[0] + v3[0]) / 3.0
-			center.y = (v1[1] + v2[1] + v3[1]) / 3.0
-			center.z = (v1[2] + v2[2] + v3[2]) / 3.0
+			v1 = mesh.vertices[poly.vertices[0][0]].pos
+			v2 = mesh.vertices[poly.vertices[1][0]].pos
+			v3 = mesh.vertices[poly.vertices[2][0]].pos
+			center.x = (v1.x + v2.x + v3.x) / 3.0
+			center.y = (v1.y + v2.y + v3.y) / 3.0
+			center.z = (v1.z + v2.z + v3.z) / 3.0
 			xdiff = newpos.x - center.x
 			ydiff = newpos.y - center.y
 			#print xdiff, ydiff
 			length = sqrt(pow(xdiff, 2) + pow(ydiff, 2))
-			if length < radius:
-				allow_x = False
-				allow_y = False
+			#if length < radius:
+				#allow_x = False
+				#allow_y = False
 		
 		if allow_x:
 			self.x = newpos.x
@@ -271,7 +273,7 @@ class Bomb(Item):
 						del level.players[pos]
 						if len(level.players) == 1:
 							Log.info(level.players[0].name + " wins the match!")
-							Interface.post_event(EVENT_QUIT)
+							Event.post(Event.QUIT)
 					else:
 						Log.info("Damaged " + player.name)
 			
@@ -295,6 +297,7 @@ class Bomb(Item):
 			glPushMatrix()
 			glTranslatef(self.x, self.y, 0.5)
 			glEnable(GL_BLEND)
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE)
 			glDisable(GL_DEPTH_TEST)
 			if percent <= 0.8:
 				glMaterialfv(GL_FRONT, GL_DIFFUSE, [0.7, 0.7, 1.0, 0.5 * (0.8 - percent)])

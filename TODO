@@ -2,9 +2,9 @@ Boom Engine ToDo List
 ---------------------
 So much to do...
 
-- Vertex classes for Mesh object instead of lists/tuples
-- Per-poly collision detection with the level
+- Per-poly collision detection
 	- Do we need this or can we abstract the level into a grid somehow?
+	- How to handle characters and objects?
 - Mount compressed archives through the virtual filesystem
 	- Finish listdir for bzipped archives
 	- Finish exists for bzipped archives
@@ -14,4 +14,3 @@ So much to do...
 		- Should bombs be here too? Multiple bomb types?
 - Menu system
 	- Handle submenus
-- Calculate a bounding box on meshes to be used for collision detection

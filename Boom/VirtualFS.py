@@ -50,6 +50,9 @@ class MountPoint:
 		self.type = type
 	
 	def __repr__(self):
+		"""
+		Represent the mount point as [path, type]
+		"""
 		if self.type == TYPE_DIRECTORY:
 			type = "Directory"
 		elif self.type == TYPE_BZIP_TAR:
@@ -59,6 +62,9 @@ class MountPoint:
 #-------------------------------------------------------------------------------
 
 def mount(location):
+	"""
+	Mount a location, such as a directory or compressed archive.
+	"""
 	if location[-1] == "/":
 		location = location[:-1]
 	Log.info("Mounting " + location)
@@ -70,6 +76,9 @@ def mount(location):
 		mtab.append(MountPoint(location, TYPE_BZIP_TAR))
 
 def umount(location):
+	"""
+	Unmount a location that was previously mounted.
+	"""
 	found = False
 	for pos in range(len(mtab)):
 		if mtab[pos].path == location:
@@ -77,9 +86,15 @@ def umount(location):
 			del mtab[pos]
 			found = True
 			break
+	if not found:
+		Log.warning("Mount point was not found!")
 	return found
 
 def open(filename):
+	"""
+	Open and return a file-like object from the path given, relative to the
+	mount root.
+	"""
 	for location in mtab:
 		if location.type == TYPE_DIRECTORY:
 			path = os.path.join(location.path, filename)
@@ -91,6 +106,9 @@ def open(filename):
 	return None
 
 def listdir(directory):
+	"""
+	List the contents of a directory.
+	"""
 	files = []
 	for location in mtab:
 		if location.type == TYPE_DIRECTORY:
@@ -105,16 +123,21 @@ def listdir(directory):
 			pass
 	return files
 
-def exists(location):
+def exists(filename):
+	"""
+	Check if a file exists.
+	"""
 	for location in mtab:
 		if location.type == TYPE_DIRECTORY:
-			if os.path.exists(location.path):
+			if os.path.exists(os.path.join(location.path, filename)):
 				return True
 		elif location.type == TYPE_BZIP_TAR:
 			pass
 	return False
 
 #-------------------------------------------------------------------------------
+# Keep track of all mount points
 mtab = []
 
+# Mount the current working directory by default
 mount(os.getcwd())

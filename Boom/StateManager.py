@@ -48,10 +48,10 @@ Log.info("Initializing game state manager...")
 import Objects
 import DataManager
 import Interface
+import Keyboard
+import Event
 
 from Graphics import *
-from Keyboard import *
-from Event import *
 
 import sys
 
@@ -98,17 +98,17 @@ class PlayingState(GameState):
 		self.level = None
 	
 	def key_pressed(self, key):
-		if key == KEY_PAUSE:
+		if key == Keyboard.KEY_PAUSE:
 			push(PausedState())
-		elif key == KEY_MOVE_UP:
+		elif key == Keyboard.KEY_MOVE_UP:
 			self.level.player.moving.up = True
-		elif key == KEY_MOVE_LEFT:
+		elif key == Keyboard.KEY_MOVE_LEFT:
 			self.level.player.moving.left = True
-		elif key == KEY_MOVE_DOWN:
+		elif key == Keyboard.KEY_MOVE_DOWN:
 			self.level.player.moving.down = True
-		elif key == KEY_MOVE_RIGHT:
+		elif key == Keyboard.KEY_MOVE_RIGHT:
 			self.level.player.moving.right = True
-		elif key == KEY_LAY_BOMB:
+		elif key == Keyboard.KEY_LAY_BOMB:
 			if self.level.player.life:
 				self.level.add_bomb(self.level.player.x, self.level.player.y)
 		else:
@@ -118,13 +118,13 @@ class PlayingState(GameState):
 				Log.info("Key pressed (keycode " + str(key) + ")")
 	
 	def key_released(self, key):
-		if key == KEY_MOVE_UP:
+		if key == Keyboard.KEY_MOVE_UP:
 			self.level.player.moving.up = False
-		elif key == KEY_MOVE_LEFT:
+		elif key == Keyboard.KEY_MOVE_LEFT:
 			self.level.player.moving.left = False
-		elif key == KEY_MOVE_DOWN:
+		elif key == Keyboard.KEY_MOVE_DOWN:
 			self.level.player.moving.down = False
-		elif key == KEY_MOVE_RIGHT:
+		elif key == Keyboard.KEY_MOVE_RIGHT:
 			self.level.player.moving.right = False
 	
 	def update(self):
@@ -155,31 +155,31 @@ class PausedState(GameState):
 		pop()
 	
 	def exit(self):
-		Interface.post_event(EVENT_QUIT)
+		Event.post(Event.QUIT)
 		clear()
 	
 	def key_pressed(self, key):
 		self.menu.key_pressed(key)
 		
-		if key == KEY_PAUSE:
+		if key == Keyboard.KEY_PAUSE:
 			self.resume()
-		elif key == KEY_MOVE_UP:
+		elif key == Keyboard.KEY_MOVE_UP:
 			self.movement.up = True
-		elif key == KEY_MOVE_LEFT:
+		elif key == Keyboard.KEY_MOVE_LEFT:
 			self.movement.left = True
-		elif key == KEY_MOVE_DOWN:
+		elif key == Keyboard.KEY_MOVE_DOWN:
 			self.movement.down = True
-		elif key == KEY_MOVE_RIGHT:
+		elif key == Keyboard.KEY_MOVE_RIGHT:
 			self.movement.right = True
 	
 	def key_released(self, key):
-		if key == KEY_MOVE_UP:
+		if key == Keyboard.KEY_MOVE_UP:
 			self.movement.up = False
-		elif key == KEY_MOVE_LEFT:
+		elif key == Keyboard.KEY_MOVE_LEFT:
 			self.movement.left = False
-		elif key == KEY_MOVE_DOWN:
+		elif key == Keyboard.KEY_MOVE_DOWN:
 			self.movement.down = False
-		elif key == KEY_MOVE_RIGHT:
+		elif key == Keyboard.KEY_MOVE_RIGHT:
 			self.movement.right = False
 	
 	def draw(self):
@@ -196,7 +196,6 @@ class PausedState(GameState):
 		glVertex3f( 100,  100, 0)
 		glVertex3f(-100,  100, 0)
 		glEnd()
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE)
 		glDisable(GL_BLEND)
 		glColor4f(1.0, 1.0, 1.0, 1.0)
 		glRasterPos2f(-1, 0)

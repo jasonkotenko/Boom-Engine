@@ -46,7 +46,7 @@ class OnDemandLoader:
 		using the load function.
 		
 		This class is just a skeleton and should be inherited by classes that
-		define the load path and load function to actually do something.
+		define the path and load function to actually do something.
 	"""
 	def __init__(self):
 		self.data = {}
@@ -54,7 +54,9 @@ class OnDemandLoader:
 		self.extensions = []
 	
 	def __getitem__(self, key):
+		# If they key is in our data store
 		if key in self.data.keys():
+			# Just return it
 			return self.data[key]
 		else:
 			# Try to load the data!
@@ -66,6 +68,7 @@ class OnDemandLoader:
 				return None
 	
 	def __setitem__(self, key, value):
+		# Save the key/value into our data store
 		self.data[key] = value
 	
 	def load(self, file, ext):
@@ -84,6 +87,7 @@ class MeshLoader(OnDemandLoader):
 		self.path = "Meshes"
 	
 	def load(self, key):
+		# Load a Mesh object into our data store
 		self.data[key] = Graphics.Mesh(os.path.join(self.path, key))
 		Log.info("Loading " + key)
 

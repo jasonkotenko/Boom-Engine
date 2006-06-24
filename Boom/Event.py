@@ -3,7 +3,8 @@
 """
 	Boom Events
 	===========
-		Event definitions that are used by the engine's internal event queue.
+		Event definitions that are used by the engine's internal event queue. This
+		module also manages the internal event queue.
 	
 		License
 		-------
@@ -24,7 +25,16 @@
 		Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 """
 
-EVENT_ENGINE_INITIALIZED = 0
-EVENT_QUIT = 1
-EVENT_LEVEL_LOADED = 2
-EVENT_MATCH_WON = 3
+INITIALIZED = 0
+QUIT = 1
+
+LEVEL_LOADED = 2
+MATCH_WON = 3
+
+queue = []
+
+def post(event):
+	"""
+	Post a new event to the internal event queue.
+	"""
+	queue.append(event)

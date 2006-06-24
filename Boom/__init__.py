@@ -55,6 +55,17 @@ import Interface
 version = 0.1
 
 def load_level(level):
-	StateManager.push(StateManager.PlayingState())
+	"""
+	A convienience function that will change the game state to playing and load a
+	specified level.
+	
+	@return: The level that was loaded.
+	"""
+	# Change the game state if we need to
+	if StateManager.current == None or StateManager.current.name != "Playing":
+		StateManager.push(StateManager.PlayingState())
+		
+	# Load the level
 	StateManager.current.load_level(level)
+	
 	return StateManager.current.level

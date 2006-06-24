@@ -31,10 +31,10 @@
 import Log
 import Objects
 import StateManager
+import Event
+import Keyboard
 
 from Graphics import *
-from Keyboard import *
-from Event import *
 
 from time import time, sleep
 
@@ -43,8 +43,6 @@ last_time = 0
 
 MENU_SUBMENU = 0
 MENU_ITEM = 1
-
-event_queue = []
 
 #-------------------------------------------------------------------------------
 class BaseInterface:
@@ -64,6 +62,12 @@ class BaseInterface:
 		pass
 	
 	def init_gl(self, width = 640, height = 480):
+		"""
+		Initialize OpenGL. Sets up OpenGL features and settings.
+		"""
+		# Initialize GLUT
+		glutInit(sys.argv)
+		
 		# Set the background color, enable shading and depth testing, etc...
 		glClearColor(0.0, 0.0, 0.0, 0.0)
 		glClearDepth(1.0)
@@ -71,12 +75,14 @@ class BaseInterface:
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST)
 		glEnable(GL_DEPTH_TEST)
 		
+		# Use smooth shading
 		glShadeModel(GL_SMOOTH)
+		
+		# Enable textures
 		#glEnable(GL_COLOR_MATERIAL)
 		#glEnable(GL_TEXTURE_2D)
 		
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE)
-		
+		# Enable backface culling
 		glCullFace(GL_BACK)
 		glEnable(GL_CULL_FACE)
 		
@@ -90,12 +96,18 @@ class BaseInterface:
 		glEnable(GL_NORMALIZE)
 	
 	def draw(self):
+		"""
+		Clear the screen and draw the current state.
+		"""
 		global last_time
 		global tdiff
+		
+		# Calculate the time between frames
 		cur_time = time()
 		tdiff = cur_time - last_time
 		last_time = cur_time
 
+		# Clear the frame and draw the current state
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		glLoadIdentity()
 		StateManager.draw()
@@ -109,6 +121,9 @@ class BaseInterface:
 		pass
 	
 	def resize(self, width, height):
+		"""
+		Resize the window.
+		"""
 		# Prevent zero heights... weird shit I tell you
 		if height == 0:
 			height = 1
@@ -121,8 +136,10 @@ class BaseInterface:
 		glMatrixMode(GL_MODELVIEW)
 	
 	def shutdown(self):
+		"""
+		Clean up and exit the game
+		"""
 		Log.info("Shutting down...")
-		sys.exit(0)
 
 #-------------------------------------------------------------------------------
 class SDLInterface(BaseInterface):
@@ -132,25 +149,35 @@ class SDLInterface(BaseInterface):
 		A class that creates an OpenGL-capable SDL window and dispatches user events
 		to the proper handlers in the state manager.
 	"""
-	def __init__(self):
-		self.init_sdl()
-		glutInit(sys.argv)
+	def __init__(self, width = 640, height = 480):
+		self.init_sdl(width, height)
 		BaseInterface.__init__(self)
 	
-	def init_sdl(self, width = 640, height = 480):
+	def init_sdl(self, width, height):
+		"""
+		Initialize SDL and create a window.
+		"""
+		# Initialize SDL
 		pygame.init()
 		
+		# Create a new OpenGL capable window
 		flags = HWSURFACE | DOUBLEBUF | OPENGL
 		self.screen = pygame.display.set_mode([width, height], flags)
 		self.resize(width, height)
 	
 	def start(self):
-		global event_queue
+		"""
+		Start the game engine.
+		"""
+		# Start the main event loop
 		while 1:
-			for event in event_queue:
-				if event == EVENT_QUIT:
-					self.shutdown()
-			event_queue = []
+			# Process the internal event queue
+			for event in Event.queue:
+				if event == Event.QUIT:
+					return self.shutdown()
+			Event.queue = []
+			
+			# Process the SDL event queue
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					self.shutdown()
@@ -161,10 +188,15 @@ class SDLInterface(BaseInterface):
 					self.queue_flip()
 				elif event.type == pygame.KEYUP:
 					StateManager.current.key_released(event.key)
+			
+			# Update and draw the current state
 			StateManager.update()
 			self.draw()
 	
 	def flip(self):
+		"""
+		Flip (draw) the display.
+		"""
 		pygame.display.flip()
 
 #-------------------------------------------------------------------------------
@@ -185,32 +217,47 @@ class Menu:
 		self.selected = 0
 	
 	def add_item(self, label, callback, submenu = False):
+		"""
+		Add an item or submenu to the menu.
+		"""
 		if not submenu:
 			self.items.append([label, callback, MENU_ITEM])
 		else:
 			self.items.append([label, callback, MENU_SUBMENU])
 	
 	def key_pressed(self, key):
-		if key == KEY_SELECT:
+		"""
+		Handle keyboard input (e.g. to move the current selection pointer)
+		"""
+		if key == Keyboard.KEY_SELECT:
 			self.items[self.selected][1]()
-		elif key == KEY_UP:
+		elif key == Keyboard.KEY_UP:
 			self.up()
-		elif key == KEY_DOWN:
+		elif key == Keyboard.KEY_DOWN:
 			self.down()
 	
 	def up(self):
+		"""
+		Select one item up, looping around if needed.
+		"""
 		if self.selected > 0:
 			self.selected -= 1
 		else:
 			self.selected = len(self.items) - 1
 	
 	def down(self):
+		"""
+		Select one item down, looping around if needed.
+		"""
 		if self.selected < len(self.items) - 1:
 			self.selected += 1
 		else:
 			self.selected = 0
 	
 	def draw(self):
+		"""
+		Draw the menu centered on the screen.
+		"""
 		y = 0
 		glRasterPos2f(-1, y)
 		y -= 1
@@ -227,7 +274,3 @@ class Menu:
 			for character in label:
 				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, ord(character))
 			pos += 1
-
-
-def post_event(event):
-	event_queue.append(event)
