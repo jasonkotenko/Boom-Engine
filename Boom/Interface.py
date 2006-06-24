@@ -173,6 +173,9 @@ class SDLInterface(BaseInterface):
 		while 1:
 			# Process the internal event queue
 			for event in Event.queue:
+				if event in Event.callbacks.keys():
+					for callback in Event.callbacks[event]:
+						callback()
 				if event == Event.QUIT:
 					return self.shutdown()
 			Event.queue = []
@@ -212,6 +215,7 @@ class Menu:
 	def __init__(self, title = "Default Menu Title"):
 		self.title = title
 		self.items = []
+		self.title_color = Color(1.0, 1.0, 1.0)
 		self.color = Color(1.0, 1.0, 1.0)
 		self.selected_color = Color(1.0, 0.0, 0.0)
 		self.selected = 0
@@ -258,12 +262,17 @@ class Menu:
 		"""
 		Draw the menu centered on the screen.
 		"""
+		glPushMatrix()
+		glDisable(GL_LIGHTING)
 		y = 0
+		# Draw the menu title
+		glColor3fv(self.title_color.array())
 		glRasterPos2f(-1, y)
 		y -= 1
 		for character in self.title:
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, ord(character))
 		pos = 0
+		# Draw each menu item
 		for label, callback, type in self.items:
 			if pos == self.selected:
 				glColor3fv(self.selected_color.array())
@@ -274,3 +283,5 @@ class Menu:
 			for character in label:
 				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, ord(character))
 			pos += 1
+		glEnable(GL_LIGHTING)
+		glPopMatrix()

@@ -273,7 +273,7 @@ class Bomb(Item):
 						del level.players[pos]
 						if len(level.players) == 1:
 							Log.info(level.players[0].name + " wins the match!")
-							Event.post(Event.QUIT)
+							Event.post(Event.MATCH_WON)
 					else:
 						Log.info("Damaged " + player.name)
 			

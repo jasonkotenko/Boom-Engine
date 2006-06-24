@@ -32,6 +32,12 @@ LEVEL_LOADED = 2
 MATCH_WON = 3
 
 queue = []
+callbacks = {}
+
+def register(event, callback):
+	if not event in callbacks.keys():
+		callbacks[event] = []
+	callbacks[event].append(callback)
 
 def post(event):
 	"""

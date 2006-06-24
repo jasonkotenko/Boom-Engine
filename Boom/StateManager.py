@@ -88,7 +88,7 @@ class MenuState(GameState):
 		self.name = "Menu"
 	
 	def key_pressed(key):
-		push(PlayingState())
+		pass
 
 #-------------------------------------------------------------------------------
 class PlayingState(GameState):
@@ -198,7 +198,6 @@ class PausedState(GameState):
 		glEnd()
 		glDisable(GL_BLEND)
 		glColor4f(1.0, 1.0, 1.0, 1.0)
-		glRasterPos2f(-1, 0)
 		self.menu.draw()
 		glEnable(GL_LIGHTING)
 		glEnable(GL_DEPTH_TEST)

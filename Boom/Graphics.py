@@ -410,7 +410,7 @@ class Mesh:
 		self.center.y /= len(self.vertices)
 		self.center.z /= len(self.vertices)
 		
-		Log.info("Object center found at " + str(self.center))
+		Log.debug("Object center found at " + str(self.center))
 		
 		max_dist = 0
 		for vertex in self.vertices:
@@ -421,7 +421,7 @@ class Mesh:
 				max_dist = dist
 		self.radius = sqrt(max_dist)
 		
-		Log.info("Object radius is " + str(self.radius))
+		Log.debug("Object radius is " + str(self.radius))
 
 	def load_materials(self, filename):
 		"""
