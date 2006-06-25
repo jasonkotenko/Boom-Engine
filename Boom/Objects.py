@@ -32,7 +32,7 @@ import Event
 
 from Graphics import *
 
-from math import sin, sqrt, pow, degrees, pi
+from math import sin, asin, sqrt, pow, degrees, pi
 
 ITEM_ANIM_NONE = 0
 ITEM_ANIM_THROB = 1
@@ -49,13 +49,15 @@ class Level:
 		self.timer = 180
 	
 	def add_player(self, name, x = 0, y = 0, control = False):
-		player = Player()
+		if control:
+			player = Player()
+			self.player = player
+		else:
+			player = CPUPlayer()
 		player.name = name
 		player.x = x
 		player.y = y
 		self.players.append(player)
-		if control:
-			self.player = player
 	
 	def add_bomb(self, x = 0, y = 0):
 		bomb = Bomb()
@@ -201,6 +203,68 @@ class Player(GameObject):
 		glRotatef(self.current_angle, 0, 0, 1)
 		DataManager.meshes[self.mesh].render()
 		glPopMatrix()
+
+#-------------------------------------------------------------------------------
+class CPUPlayer(Player):
+	def __init__(self):
+		Player.__init__(self)
+
+	def update(self, level):
+		# See if we need to run away from any bombs!
+		running = False
+		for item in level.items:
+			if item.type == "Bomb":
+				diffx = self.x - item.x
+				diffy = self.y - item.y
+				distance = sqrt(pow(diffx, 2) + pow(diffy, 2))
+				if distance < item.radius:
+					if self.x < item.x:
+						self.moving.left = True
+					else:
+						self.moving.right = True
+					if self.y < item.y:
+						self.moving.down = True
+					else:
+						self.moving.up = True
+					running = True
+					break
+		# Select our closest target and go after her!
+		if not running:
+			chasing = False
+			closest = [None, 1000]
+			for player in level.players:
+				if player != self:
+					diffx = self.x - player.x
+					diffy = self.y - player.y
+					distance = sqrt(pow(diffx, 2) + pow(diffy, 2))
+					if distance < closest[1]:
+						closest = [player, distance]
+			player, distance = closest
+			if player:
+				chasing = True
+				if self.x < player.x:
+					self.moving.right = True
+					self.moving.left = False
+				else:
+					self.moving.left = True
+					self.moving.right = False
+				if self.y < player.y:
+					self.moving.up = True
+					self.moving.down = False
+				else:
+					self.moving.down = True
+					self.moving.up = False
+				min_radius = DataManager.meshes[self.mesh].radius + DataManager.meshes[player.mesh].radius
+				if distance < min_radius + 0.1:
+					level.add_bomb(self.x, self.y)
+		
+			if not chasing:
+				self.moving.left = False
+				self.moving.right = False
+				self.moving.up = False
+				self.moving.down = False
+		
+		Player.update(self, level)
 
 #-------------------------------------------------------------------------------
 class Item(GameObject):

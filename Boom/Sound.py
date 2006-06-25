@@ -30,7 +30,7 @@
 """
 
 import Log
-Log.info("Initializing sound manager...")
+Log.info("Initializing sound subystem...")
 
 from Graphics import *
 
