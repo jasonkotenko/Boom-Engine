@@ -33,6 +33,7 @@ import Objects
 import StateManager
 import Event
 import Keyboard
+import Sound
 
 from Graphics import *
 
@@ -155,7 +156,7 @@ class SDLInterface(BaseInterface):
 	
 	def init_sdl(self, width, height):
 		"""
-		Initialize SDL and create a window.
+		Initialize SDL, setup the sound manager, and create a window.
 		"""
 		# Initialize SDL
 		pygame.init()
@@ -164,6 +165,9 @@ class SDLInterface(BaseInterface):
 		flags = HWSURFACE | DOUBLEBUF | OPENGL
 		self.screen = pygame.display.set_mode([width, height], flags)
 		self.resize(width, height)
+		
+		# Setup the sound manager to use SDL
+		Sound.manager = Sound.SDLSoundManager()
 	
 	def start(self):
 		"""
@@ -258,17 +262,32 @@ class Menu:
 		else:
 			self.selected = 0
 	
+	def set_pos(self, x, y):
+		glPushAttrib(GL_TRANSFORM_BIT)
+		glMatrixMode(GL_PROJECTION)
+		glPushMatrix()
+		glLoadIdentity()
+		glMatrixMode(GL_MODELVIEW)
+		glPushMatrix()
+		glLoadIdentity()
+		glRasterPos2f(x, y)
+		glPopMatrix()
+		glMatrixMode(GL_PROJECTION)
+		glPopMatrix()
+		glPopAttrib()
+	
 	def draw(self):
 		"""
 		Draw the menu centered on the screen.
-		"""
+		"""		
 		glPushMatrix()
 		glDisable(GL_LIGHTING)
 		y = 0
+		left = -0.2
 		# Draw the menu title
 		glColor3fv(self.title_color.array())
-		glRasterPos2f(-1, y)
-		y -= 1
+		self.set_pos(left, y)
+		y -= 0.1
 		for character in self.title:
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, ord(character))
 		pos = 0
@@ -278,8 +297,8 @@ class Menu:
 				glColor3fv(self.selected_color.array())
 			else:
 				glColor3fv(self.color.array())
-			glRasterPos2f(-1, y)
-			y -= 0.7
+			self.set_pos(left, y)
+			y -= 0.075
 			for character in label:
 				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, ord(character))
 			pos += 1

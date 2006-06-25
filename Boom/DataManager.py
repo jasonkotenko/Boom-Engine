@@ -32,7 +32,7 @@
 import Log
 Log.info("Initializing game data manager")
 
-import Graphics, VirtualFS
+import Graphics, VirtualFS, Sound
 
 import os.path
 
@@ -87,8 +87,28 @@ class MeshLoader(OnDemandLoader):
 		self.path = "Meshes"
 	
 	def load(self, key):
-		# Load a Mesh object into our data store
+		"""
+		Load a Mesh object into our data store.
+		"""
 		self.data[key] = Graphics.Mesh(os.path.join(self.path, key))
 		Log.info("Loading " + key)
+
+#-------------------------------------------------------------------------------
+class SoundLoader(OnDemandLoader):
+	"""
+	On Demand Sound Loader
+	======================
+		A class that will load sounds on demand from the Sounds directory in the
+		virtual filesystem as they are needed by the engine.
+	"""
+	def __init__(self):
+		OnDemandLoader.__init__(self)
+		self.path = "Sounds"
+	
+	def load(self, key):
+		"""
+		Load a sound object into our data store.
+		"""
+		self.data[key] = Sound.manager.load(key)
 
 meshes = MeshLoader()

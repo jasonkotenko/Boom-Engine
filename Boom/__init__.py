@@ -8,6 +8,7 @@
 		Modules
 		-------
 		Log			 - Generic logging facility
+		Event		 - Event handling and dispatching
 		VirtualFS	 - Virtual filesystem used within the engine
 		DataManager	 - Loads and stores game data such as images and meshes
 		Graphics	 - 2d/3d game object classes (e.g. Point2d, Mesh, Material)
@@ -16,6 +17,7 @@
 		StateManager - Game state manager
 		Keyboard	 - Defined key constants and keyboard functions
 		Interface	 - User interface classes
+		Sound		 - Manage sound playback
 		
 		A Simple Example
 		----------------
@@ -45,12 +47,14 @@
 """
 
 import Log
+import Event
 import VirtualFS
 import DataManager
 import Graphics
 import Objects
 import StateManager
 import Interface
+import Sound
 
 version = 0.1
 
