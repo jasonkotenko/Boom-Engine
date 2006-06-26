@@ -27,7 +27,7 @@
 """
 
 import os, os.path, sys
-from math import pow, sqrt, atan2, pi
+from math import sin, cos, pow, sqrt, atan2, pi
 from copy import deepcopy
 
 import Log
@@ -407,9 +407,11 @@ class Mesh:
 		self.find_radius()
 		
 		self.hull = convex_hull2_graham(self.vertices)
-		print "Hull generated with " + str(len(self.hull)) + " points"
+		Log.info("Hull generated with " + str(len(self.hull)) + " points")
 		self.hull_center = hull_center(self.hull)
 		self.hull_radius = hull_radius(self.hull, self.hull_center)
+		self.hull = optimize_hull(self.hull, self.hull_center, self.hull_radius, 8)
+		Log.info("Hull optimized to " + str(len(self.hull)) + " points")
 	
 	def find_center(self):
 		for vertex in self.vertices:
@@ -613,6 +615,27 @@ def distance2(v1, v2):
 	Returns the distance between two points
 	"""
 	return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2))
+
+def optimize_hull(hull, center, radius, vertex_count):
+	if len(hull) <= vertex_count:
+		return hull
+	step = (2 * pi) / vertex_count
+	current_angle = 0.0
+	new_hull = []
+	for c in range(vertex_count):
+		n = Point2d()
+		n.x = center.x + (radius * cos(current_angle))
+		n.y = center.y + (radius * sin(current_angle))
+		min_d = 1000
+		min_p = None
+		for vertex in hull:
+			d = distance2(vertex, n)
+			if d < min_d:
+				min_d = d
+				min_p = vertex
+		new_hull.append(min_p)
+		current_angle += step
+	return new_hull
 
 def convex_hull2_graham(vertices):
 	v = []
