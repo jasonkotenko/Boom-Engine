@@ -109,6 +109,73 @@ class GameObject:
 	def draw(self):
 		pass
 
+	def check_collision(self, object):
+		if object_hull_collision(self, object):
+			return True
+		return False
+
+def object_bounding_sphere_collision(object1, object2):
+	mesh1 = DataManager.meshes[object1.mesh]
+	mesh2 = DataManager.meshes[object2.mesh]
+	xdiff = (object1.x + mesh1.center.x) - (object2.x + mesh2.center.x)
+	ydiff = (object1.y + mesh1.center.y) - (object2.y + mesh2.center.y)
+	length = sqrt(xdiff * xdiff + ydiff * ydiff)
+	if length < (mesh1.radius + mesh2.radius):
+		return True
+	else:
+		return False
+
+def object_hull_collision(object1, object2):
+	mesh1 = DataManager.meshes[object1.mesh]
+	mesh2 = DataManager.meshes[object2.mesh]
+	xdiff = (object1.x + mesh1.hull_center.x) - (object2.x + mesh2.hull_center.x)
+	ydiff = (object1.y + mesh1.hull_center.y) - (object2.y + mesh2.hull_center.y)
+	length = sqrt(xdiff * xdiff + ydiff * ydiff)
+	if length < (mesh1.hull_radius + mesh2.hull_radius):
+		if hull_collision(mesh1.hull, Point2d(object1.x, object1.y), mesh2.hull, Point2d(object2.x, object2.y)):
+			return True
+		else:
+			return False
+	else:
+		return False
+
+def find_poly_center(poly, vertex_list):
+	center = Point3d()
+	for pos in poly.vertices:
+		vertex = vertex_list[pos[0]]
+		center.x += vertex.x
+		center.y += vertex.y
+		center.z += vertex.z
+	center.x /= len(poly.vertices)
+	center.y /= len(poly.vertices)
+	center.z /= len(poly.vertices)
+	return center
+
+def find_poly_radius(poly, center, vertex_list):
+	r2 = 0
+	for pos in poly.vertices:
+		vertex = vertex_list[pos[0]]
+		d = pow(center.x - vertex.x, 2) + pow(center.y - vertex.y, 2)
+		if d > r2:
+			r2 = d
+	return sqrt(r2)
+
+def poly_bounding_sphere_collision(object1, poly1, object2, poly2):
+	mesh1 = DataManager.meshes[object1.mesh]
+	mesh2 = DataManager.meshes[object2.mesh]
+	center1 = find_poly_center(poly1, mesh1.vertices)
+	center2 = find_poly_center(poly2, mesh2.vertices)
+	r1 = find_poly_radius(poly1, center1, mesh1.vertices)
+	r2 = find_poly_radius(poly2, center2, mesh2.vertices)
+	xdiff = (object1.x + center1.x) - (object2.x + center2.x)
+	ydiff = (object1.y + center1.y) - (object2.y + center2.y)
+	length = sqrt(xdiff * xdiff + ydiff * ydiff)
+	if length < (r1 + r2):
+		print length, r1 + r2
+		return True
+	else:
+		return False
+
 #-------------------------------------------------------------------------------
 class Player(GameObject):
 	def __init__(self):
@@ -137,40 +204,31 @@ class Player(GameObject):
 		mesh1 = DataManager.meshes[self.mesh]
 		for player in level.players:
 			if player != self:
-				mesh2 = DataManager.meshes[player.mesh]
-				xdiff = (newpos.x + mesh1.center.x) - (player.x + mesh2.center.x)
-				ydiff = (newpos.y + mesh1.center.y) - (player.y + mesh2.center.y)
-				length = sqrt(xdiff * xdiff + ydiff * ydiff)
-				if length < (mesh1.radius + mesh2.radius) - 0.5:
-					# Handle collision!
+				old = Point2d(self.x, self.y)
+				self.x = newpos.x
+				self.y = newpos.y
+				if self.check_collision(player):
 					allow_x = False
 					allow_y = False
+				self.x = old.x
+				self.y = old.y
 		
 		for item in level.items:
-			mesh2 = DataManager.meshes[item.mesh]
-			length = sqrt(pow((newpos.x + mesh1.center.x) - (item.x + mesh2.center.x), 2) + pow((newpos.y + mesh1.center.y) - (item.y + mesh2.center.y), 2))
-			length2 = sqrt(pow((self.x + mesh1.center.x) - (item.x + mesh2.center.x), 2) + pow((self.y + mesh1.center.y) - (item.y + mesh2.center.y), 2))
-			if length < length2 - 0.05:
-				if length < (mesh1.radius + mesh2.radius):
+			d1 = sqrt(pow(self.x - item.x, 2) + pow(self.y - item.y, 2))
+			d2 = sqrt(pow(newpos.x - item.x, 2) + pow(newpos.y - item.y, 2))
+			if d2 < d1:
+				old = Point2d(self.x, self.y)
+				self.x = newpos.x
+				self.y = newpos.y
+				if self.check_collision(item):
 					allow_x = False
 					allow_y = False
+				self.x = old.x
+				self.y = old.y
 		
 		mesh = DataManager.meshes[level.mesh]
 		for poly in mesh.polygons:
-			center = Point3d()
-			v1 = mesh.vertices[poly.vertices[0][0]].pos
-			v2 = mesh.vertices[poly.vertices[1][0]].pos
-			v3 = mesh.vertices[poly.vertices[2][0]].pos
-			center.x = (v1.x + v2.x + v3.x) / 3.0
-			center.y = (v1.y + v2.y + v3.y) / 3.0
-			center.z = (v1.z + v2.z + v3.z) / 3.0
-			xdiff = newpos.x - center.x
-			ydiff = newpos.y - center.y
-			#print xdiff, ydiff
-			length = sqrt(pow(xdiff, 2) + pow(ydiff, 2))
-			#if length < radius:
-				#allow_x = False
-				#allow_y = False
+			pass
 		
 		if allow_x:
 			self.x = newpos.x
@@ -212,22 +270,24 @@ class CPUPlayer(Player):
 	def update(self, level):
 		# See if we need to run away from any bombs!
 		running = False
+		bombs = []
 		for item in level.items:
 			if item.type == "Bomb":
 				diffx = self.x - item.x
 				diffy = self.y - item.y
 				distance = sqrt(pow(diffx, 2) + pow(diffy, 2))
 				if distance < item.radius:
-					if self.x < item.x:
+					bombs.append([item, distance])
+					if self.x <= item.x:
 						self.moving.left = True
 					else:
 						self.moving.right = True
-					if self.y < item.y:
+					if self.y <= item.y:
 						self.moving.down = True
 					else:
 						self.moving.up = True
 					running = True
-					break
+		
 		# Select our closest target and go after her!
 		if not running:
 			chasing = False
@@ -242,17 +302,23 @@ class CPUPlayer(Player):
 			player, distance = closest
 			if player:
 				chasing = True
-				if self.x < player.x:
+				if self.x < player.x - 0.1:
 					self.moving.right = True
 					self.moving.left = False
-				else:
+				elif self.x > player.x + 0.1:
 					self.moving.left = True
 					self.moving.right = False
-				if self.y < player.y:
+				else:
+					self.moving.left = False
+					self.moving.right = False
+				if self.y < player.y - 0.1:
 					self.moving.up = True
 					self.moving.down = False
-				else:
+				elif self.y > player.y + 0.1:
 					self.moving.down = True
+					self.moving.up = False
+				else:
+					self.moving.down = False
 					self.moving.up = False
 				min_radius = DataManager.meshes[self.mesh].radius + DataManager.meshes[player.mesh].radius
 				if distance < min_radius + 0.1:

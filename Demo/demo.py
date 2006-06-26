@@ -50,7 +50,8 @@ class MainMenuState(Boom.StateManager.GameState):
 		level.add_player("Daniel", 0, 0, True)
 		level.add_player("CPU 1", 4, 1)
 		level.add_player("CPU 2", -2, -4)
-		self.music.stop()
+		level_music = Boom.Sound.Music("Sounds/Level.ogg")
+		level_music.play()
 	
 	def match_won(self):
 		Boom.StateManager.pop()

@@ -27,7 +27,8 @@
 """
 
 import os, os.path, sys
-from math import pow, sqrt
+from math import pow, sqrt, atan2, pi
+from copy import deepcopy
 
 import Log
 Log.info("Initializing graphics subsystem...")
@@ -241,7 +242,7 @@ class Material:
 		#glBindTexture(GL_TEXTURE_2D, texture)
 
 #-------------------------------------------------------------------------------
-class Vertex2d:
+class Vertex2d(Point2d):
 	"""
 	Two-Dimensional Vertex
 	======================
@@ -249,7 +250,7 @@ class Vertex2d:
 		normal vector, and texture (UV) coordinates.
 	"""
 	def __init__(self, x = 0, y = 0):
-		self.pos = Point2d(x, y)
+		Point2d.__init__(self, x, y)
 		self.normal = None
 		self.texture_coord = None
 	
@@ -257,10 +258,10 @@ class Vertex2d:
 		"""
 		Represent the vertex as position, normal, texture coordinate
 		"""
-		return self.pos + ", " + self.normal + ", " + self.texture_coord
+		return Point2d.__repr__(self) + ", " + str(self.normal) + ", " + str(self.texture_coord)
 
 #-------------------------------------------------------------------------------
-class Vertex3d:
+class Vertex3d(Point3d):
 	"""
 	Three-Dimensional Vertex
 	========================
@@ -268,7 +269,7 @@ class Vertex3d:
 		normal vector, and texture (UV) coordinates.
 	"""
 	def __init__(self, x = 0, y = 0, z = 0):
-		self.pos = Point3d(x, y, z)
+		Point3d.__init__(self, x, y, z)
 		self.normal = None
 		self.texture_coord = None
 	
@@ -276,7 +277,7 @@ class Vertex3d:
 		"""
 		Represent the vertex as position, normal, texture coordinate
 		"""
-		return self.pos + ", " + self.normal + ", " + self.texture_coord
+		return Point3d.__repr__(self) + ", " + str(self.normal) + ", " + str(self.texture_coord)
 
 #-------------------------------------------------------------------------------
 class Polygon:
@@ -402,26 +403,39 @@ class Mesh:
 		Log.debug("Loaded " + str(len(self.polygons)) + " polygons.")
 		#Log.debug("Bounding box at " + str(bbmin) + ", " + str(bbmax))
 		
+		self.find_center()
+		self.find_radius()
+		
+		self.hull = convex_hull2_graham(self.vertices)
+		print "Hull generated with " + str(len(self.hull)) + " points"
+		self.hull_center = hull_center(self.hull)
+		self.hull_radius = hull_radius(self.hull, self.hull_center)
+	
+	def find_center(self):
 		for vertex in self.vertices:
-			self.center.x += vertex.pos.x
-			self.center.y += vertex.pos.y
-			self.center.z += vertex.pos.z
+			self.center.x += vertex.x
+			self.center.y += vertex.y
+			self.center.z += vertex.z
 		self.center.x /= len(self.vertices)
 		self.center.y /= len(self.vertices)
 		self.center.z /= len(self.vertices)
 		
 		Log.debug("Object center found at " + str(self.center))
-		
+	
+	def find_radius(self):
 		max_dist = 0
 		for vertex in self.vertices:
-			dist = pow(self.center.x - vertex.pos.x, 2) + \
-				   pow(self.center.y - vertex.pos.y, 2) + \
-				   pow(self.center.z - vertex.pos.z, 2)
+			dist = pow(self.center.x - vertex.x, 2) + \
+				   pow(self.center.y - vertex.y, 2) + \
+				   pow(self.center.z - vertex.z, 2)
 			if dist > max_dist:
 				max_dist = dist
 		self.radius = sqrt(max_dist)
 		
 		Log.debug("Object radius is " + str(self.radius))
+	
+	def generate_convex_hull(self):
+		pass
 
 	def load_materials(self, filename):
 		"""
@@ -485,7 +499,7 @@ class Mesh:
 						glTexCoord2fv(self.texture_coords[texture])
 					if normal != None:
 						glNormal3fv(self.normals[normal])
-					glVertex3fv(self.vertices[vertex].pos.array())
+					glVertex3fv(self.vertices[vertex].array())
 				glEnd()
 				"""
 				# Draw the mesh's bounding sphere
@@ -494,5 +508,164 @@ class Mesh:
 				glutWireSphere(self.radius, 12, 12)
 				glPopMatrix()
 				"""
+				# Draw convex hull
+				glPushMatrix()
+				glDisable(GL_LIGHTING)
+				glColor3f(0, 1.0, 0)
+				glBegin(GL_LINE_LOOP)
+				for v in self.hull:
+					glVertex3f(v.x, v.y, 0.1)
+				glEnd()
+				glEnable(GL_LIGHTING)
+				glPopMatrix()
 			glEndList()
 			self.display_list = list
+
+def line_intersection(p1, p2, offset1, p3, p4, offset2):
+	try:
+		m1 = (p2.y - p1.y) / (p2.x - p1.x)
+		m2 = (p4.y - p3.y) / (p4.x - p3.x)
+		#print "Slopes", m1, m2
+	except:
+		return False
+	
+	b1 = (p1.y + offset1.y) - (m1 * (p1.x + offset1.x))
+	b2 = (p3.y + offset2.y) - (m2 * (p3.x + offset2.x))
+	#print "Intercepts", b1, b2
+	
+	if m1 == m2:
+		return False # Parallel
+	
+	x = (b2 - b1) / (m1 - m2)
+	y = (m1 * x) + b1
+	
+	#print x, y
+	
+	if p1.x < p2.x:
+		t1 = p1
+		t2 = p2
+	else:
+		t1 = p2
+		t2 = p1
+	if p3.x < p4.x:
+		t3 = p3
+		t4 = p4
+	else:
+		t3 = p4
+		t4 = p3
+		
+	#print t1, t2, t3, t4
+	
+	if (x >= t1.x + offset1.x and x <= t2.x + offset1.x and x >= t3.x + offset2.x and x <= t4.x + offset2.x):
+		return True
+	else:
+		return False
+
+def hull_collision(hull1, offset1, hull2, offset2):
+	for pos in range(len(hull1)):
+		v1 = hull1[pos]
+		if pos == len(hull1) - 1:
+			v2 = hull1[0]
+		else:
+			v2 = hull1[pos + 1]
+		for pos2 in range(len(hull2)):
+			v3 = hull2[pos]
+			if pos2 == len(hull2) - 1:
+				v4 = hull2[0]
+			else:
+				v4 = hull2[pos2 + 1]
+			if line_intersection(v1, v2, offset1, v3, v4, offset2):
+				return True
+	return False
+
+def hull_center(hull):
+	center = Point2d()
+	for vertex in hull:
+		center.x += vertex.x
+		center.y += vertex.y
+	center.x /= len(hull)
+	center.y /= len(hull)
+	return center
+
+def hull_radius(hull, center):
+	max_dist = 0
+	for vertex in hull:
+		dist = pow(center.x - vertex.x, 2) + pow(center.y - vertex.y, 2)
+		if dist > max_dist:
+			max_dist = dist
+	return sqrt(max_dist)
+
+def polar_angle2(pole, point):
+	"""
+	Returns the polar angle between the pole and a point in radians.
+	Output is 0 to 2pi
+	"""
+	dx = point.x - pole.x
+	dy = point.y - pole.y
+	angle = atan2(dy, dx)
+	return angle % (2 * pi)
+
+def cross2(v1, v2, v3):
+	return ((v2.x - v1.x) * (v3.y - v1.y)) - ((v3.x - v1.x) * (v2.y - v1.y))
+
+def distance2(v1, v2):
+	"""
+	Returns the distance between two points
+	"""
+	return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2))
+
+def convex_hull2_graham(vertices):
+	v = []
+	
+	# Copy the vertex array
+	for vertex in vertices:
+		v.append(Point2d(vertex.x, vertex.y))
+	
+	# Find the bottom-left most point
+	pivot = v[0]
+	for pos in range(len(v)):
+		vertex = v[pos]
+		if vertex.y < pivot.y:
+			pivot = vertex
+		elif vertex.y == pivot.y and vertex.x < pivot.x:
+			pivot = vertex
+	
+	# Save the angles from the pivot
+	for vertex in v:
+		vertex.angle = polar_angle2(pivot, vertex)
+	
+	def compare(v1, v2):
+		if v1.angle < v2.angle:
+			return -1
+		elif v1.angle > v2.angle:
+			return 1
+		elif v1.x == v2.x and v1.y == v2.y:
+			return 1
+		elif distance2(pivot, v1) < distance2(pivot, v2):
+			return -1
+		else:
+			return 1
+	
+	# Sort the list by angle, then distance if angles tie
+	v.sort(compare)
+	
+	# Setup the stack
+	stack = []
+	stack.append(v[0])
+	stack.append(v[1])
+	
+	# Build the convex hull out of only left turns
+	for pos in range(2, len(v)):
+		c = cross2(stack[-2], stack[-1], v[pos])
+		if c == 0:
+			stack.pop()
+			stack.append(v[pos])
+		elif c > 0:
+			stack.append(v[pos])
+		else:
+			while c <= 0 and len(stack) > 2:
+				stack.pop()
+				c = cross2(stack[-2], stack[-1], v[pos])
+			stack.append(v[pos])
+	
+	return stack
