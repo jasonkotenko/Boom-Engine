@@ -7,9 +7,12 @@
 		let's a player start a match against two computer-controlled players on
 		a simple demo map.
 		
+		Command-Line options:
+			--nosound	turns off music and sounds
+		
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor
+		Copyright (C) 2006 Daniel G. Taylor, Jason F. Kotenko
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -30,6 +33,12 @@
 import os, sys
 sys.path.append(os.getcwd() + "/../")
 
+# Parse command line options (so far only option for no sounds)
+nosound = False
+for x in sys.argv[1:]:
+	if x == "--nosound":
+		nosound = True
+
 import Boom
 
 # Initialize Boom
@@ -44,8 +53,9 @@ class MainMenuState(Boom.StateManager.GameState):
 		#self.menu.add_item("Credits", self.show_credits)
 		self.menu.add_item("Exit", self.exit_demo)
 		Boom.Event.register(Boom.Event.MATCH_WON, self.match_won)
-		self.music = Boom.Sound.Music("Sounds/Menu.ogg")
-		self.music.play()
+		if not nosound:
+			self.music = Boom.Sound.Music("Sounds/Menu.ogg")
+			self.music.play()
 	
 	def start_demo(self):
 		# Load a simple level and add a few players
@@ -53,12 +63,14 @@ class MainMenuState(Boom.StateManager.GameState):
 		level.add_player("Daniel", 0, 0, True)
 		level.add_player("CPU 1", 4, 1)
 		level.add_player("CPU 2", -2, -4)
-		level_music = Boom.Sound.Music("Sounds/Level.ogg")
-		level_music.play()
+		if not nosound:
+			level_music = Boom.Sound.Music("Sounds/Level.ogg")
+			level_music.play()
 	
 	def match_won(self):
 		Boom.StateManager.pop()
-		self.music.play()
+		if not nosound:
+			self.music.play()
 	
 	def show_credits(self):
 		pass

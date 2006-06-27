@@ -8,7 +8,7 @@
 	
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor
+		Copyright (C) 2006 Daniel G. Taylor, Jason F. Kotenko
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -130,6 +130,11 @@ def object_hull_collision(object1, object2):
 	mesh2 = DataManager.meshes[object2.mesh]
 	xdiff = (object1.x + mesh1.hull_center.x) - (object2.x + mesh2.hull_center.x)
 	ydiff = (object1.y + mesh1.hull_center.y) - (object2.y + mesh2.hull_center.y)
+	
+	#Get out before sqrt if at all possible (sqrt,*,* are expensive)
+	if xdiff > (mesh1.hull_radius + mesh2.hull_radius) or ydiff > (mesh1.hull_radius + mesh2.hull_radius):
+		return False
+	
 	length = sqrt(xdiff * xdiff + ydiff * ydiff)
 	if length < (mesh1.hull_radius + mesh2.hull_radius):
 		if hull_collision(mesh1.hull, Point2d(object1.x, object1.y), mesh2.hull, Point2d(object2.x, object2.y)):
