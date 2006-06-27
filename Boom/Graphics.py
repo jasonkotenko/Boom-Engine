@@ -514,7 +514,8 @@ class Mesh:
 			glEndList()
 			self.display_list = list
 
-def line_intersection(p1, p2, offset1, p3, p4, offset2):
+"""
+def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
 	try:
 		m1 = (p2.y - p1.y) / (p2.x - p1.x)
 		m2 = (p4.y - p3.y) / (p4.x - p3.x)
@@ -553,6 +554,58 @@ def line_intersection(p1, p2, offset1, p3, p4, offset2):
 		return True
 	else:
 		return False
+"""
+
+def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
+	# Calculate offset points
+	x1 = p1.x + offset1.x
+	y1 = p1.y + offset1.y
+	x2 = p2.x + offset1.x
+	y2 = p2.y + offset1.y
+	x3 = p3.x + offset2.x
+	y3 = p3.y + offset2.y
+	x4 = p4.x + offset2.x
+	y4 = p4.y + offset2.y
+	
+	# Calculate Ax + By = C for the first line
+	A1 = y2 - y1
+	B1 = x1 - x2
+	C1 = A1 * x1 + B1 * y1
+	
+	# Calculate Ax + By = C for the second line
+	A2 = y4 - y3
+	B2 = x3 - x4
+	C2 = A2 * x3 + B2 * y3
+	
+	# Calculate the determinant
+	det = A1 * B2 - A2 * B1
+	
+	if det == 0:
+		# The lines are parallel
+		if A1 == A2 and B1 == B2 and C1 == C2:
+			# The line segments lie on the same line, so now check if one point on the
+			# second line lies within the two points on the first line
+			if x1 < x2:
+				return (x3 >= x1 and x3 <= x2) or (x4 >= x1 and x4 <= x2)
+			else:
+				return (x3 >= x2 and x3 <= x1) or (x4 >= x2 and x4 <= x1)
+		else:
+			return False
+	else:
+		# Get the point of intersection
+		x = (B2 * C1 - B1 * C2) / det
+		y = (A1 * C2 - A2 * C1) / det
+		# Check to see if the point of intersection lies on both lines
+		if x1 < x2:
+			if x3 < x4:
+				return x >= x1 and x <= x2 and x >= x3 and x <= x4
+			else:
+				return x >= x1 and x <= x2 and x >= x4 and x <= x3
+		else:
+			if x3 < x4:
+				return x >= x2 and x <= x1 and x >= x3 and x <= x4
+			else:
+				return x >= x2 and x <= x1 and x >= x4 and x <= x3
 
 def hull_collision2d(hull1, offset1, hull2, offset2):
 	for pos in range(len(hull1)):
@@ -567,7 +620,7 @@ def hull_collision2d(hull1, offset1, hull2, offset2):
 				v4 = hull2[0]
 			else:
 				v4 = hull2[pos2 + 1]
-			if line_intersection(v1, v2, offset1, v3, v4, offset2):
+			if line_intersection2d(v1, v2, offset1, v3, v4, offset2):
 				return True
 	return False
 

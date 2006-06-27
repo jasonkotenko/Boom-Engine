@@ -209,18 +209,21 @@ class Player(GameObject):
 		mesh1 = DataManager.meshes[self.mesh]
 		for player in level.players:
 			if player != self:
-				old = Point2d(self.x, self.y)
-				self.x = newpos.x
-				self.y = newpos.y
-				if self.check_collision(player):
-					allow_x = False
-					allow_y = False
-				self.x = old.x
-				self.y = old.y
+				d1 = pow(self.x - player.x, 2) + pow(self.y - player.y, 2)
+				d2 = pow(newpos.x - player.x, 2) + pow(newpos.y - player.y, 2)
+				if d2 < d1:
+					old = Point2d(self.x, self.y)
+					self.x = newpos.x
+					self.y = newpos.y
+					if self.check_collision(player):
+						allow_x = False
+						allow_y = False
+					self.x = old.x
+					self.y = old.y
 		
 		for item in level.items:
-			d1 = sqrt(pow(self.x - item.x, 2) + pow(self.y - item.y, 2))
-			d2 = sqrt(pow(newpos.x - item.x, 2) + pow(newpos.y - item.y, 2))
+			d1 = pow(self.x - item.x, 2) + pow(self.y - item.y, 2)
+			d2 = pow(newpos.x - item.x, 2) + pow(newpos.y - item.y, 2)
 			if d2 < d1:
 				old = Point2d(self.x, self.y)
 				self.x = newpos.x
