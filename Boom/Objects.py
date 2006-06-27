@@ -110,7 +110,7 @@ class GameObject:
 		pass
 
 	def check_collision(self, object):
-		if object_hull_collision(self, object):
+		if object_hull_collision2d(self, object):
 			return True
 		return False
 
@@ -125,7 +125,7 @@ def object_bounding_sphere_collision(object1, object2):
 	else:
 		return False
 
-def object_hull_collision(object1, object2):
+def object_hull_collision2d(object1, object2):
 	mesh1 = DataManager.meshes[object1.mesh]
 	mesh2 = DataManager.meshes[object2.mesh]
 	xdiff = (object1.x + mesh1.hull_center.x) - (object2.x + mesh2.hull_center.x)
@@ -137,7 +137,7 @@ def object_hull_collision(object1, object2):
 	
 	length = sqrt(xdiff * xdiff + ydiff * ydiff)
 	if length < (mesh1.hull_radius + mesh2.hull_radius):
-		if hull_collision(mesh1.hull, Point2d(object1.x, object1.y), mesh2.hull, Point2d(object2.x, object2.y)):
+		if hull_collision2d(mesh1.hull, object1, mesh2.hull, object2):
 			return True
 		else:
 			return False

@@ -394,14 +394,14 @@ class Mesh:
 		Log.debug("Loaded " + str(len(self.polygons)) + " polygons.")
 		#Log.debug("Bounding box at " + str(bbmin) + ", " + str(bbmax))
 		
-		self.find_center()
-		self.find_radius()
+		#self.find_center()
+		#self.find_radius()
 		
-		self.hull = convex_hull2_graham(self.vertices)
+		self.hull = convex_hull2d(self.vertices)
 		Log.info("Hull generated with " + str(len(self.hull)) + " points")
-		self.hull_center = hull_center(self.hull)
-		self.hull_radius = hull_radius(self.hull, self.hull_center)
-		self.hull = optimize_hull(self.hull, self.hull_center, self.hull_radius, 8)
+		self.hull_center = hull_center2d(self.hull)
+		self.hull_radius = hull_radius2d(self.hull, self.hull_center)
+		self.hull = optimize_hull2d(self.hull, self.hull_center, self.hull_radius, 8)
 		Log.info("Hull optimized to " + str(len(self.hull)) + " points")
 	
 	def find_center(self):
@@ -554,7 +554,7 @@ def line_intersection(p1, p2, offset1, p3, p4, offset2):
 	else:
 		return False
 
-def hull_collision(hull1, offset1, hull2, offset2):
+def hull_collision2d(hull1, offset1, hull2, offset2):
 	for pos in range(len(hull1)):
 		v1 = hull1[pos]
 		if pos == len(hull1) - 1:
@@ -571,7 +571,7 @@ def hull_collision(hull1, offset1, hull2, offset2):
 				return True
 	return False
 
-def hull_center(hull):
+def hull_center2d(hull):
 	center = Point2d()
 	for vertex in hull:
 		center.x += vertex.x
@@ -580,7 +580,7 @@ def hull_center(hull):
 	center.y /= len(hull)
 	return center
 
-def hull_radius(hull, center):
+def hull_radius2d(hull, center):
 	max_dist = 0
 	for vertex in hull:
 		dist = pow(center.x - vertex.x, 2) + pow(center.y - vertex.y, 2)
@@ -588,7 +588,7 @@ def hull_radius(hull, center):
 			max_dist = dist
 	return sqrt(max_dist)
 
-def polar_angle2(pole, point):
+def polar_angle2d(pole, point):
 	"""
 	Returns the polar angle between the pole and a point in radians.
 	Output is 0 to 2pi
@@ -598,16 +598,16 @@ def polar_angle2(pole, point):
 	angle = atan2(dy, dx)
 	return angle % (2 * pi)
 
-def cross2(v1, v2, v3):
+def cross2d(v1, v2, v3):
 	return ((v2.x - v1.x) * (v3.y - v1.y)) - ((v3.x - v1.x) * (v2.y - v1.y))
 
-def distance2(v1, v2):
+def distance2d(v1, v2):
 	"""
 	Returns the distance between two points
 	"""
 	return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2))
 
-def optimize_hull(hull, center, radius, vertex_count):
+def optimize_hull2d(hull, center, radius, vertex_count):
 	if len(hull) <= vertex_count:
 		return hull
 	step = (2 * pi) / vertex_count
@@ -620,7 +620,7 @@ def optimize_hull(hull, center, radius, vertex_count):
 		min_d = 1000
 		min_p = None
 		for vertex in hull:
-			d = distance2(vertex, n)
+			d = distance2d(vertex, n)
 			if d < min_d:
 				min_d = d
 				min_p = vertex
@@ -628,7 +628,7 @@ def optimize_hull(hull, center, radius, vertex_count):
 		current_angle += step
 	return new_hull
 
-def convex_hull2_graham(vertices):
+def convex_hull2d(vertices):
 	v = []
 	
 	# Copy the vertex array
@@ -646,7 +646,7 @@ def convex_hull2_graham(vertices):
 	
 	# Save the angles from the pivot
 	for vertex in v:
-		vertex.angle = polar_angle2(pivot, vertex)
+		vertex.angle = polar_angle2d(pivot, vertex)
 	
 	def compare(v1, v2):
 		if v1.angle < v2.angle:
@@ -655,7 +655,7 @@ def convex_hull2_graham(vertices):
 			return 1
 		elif v1.x == v2.x and v1.y == v2.y:
 			return 1
-		elif distance2(pivot, v1) < distance2(pivot, v2):
+		elif distance2d(pivot, v1) < distance2d(pivot, v2):
 			return -1
 		else:
 			return 1
@@ -670,7 +670,7 @@ def convex_hull2_graham(vertices):
 	
 	# Build the convex hull out of only left turns
 	for pos in range(2, len(v)):
-		c = cross2(stack[-2], stack[-1], v[pos])
+		c = cross2d(stack[-2], stack[-1], v[pos])
 		if c == 0:
 			stack.pop()
 			stack.append(v[pos])
@@ -679,7 +679,7 @@ def convex_hull2_graham(vertices):
 		else:
 			while c <= 0 and len(stack) > 2:
 				stack.pop()
-				c = cross2(stack[-2], stack[-1], v[pos])
+				c = cross2d(stack[-2], stack[-1], v[pos])
 			stack.append(v[pos])
 	
 	return stack
