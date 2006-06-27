@@ -47,16 +47,36 @@
 """
 
 import Log
-import Event
-import VirtualFS
-import DataManager
-import Graphics
-import Objects
-import StateManager
-import Interface
-import Sound
+
+Event = None
+VirtualFS = None
+DataManager = None
+Graphics = None
+Objects = None
+StateManager = None
+Interface = None
+Sound = None
 
 version = 0.1
+
+def init():
+	global Event
+	global VirtualFS
+	global DataManager
+	global Graphics
+	global Objects
+	global StateManager
+	global Interface
+	global Sound
+	
+	import Event
+	import VirtualFS
+	import DataManager
+	import Graphics
+	import Objects
+	import StateManager
+	import Interface
+	import Sound
 
 def load_level(level):
 	"""

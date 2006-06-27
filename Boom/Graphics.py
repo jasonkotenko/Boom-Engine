@@ -5,7 +5,7 @@
 	=====================
 		This module defines classes for graphical objects such as points,
 		images, materials, meshes, as well as providing access to OpenGL
-		and SDL to the rest of the engine.
+		to the rest of the engine.
 	
 		License
 		-------
@@ -43,15 +43,6 @@ try:
 except:
 	Log.critial("Can't import OpenGL bindings...")
 	Log.info("Please install them from http://pyopengl.sourceforge.net/")
-	sys.exit(1)
-
-# SDL functions
-try:
-	import pygame
-	from pygame.locals import *
-except:
-	Log.critical("Can't import SDL bindings...")
-	Log.critical("Please install them from http://www.pygame.org/")
 	sys.exit(1)
 
 #-------------------------------------------------------------------------------

@@ -2,9 +2,8 @@ Boom Engine ToDo List
 ---------------------
 So much to do...
 
-- Per-poly collision detection
-	- Do we need this or can we abstract the level into a grid somehow?
-	- How to handle characters and objects?
+- Level collision detection
+- Fast line intersection algorithm for hull collisions
 - Mount compressed archives through the virtual filesystem
 	- Finish listdir for bzipped archives
 	- Finish exists for bzipped archives

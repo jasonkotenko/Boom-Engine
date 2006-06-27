@@ -32,6 +32,9 @@ sys.path.append(os.getcwd() + "/../")
 
 import Boom
 
+# Initialize Boom
+Boom.init()
+
 class MainMenuState(Boom.StateManager.GameState):
 	def __init__(self):
 		Boom.StateManager.GameState.__init__(self)

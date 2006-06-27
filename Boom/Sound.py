@@ -30,9 +30,7 @@
 """
 
 import Log
-Log.info("Initializing sound subystem...")
-
-from Graphics import *
+Log.info("Initializing sound subsystem...")
 
 #-------------------------------------------------------------------------------
 class Sound:
@@ -64,6 +62,7 @@ class Music(Sound):
 		stop_music()
 
 #-------------------------------------------------------------------------------
+SDL = None
 class SDLSoundManager:
 	"""
 	SDL Sound Manager
@@ -71,20 +70,22 @@ class SDLSoundManager:
 		Manage and play sounds using SDL's mixer as the backend.
 	"""
 	def __init__(self):
-		pass
+		global SDL
+		import SDL
+		SDL.mixer.init()
 	
 	def load(self, name):
-		return pygame.mixer.Sound(name)
+		return SDL.mixer.Sound(name)
 	
 	def play(self, name):
 		pass
 	
 	def play_music(self, name):
-		pygame.mixer.music.load(name)
-		pygame.mixer.music.play(-1)
+		SDL.mixer.music.load(name)
+		SDL.mixer.music.play(-1)
 	
 	def stop_music(self):
-		pygame.mixer.music.stop()
+		SDL.mixer.music.stop()
 
 #-------------------------------------------------------------------------------
 

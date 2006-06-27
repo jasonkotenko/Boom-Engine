@@ -29,7 +29,6 @@
 """
 
 import Log
-import Objects
 import StateManager
 import Event
 import Keyboard
@@ -143,6 +142,7 @@ class BaseInterface:
 		Log.info("Shutting down...")
 
 #-------------------------------------------------------------------------------
+SDL = None
 class SDLInterface(BaseInterface):
 	"""
 	An SDL Interface
@@ -159,11 +159,13 @@ class SDLInterface(BaseInterface):
 		Initialize SDL, setup the sound manager, and create a window.
 		"""
 		# Initialize SDL
-		pygame.init()
+		global SDL
+		import SDL
+		SDL.display.init()
 		
 		# Create a new OpenGL capable window
-		flags = HWSURFACE | DOUBLEBUF | OPENGL
-		self.screen = pygame.display.set_mode([width, height], flags)
+		flags = SDL.HWSURFACE | SDL.DOUBLEBUF | SDL.OPENGL
+		self.screen = SDL.display.set_mode([width, height], flags)
 		self.resize(width, height)
 		
 		# Setup the sound manager to use SDL
@@ -185,15 +187,15 @@ class SDLInterface(BaseInterface):
 			Event.queue = []
 			
 			# Process the SDL event queue
-			for event in pygame.event.get():
-				if event.type == pygame.QUIT:
+			for event in SDL.event.get():
+				if event.type == SDL.QUIT:
 					self.shutdown()
-				elif event.type == pygame.VIDEORESIZE:
+				elif event.type == SDL.VIDEORESIZE:
 					self.resize(event.w, event.h)
-				elif event.type == pygame.KEYDOWN:
+				elif event.type == SDL.KEYDOWN:
 					StateManager.current.key_pressed(event.key)
 					self.queue_flip()
-				elif event.type == pygame.KEYUP:
+				elif event.type == SDL.KEYUP:
 					StateManager.current.key_released(event.key)
 			
 			# Update and draw the current state
@@ -204,7 +206,7 @@ class SDLInterface(BaseInterface):
 		"""
 		Flip (draw) the display.
 		"""
-		pygame.display.flip()
+		SDL.display.flip()
 
 #-------------------------------------------------------------------------------
 class Menu:
