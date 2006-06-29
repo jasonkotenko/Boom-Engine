@@ -47,3 +47,11 @@ def post(event):
 	Post a new event to the internal event queue.
 	"""
 	queue.append(event)
+
+def handle_events():
+	global queue
+	for event in queue:
+		if event in callbacks.keys():
+			for callback in callbacks[event]:
+				callback()
+	queue = []

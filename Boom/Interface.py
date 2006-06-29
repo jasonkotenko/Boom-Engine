@@ -34,6 +34,8 @@ import Event
 import Keyboard
 import Sound
 
+import sys
+
 from Graphics import *
 
 from time import time, sleep
@@ -140,6 +142,7 @@ class BaseInterface:
 		Clean up and exit the game
 		"""
 		Log.info("Shutting down...")
+		sys.exit(0)
 
 #-------------------------------------------------------------------------------
 SDL = None
@@ -153,6 +156,7 @@ class SDLInterface(BaseInterface):
 	def __init__(self, width = 640, height = 480):
 		self.init_sdl(width, height)
 		BaseInterface.__init__(self)
+		Event.register(Event.QUIT, self.shutdown)
 	
 	def init_sdl(self, width, height):
 		"""
@@ -178,13 +182,7 @@ class SDLInterface(BaseInterface):
 		# Start the main event loop
 		while 1:
 			# Process the internal event queue
-			for event in Event.queue:
-				if event in Event.callbacks.keys():
-					for callback in Event.callbacks[event]:
-						callback()
-				if event == Event.QUIT:
-					return self.shutdown()
-			Event.queue = []
+			Event.handle_events()
 			
 			# Process the SDL event queue
 			for event in SDL.event.get():

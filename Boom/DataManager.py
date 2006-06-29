@@ -112,3 +112,4 @@ class SoundLoader(OnDemandLoader):
 		self.data[key] = Sound.manager.load(key)
 
 meshes = MeshLoader()
+sounds = SoundLoader()

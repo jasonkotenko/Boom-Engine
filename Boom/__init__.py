@@ -19,10 +19,14 @@
 		Interface	 - User interface classes
 		Sound		 - Manage sound playback
 		
+		Make sure to call Boom.init() after importing Boom or the modules above
+		will not be loaded for use!
+		
 		A Simple Example
 		----------------
 		import Boom
 		
+		Boom.init()
 		interface = Boom.Interface.SDLInterface()
 		Boom.load_level("level_name")
 		interface.start()
