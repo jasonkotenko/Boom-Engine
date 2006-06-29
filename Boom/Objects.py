@@ -128,15 +128,15 @@ def object_bounding_sphere_collision(object1, object2):
 def object_hull_collision2d(object1, object2):
 	mesh1 = DataManager.meshes[object1.mesh]
 	mesh2 = DataManager.meshes[object2.mesh]
-	xdiff = (object1.x + mesh1.hull_center.x) - (object2.x + mesh2.hull_center.x)
-	ydiff = (object1.y + mesh1.hull_center.y) - (object2.y + mesh2.hull_center.y)
+	xdiff = (object1.x + mesh1.hull.center.x) - (object2.x + mesh2.hull.center.x)
+	ydiff = (object1.y + mesh1.hull.center.y) - (object2.y + mesh2.hull.center.y)
 	
 	#Get out before sqrt if at all possible (sqrt,*,* are expensive)
-	if xdiff > (mesh1.hull_radius + mesh2.hull_radius) or ydiff > (mesh1.hull_radius + mesh2.hull_radius):
+	if xdiff > (mesh1.hull.radius + mesh2.hull.radius) or ydiff > (mesh1.hull.radius + mesh2.hull.radius):
 		return False
 	
 	length = sqrt(xdiff * xdiff + ydiff * ydiff)
-	if length < (mesh1.hull_radius + mesh2.hull_radius):
+	if length < (mesh1.hull.radius + mesh2.hull.radius):
 		if hull_collision2d(mesh1.hull, object1, mesh2.hull, object2):
 			return True
 		else:
@@ -284,7 +284,7 @@ class CPUPlayer(Player):
 				diffx = self.x - item.x
 				diffy = self.y - item.y
 				distance = sqrt(pow(diffx, 2) + pow(diffy, 2))
-				if distance < item.radius:
+				if distance < item.radius + 0.1:
 					bombs.append([item, distance])
 					if self.x <= item.x:
 						self.moving.left = True
@@ -328,7 +328,7 @@ class CPUPlayer(Player):
 				else:
 					self.moving.down = False
 					self.moving.up = False
-				min_radius = DataManager.meshes[self.mesh].radius + DataManager.meshes[player.mesh].radius
+				min_radius = DataManager.meshes[self.mesh].hull.radius + DataManager.meshes[player.mesh].hull.radius
 				if distance < min_radius + 0.1:
 					level.add_bomb(self.x, self.y)
 		

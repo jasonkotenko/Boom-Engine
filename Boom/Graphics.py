@@ -394,41 +394,14 @@ class Mesh:
 		Log.debug("Loaded " + str(len(self.polygons)) + " polygons.")
 		#Log.debug("Bounding box at " + str(bbmin) + ", " + str(bbmax))
 		
-		#self.find_center()
-		#self.find_radius()
-		
-		self.hull = convex_hull2d(self.vertices)
-		Log.info("Hull generated with " + str(len(self.hull)) + " points")
-		self.hull_center = hull_center2d(self.hull)
-		self.hull_radius = hull_radius2d(self.hull, self.hull_center)
-		self.hull = optimize_hull2d(self.hull, self.hull_center, self.hull_radius, 8)
-		Log.info("Hull optimized to " + str(len(self.hull)) + " points")
-	
-	def find_center(self):
-		for vertex in self.vertices:
-			self.center.x += vertex.x
-			self.center.y += vertex.y
-			self.center.z += vertex.z
-		self.center.x /= len(self.vertices)
-		self.center.y /= len(self.vertices)
-		self.center.z /= len(self.vertices)
-		
-		Log.debug("Object center found at " + str(self.center))
-	
-	def find_radius(self):
-		max_dist = 0
-		for vertex in self.vertices:
-			dist = pow(self.center.x - vertex.x, 2) + \
-				   pow(self.center.y - vertex.y, 2) + \
-				   pow(self.center.z - vertex.z, 2)
-			if dist > max_dist:
-				max_dist = dist
-		self.radius = sqrt(max_dist)
-		
-		Log.debug("Object radius is " + str(self.radius))
+		self.generate_convex_hull()
 	
 	def generate_convex_hull(self):
-		pass
+		self.hull = convex_hull2d(self.vertices)
+		Log.debug("Hull generated with " + str(len(self.hull)) + " points")
+		
+		self.hull = optimize_hull2d(self.hull, 6)
+		Log.debug("Hull optimized to " + str(len(self.hull)) + " points")
 
 	def load_materials(self, filename):
 		"""
@@ -513,6 +486,54 @@ class Mesh:
 				glPopMatrix()
 			glEndList()
 			self.display_list = list
+
+class Hull2d(list):
+	def __init__(self):
+		list.__init__(self)
+		self.__center = None
+		self.__radius = None
+	
+	def __setitem__(self, item, value):
+		self.__center = None
+		self.__radius = None
+		list.__setitem__(self, item, value)
+	
+	def __get_center(self):
+		if self.__center != None:
+			return self.__center
+		else:
+			self.__center = Point2d(0, 0)
+			for vertex in self:
+				self.__center.x += vertex.x
+				self.__center.y += vertex.y
+			self.__center.x /= len(self)
+			self.__center.y /= len(self)
+			return self.__center
+	
+	def __set_center(self, center):
+		self.__center = center
+	
+	def __get_radius(self):
+		if self.__radius != None:
+			return self.__radius
+		else:
+			if self.__center == None:
+				center = self.__get_center()
+			else:
+				center = self.__center
+			max_dist = 0
+			for vertex in self:
+				dist = pow(center.x - vertex.x, 2) + pow(center.y - vertex.y, 2)
+				if dist > max_dist:
+					max_dist = dist
+			self.__radius = sqrt(max_dist)
+			return self.__radius
+	
+	def __set_radius(self, radius):
+		self.__radius = radius
+	
+	center = property(__get_center, __set_center)
+	radius = property(__get_radius, __set_radius)
 
 """
 def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
@@ -608,6 +629,57 @@ def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
 				return x >= x2 and x <= x1 and x >= x4 and x <= x3
 
 def hull_collision2d(hull1, offset1, hull2, offset2):
+	# Setup point lists
+	dist1 = []
+	dist2 = []
+	
+	# Store center and radius for convenience and to keep from calling the
+	# Hull2d's property functions repeatedly
+	center1 = hull1.center
+	center2 = hull2.center
+	radius1 = hull1.radius * hull1.radius
+	radius2 = hull2.radius * hull2.radius
+	
+	# Find all points in hull1 that lie within the radius of hull2
+	for pos in range(len(hull1)):
+		vertex = hull1[pos]
+		d = pow((vertex.x + offset1.x) - (center2.x + offset2.x), 2) + \
+			pow((vertex.y + offset1.y) - (center2.y + offset2.y), 2)
+		if d <= radius2:
+			dist1.append(pos)
+	# Add the point before the first and after the last so we use them when
+	# making lines to test
+	if len(dist1) == 0:
+		return False
+	elif len(dist1) < len(hull1):
+		dist1 = [dist1[0] - 1] + dist1 + [(dist1[-1] + 1) % len(dist1)]
+	
+	# Find all points in hull2 that lie within the radius of hull1
+	for pos in range(len(hull2)):
+		vertex = hull2[pos]
+		d = pow((vertex.x + offset2.x) - (center1.x + offset1.x), 2) + \
+			pow((vertex.y + offset2.y) - (center1.y + offset1.y), 2)
+		if d <= radius1:
+			dist2.append(pos)
+	# Add the point before the first and after the last so we use them when
+	# making lines to test
+	if len(dist2) == 0:
+		return False
+	elif len(dist2) < len(hull2):
+		dist2 = [dist2[0] - 1] + dist2 + [(dist2[-1] + 1) % len(dist2)]
+	
+	# Iterate through points and test lines
+	for pos in range(len(dist1) - 1):
+		v1 = hull1[dist1[pos]]
+		v2 = hull1[dist1[pos + 1]]
+		for pos2 in range(len(dist2) - 1):
+			v3 = hull2[dist2[pos2]]
+			v4 = hull2[dist2[pos2 + 1]]
+			if line_intersection2d(v1, v2, offset1, v3, v4, offset2):
+				return True
+	return False
+	
+	"""
 	for pos in range(len(hull1)):
 		v1 = hull1[pos]
 		if pos == len(hull1) - 1:
@@ -623,23 +695,7 @@ def hull_collision2d(hull1, offset1, hull2, offset2):
 			if line_intersection2d(v1, v2, offset1, v3, v4, offset2):
 				return True
 	return False
-
-def hull_center2d(hull):
-	center = Point2d()
-	for vertex in hull:
-		center.x += vertex.x
-		center.y += vertex.y
-	center.x /= len(hull)
-	center.y /= len(hull)
-	return center
-
-def hull_radius2d(hull, center):
-	max_dist = 0
-	for vertex in hull:
-		dist = pow(center.x - vertex.x, 2) + pow(center.y - vertex.y, 2)
-		if dist > max_dist:
-			max_dist = dist
-	return sqrt(max_dist)
+	"""
 
 def polar_angle2d(pole, point):
 	"""
@@ -660,12 +716,14 @@ def distance2d(v1, v2):
 	"""
 	return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2))
 
-def optimize_hull2d(hull, center, radius, vertex_count):
+def optimize_hull2d(hull, vertex_count):
 	if len(hull) <= vertex_count:
 		return hull
 	step = (2 * pi) / vertex_count
 	current_angle = 0.0
-	new_hull = []
+	new_hull = Hull2d()
+	center = hull.center
+	radius = hull.radius
 	for c in range(vertex_count):
 		n = Point2d()
 		n.x = center.x + (radius * cos(current_angle))
@@ -717,7 +775,7 @@ def convex_hull2d(vertices):
 	v.sort(compare)
 	
 	# Setup the stack
-	stack = []
+	stack = Hull2d()
 	stack.append(v[0])
 	stack.append(v[1])
 	
