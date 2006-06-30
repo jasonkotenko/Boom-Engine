@@ -32,7 +32,7 @@ import Event
 
 from Graphics import *
 
-from math import sin, asin, sqrt, pow, degrees, pi
+from math import sin, asin, sqrt, degrees, pi
 
 ITEM_ANIM_NONE = 0
 ITEM_ANIM_THROB = 1
@@ -114,8 +114,8 @@ def object_bounding_sphere_collision(object1, object2):
 	mesh2 = DataManager.meshes[object2.mesh]
 	xdiff = (object1.x + mesh1.center.x) - (object2.x + mesh2.center.x)
 	ydiff = (object1.y + mesh1.center.y) - (object2.y + mesh2.center.y)
-	length = sqrt(xdiff * xdiff + ydiff * ydiff)
-	if length < (mesh1.radius + mesh2.radius):
+	length = xdiff * xdiff + ydiff * ydiff
+	if length < ((mesh1.radius * mesh1.radius) + (mesh2.radius * mesh2.radius)):
 		return True
 	else:
 		return False
@@ -126,12 +126,14 @@ def object_hull_collision2d(object1, object2):
 	xdiff = (object1.x + mesh1.hull.center.x) - (object2.x + mesh2.hull.center.x)
 	ydiff = (object1.y + mesh1.hull.center.y) - (object2.y + mesh2.hull.center.y)
 	
-	# Get out before sqrt if at all possible (sqrt, ** are expensive)
+	# Get out before length calc if at all possible (sqrt, ** are expensive)
 	if xdiff > (mesh1.hull.radius + mesh2.hull.radius) or ydiff > (mesh1.hull.radius + mesh2.hull.radius):
 		return False
 	
-	length = sqrt(xdiff * xdiff + ydiff * ydiff)
-	if length < (mesh1.hull.radius + mesh2.hull.radius):
+	radius1 = mesh1.hull.radius * mesh1.hull.radius
+	radius2 = mesh2.hull.radius * mesh2.hull.radius
+	length = xdiff * xdiff + ydiff * ydiff
+	if length < radius1 + radius2:
 		if hull_collision2d(mesh1.hull, object1, mesh2.hull, object2):
 			return True
 		else:
@@ -182,8 +184,10 @@ class Player(GameObject):
 					self.y = old.y
 		
 		for item in level.items:
-			d1 = pow(self.x - item.x, 2) + pow(self.y - item.y, 2)
-			d2 = pow(newpos.x - item.x, 2) + pow(newpos.y - item.y, 2)
+			d1 = (self.x - item.x) * (self.x - item.x) + \
+				 (self.y - item.y) * (self.y - item.y)
+			d2 = (newpos.x - item.x) * (newpos.x - item.x) + \
+				 (newpos.y - item.y) * (newpos.y - item.y)
 			if d2 < d1:
 				old = Point2d(self.x, self.y)
 				self.x = newpos.x
@@ -193,10 +197,6 @@ class Player(GameObject):
 					allow_y = False
 				self.x = old.x
 				self.y = old.y
-		
-		mesh = DataManager.meshes[level.mesh]
-		for poly in mesh.polygons:
-			pass
 		
 		if allow_x:
 			self.x = newpos.x
@@ -243,8 +243,8 @@ class CPUPlayer(Player):
 			if item.type == "Bomb":
 				diffx = self.x - item.x
 				diffy = self.y - item.y
-				distance = sqrt(pow(diffx, 2) + pow(diffy, 2))
-				if distance < item.radius + 0.1:
+				distance = diffx * diffx + diffy * diffy
+				if distance < (item.radius * item.radius) + 0.1:
 					bombs.append([item, distance])
 					if self.x <= item.x:
 						self.moving.left = True
@@ -264,7 +264,7 @@ class CPUPlayer(Player):
 				if player != self:
 					diffx = self.x - player.x
 					diffy = self.y - player.y
-					distance = sqrt(pow(diffx, 2) + pow(diffy, 2))
+					distance = diffx * diffx + diffy * diffy
 					if distance < closest[1]:
 						closest = [player, distance]
 			player, distance = closest
@@ -289,7 +289,7 @@ class CPUPlayer(Player):
 					self.moving.down = False
 					self.moving.up = False
 				min_radius = DataManager.meshes[self.mesh].hull.radius + DataManager.meshes[player.mesh].hull.radius
-				if distance < min_radius + 0.1:
+				if distance < (min_radius * min_radius) + 0.1:
 					level.add_bomb(self.x, self.y)
 		
 			if not chasing:
@@ -364,7 +364,7 @@ class Bomb(Item):
 				player = level.players[pos]
 				xdiff = player.x - self.x
 				ydiff = player.y - self.y
-				if sqrt(xdiff * xdiff + ydiff * ydiff) <= self.current_size:
+				if xdiff * xdiff + ydiff * ydiff <= self.current_size * self.current_size:
 					player.life -= 1
 					if player.life == 0:
 						Log.info("Killed " + player.name)
@@ -379,7 +379,7 @@ class Bomb(Item):
 				item = level.items[pos]
 				xdiff = item.x - self.x
 				ydiff = item.y - self.y
-				if sqrt(xdiff * xdiff + ydiff * ydiff) <= self.current_size:
+				if xdiff * xdiff + ydiff * ydiff <= self.current_size * self.current_size:
 					if item.type == "Bomb":
 						item.timeout()
 					else:
@@ -399,7 +399,7 @@ class Bomb(Item):
 			glDisable(GL_DEPTH_TEST)
 			if percent <= 0.8:
 				glMaterialfv(GL_FRONT, GL_DIFFUSE, [0.7, 0.7, 1.0, 0.5 * (0.8 - percent)])
-				glutSolidSphere(pow(self.current_size, 3), 16, 16)
+				glutSolidSphere(self.current_size ** 3, 16, 16)
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, [0.8, 0.8 * percent, 0.8 * percent, 1.0 - percent])
 			glutSolidSphere(self.current_size, 16, 16)
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, [1.0, 1.0, 0.8 * (1.0 - percent), 1.0 - percent])

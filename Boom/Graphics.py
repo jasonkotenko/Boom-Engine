@@ -27,7 +27,7 @@
 """
 
 import os, os.path, sys
-from math import sin, cos, pow, sqrt, atan2, pi
+from math import sin, cos, sqrt, atan2, pi
 from copy import deepcopy
 
 import Log
@@ -41,7 +41,7 @@ try:
 	from OpenGL.GLU import *
 	from OpenGL.GLUT import *
 except:
-	Log.critial("Can't import OpenGL bindings...")
+	Log.critical("Can't import OpenGL bindings...")
 	Log.info("Please install them from http://pyopengl.sourceforge.net/")
 	sys.exit(1)
 
@@ -524,7 +524,9 @@ class Hull2d(list):
 				center = self.__center
 			max_dist = 0
 			for vertex in self:
-				dist = pow(center.x - vertex.x, 2) + pow(center.y - vertex.y, 2)
+				dx = center.x - vertex.x
+				dy = center.y - vertex.y
+				dist = dx * dx + dy * dy
 				if dist > max_dist:
 					max_dist = dist
 			self.__radius = sqrt(max_dist)
@@ -646,8 +648,9 @@ def hull_collision2d(hull1, offset1, hull2, offset2):
 	# Find all points in hull1 that lie within the radius of hull2
 	for pos in range(len(hull1)):
 		vertex = hull1[pos]
-		d = pow((vertex.x + offset1.x) - (center2.x + offset2.x), 2) + \
-			pow((vertex.y + offset1.y) - (center2.y + offset2.y), 2)
+		dx = (vertex.x + offset1.x) - (center2.x + offset2.x)
+		dy = (vertex.y + offset1.y) - (center2.y + offset2.y)
+		d = dx * dx + dy * dy
 		if d <= radius2:
 			dist1.append(pos)
 	# Add the point before the first and after the last so we use them when
@@ -660,8 +663,9 @@ def hull_collision2d(hull1, offset1, hull2, offset2):
 	# Find all points in hull2 that lie within the radius of hull1
 	for pos in range(len(hull2)):
 		vertex = hull2[pos]
-		d = pow((vertex.x + offset2.x) - (center1.x + offset1.x), 2) + \
-			pow((vertex.y + offset2.y) - (center1.y + offset1.y), 2)
+		dx = (vertex.x + offset2.x) - (center1.x + offset1.x)
+		dy = (vertex.y + offset2.y) - (center1.y + offset1.y)
+		d = dx * dx + dy * dy
 		if d <= radius1:
 			dist2.append(pos)
 	# Add the point before the first and after the last so we use them when
@@ -720,7 +724,9 @@ def distance2d(v1, v2):
 	"""
 	Returns the distance between two points
 	"""
-	return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2))
+	dx = v1.x - v2.x
+	dy = v1.y - v2.y
+	return sqrt(dx * dx + dy * dy)
 
 #-------------------------------------------------------------------------------
 def optimize_hull2d(hull, vertex_count):
