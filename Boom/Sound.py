@@ -91,24 +91,28 @@ class SDLSoundManager:
 
 manager = None
 
+#-------------------------------------------------------------------------------
 def load(name):
 	if manager:
 		return manager.load(name)
 	else:
 		Log.warning("No sound manager has been created...")
 
+#-------------------------------------------------------------------------------
 def play(name):
 	if manager:
 		manager.play(name)
 	else:
 		Log.warning("No sound manager has been created...")
 
+#-------------------------------------------------------------------------------
 def play_music(name):
 	if manager:
 		manager.play_music(name)
 	else:
 		Log.warning("No sound manager has been created...")
 
+#-------------------------------------------------------------------------------
 def stop_music():
 	if manager:
 		manager.stop_music()

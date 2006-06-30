@@ -71,7 +71,7 @@ class OnDemandLoader:
 		# Save the key/value into our data store
 		self.data[key] = value
 	
-	def load(self, file, ext):
+	def load(self, file):
 		pass
 
 #-------------------------------------------------------------------------------
@@ -110,6 +110,8 @@ class SoundLoader(OnDemandLoader):
 		Load a sound object into our data store.
 		"""
 		self.data[key] = Sound.manager.load(key)
+
+#-------------------------------------------------------------------------------
 
 meshes = MeshLoader()
 sounds = SoundLoader()

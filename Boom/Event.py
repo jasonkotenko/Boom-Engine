@@ -29,26 +29,37 @@ import Log
 Log.info("Initializing internal event handler...")
 
 INITIALIZED = 0
-QUIT = 1
+STATE_CHANGED = 1
+QUIT = 2
 
-LEVEL_LOADED = 2
-MATCH_WON = 3
+LEVEL_LOADED = 3
+MATCH_WON = 4
 
 queue = []
 callbacks = {}
 
+#-------------------------------------------------------------------------------
 def register(event, callback):
+	"""
+	Register a callback function with the internal event handler.
+	Any time that event is processed in the queue callback will be called.
+	"""
 	if not event in callbacks.keys():
 		callbacks[event] = []
 	callbacks[event].append(callback)
 
+#-------------------------------------------------------------------------------
 def post(event):
 	"""
 	Post a new event to the internal event queue.
 	"""
 	queue.append(event)
 
+#-------------------------------------------------------------------------------
 def handle_events():
+	"""
+	Handle the event queue.
+	"""
 	global queue
 	for event in queue:
 		if event in callbacks.keys():

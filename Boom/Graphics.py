@@ -455,8 +455,8 @@ class Mesh:
 			glCallList(self.display_list)
 		else:
 			# Generate a new display list and render
-			list = glGenLists(1)
-			glNewList(list, GL_COMPILE_AND_EXECUTE)
+			dlist = glGenLists(1)
+			glNewList(dlist, GL_COMPILE_AND_EXECUTE)
 			for poly in self.polygons:
 				self.materials[poly.material].set()
 				glBegin(GL_POLYGON)
@@ -485,8 +485,9 @@ class Mesh:
 				glEnable(GL_LIGHTING)
 				glPopMatrix()
 			glEndList()
-			self.display_list = list
+			self.display_list = dlist
 
+#-------------------------------------------------------------------------------
 class Hull2d(list):
 	def __init__(self):
 		list.__init__(self)
@@ -577,6 +578,7 @@ def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
 		return False
 """
 
+#-------------------------------------------------------------------------------
 def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
 	# Calculate offset points
 	x1 = p1.x + offset1.x
@@ -628,6 +630,7 @@ def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
 			else:
 				return x >= x2 and x <= x1 and x >= x4 and x <= x3
 
+#-------------------------------------------------------------------------------
 def hull_collision2d(hull1, offset1, hull2, offset2):
 	# Setup point lists
 	dist1 = []
@@ -697,6 +700,7 @@ def hull_collision2d(hull1, offset1, hull2, offset2):
 	return False
 	"""
 
+#-------------------------------------------------------------------------------
 def polar_angle2d(pole, point):
 	"""
 	Returns the polar angle between the pole and a point in radians.
@@ -707,15 +711,18 @@ def polar_angle2d(pole, point):
 	angle = atan2(dy, dx)
 	return angle % (2 * pi)
 
+#-------------------------------------------------------------------------------
 def cross2d(v1, v2, v3):
 	return ((v2.x - v1.x) * (v3.y - v1.y)) - ((v3.x - v1.x) * (v2.y - v1.y))
 
+#-------------------------------------------------------------------------------
 def distance2d(v1, v2):
 	"""
 	Returns the distance between two points
 	"""
 	return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2))
 
+#-------------------------------------------------------------------------------
 def optimize_hull2d(hull, vertex_count):
 	if len(hull) <= vertex_count:
 		return hull
@@ -739,6 +746,7 @@ def optimize_hull2d(hull, vertex_count):
 		current_angle += step
 	return new_hull
 
+#-------------------------------------------------------------------------------
 def convex_hull2d(vertices):
 	v = []
 	

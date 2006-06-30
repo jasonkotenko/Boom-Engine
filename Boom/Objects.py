@@ -105,14 +105,9 @@ class GameObject:
 	
 	def draw(self):
 		pass
-	
-	def draw(self):
-		pass
 
 	def check_collision(self, object):
-		if object_hull_collision2d(self, object):
-			return True
-		return False
+		return object_hull_collision2d(self, object)
 
 def object_bounding_sphere_collision(object1, object2):
 	mesh1 = DataManager.meshes[object1.mesh]
@@ -131,7 +126,7 @@ def object_hull_collision2d(object1, object2):
 	xdiff = (object1.x + mesh1.hull.center.x) - (object2.x + mesh2.hull.center.x)
 	ydiff = (object1.y + mesh1.hull.center.y) - (object2.y + mesh2.hull.center.y)
 	
-	#Get out before sqrt if at all possible (sqrt,*,* are expensive)
+	# Get out before sqrt if at all possible (sqrt, ** are expensive)
 	if xdiff > (mesh1.hull.radius + mesh2.hull.radius) or ydiff > (mesh1.hull.radius + mesh2.hull.radius):
 		return False
 	
@@ -141,43 +136,6 @@ def object_hull_collision2d(object1, object2):
 			return True
 		else:
 			return False
-	else:
-		return False
-
-def find_poly_center(poly, vertex_list):
-	center = Point3d()
-	for pos in poly.vertices:
-		vertex = vertex_list[pos[0]]
-		center.x += vertex.x
-		center.y += vertex.y
-		center.z += vertex.z
-	center.x /= len(poly.vertices)
-	center.y /= len(poly.vertices)
-	center.z /= len(poly.vertices)
-	return center
-
-def find_poly_radius(poly, center, vertex_list):
-	r2 = 0
-	for pos in poly.vertices:
-		vertex = vertex_list[pos[0]]
-		d = pow(center.x - vertex.x, 2) + pow(center.y - vertex.y, 2)
-		if d > r2:
-			r2 = d
-	return sqrt(r2)
-
-def poly_bounding_sphere_collision(object1, poly1, object2, poly2):
-	mesh1 = DataManager.meshes[object1.mesh]
-	mesh2 = DataManager.meshes[object2.mesh]
-	center1 = find_poly_center(poly1, mesh1.vertices)
-	center2 = find_poly_center(poly2, mesh2.vertices)
-	r1 = find_poly_radius(poly1, center1, mesh1.vertices)
-	r2 = find_poly_radius(poly2, center2, mesh2.vertices)
-	xdiff = (object1.x + center1.x) - (object2.x + center2.x)
-	ydiff = (object1.y + center1.y) - (object2.y + center2.y)
-	length = sqrt(xdiff * xdiff + ydiff * ydiff)
-	if length < (r1 + r2):
-		print length, r1 + r2
-		return True
 	else:
 		return False
 
@@ -209,8 +167,10 @@ class Player(GameObject):
 		mesh1 = DataManager.meshes[self.mesh]
 		for player in level.players:
 			if player != self:
-				d1 = pow(self.x - player.x, 2) + pow(self.y - player.y, 2)
-				d2 = pow(newpos.x - player.x, 2) + pow(newpos.y - player.y, 2)
+				d1 = (self.x - player.x) * (self.x - player.x) + \
+					 (self.y - player.y) * (self.y - player.y)
+				d2 = (newpos.x - player.x) * (newpos.x - player.x) + \
+					 (newpos.y - player.y) * (newpos.y - player.y)
 				if d2 < d1:
 					old = Point2d(self.x, self.y)
 					self.x = newpos.x

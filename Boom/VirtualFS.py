@@ -60,7 +60,6 @@ class MountPoint:
 		return "[" + self.path + ", " + type + "]"
 
 #-------------------------------------------------------------------------------
-
 def mount(location):
 	"""
 	Mount a location, such as a directory or compressed archive.
@@ -75,6 +74,7 @@ def mount(location):
 		mpoint.data = tarfile.open(location, "r:bz2")
 		mtab.append(MountPoint(location, TYPE_BZIP_TAR))
 
+#-------------------------------------------------------------------------------
 def umount(location):
 	"""
 	Unmount a location that was previously mounted.
@@ -90,6 +90,7 @@ def umount(location):
 		Log.warning("Mount point was not found!")
 	return found
 
+#-------------------------------------------------------------------------------
 def open(filename):
 	"""
 	Open and return a file-like object from the path given, relative to the
@@ -105,6 +106,7 @@ def open(filename):
 	Log.error("Unable to find file " + filename)
 	return None
 
+#-------------------------------------------------------------------------------
 def listdir(directory):
 	"""
 	List the contents of a directory.
@@ -123,6 +125,7 @@ def listdir(directory):
 			pass
 	return files
 
+#-------------------------------------------------------------------------------
 def exists(filename):
 	"""
 	Check if a file exists.

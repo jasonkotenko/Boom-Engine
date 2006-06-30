@@ -207,16 +207,16 @@ class PausedState(GameState):
 
 states = []
 current = None
-on_state_change = None
 
+#-------------------------------------------------------------------------------
 def push(state):
 	global current
 	Log.info("Changing game state to " + state.name)
 	states.append(state)
 	current = state
-	if on_state_change:
-		on_state_change(current)
+	Event.post(Event.STATE_CHANGED)
 
+#-------------------------------------------------------------------------------
 def replace(state):
 	global current
 	if len(states) < 1:
@@ -225,9 +225,9 @@ def replace(state):
 	Log.info("Changing game state to " + state.name)
 	states[-1] = state
 	current = state
-	if on_state_change:
-		on_state_change(current)
+	Event.post(Event.STATE_CHANGED)
 
+#-------------------------------------------------------------------------------
 def pop():
 	global current
 	if len(states) < 1:
@@ -238,22 +238,20 @@ def pop():
 	
 	if len(states) < 1:
 		current = None
-		if on_state_change:
-			on_state_change(None)
 	else:
 		current = states[-1]
 		Log.info("Changing game state to " + current.name)
-		if on_state_change:
-			on_state_change(current)
+	Event.post(Event.STATE_CHANGED)
 
+#-------------------------------------------------------------------------------
 def clear():
 	global current
 	states = []
 	current = None
 	Log.info("Clearing game state stack...")
-	if on_state_change:
-		on_state_change(None)
+	Event.post(Event.STATE_CHANGED)
 
+#-------------------------------------------------------------------------------
 def update():
 	if len(states) < 1:
 		Log.error("No game states present!")
@@ -261,6 +259,7 @@ def update():
 	if current and current.running:
 		current.update()
 
+#-------------------------------------------------------------------------------
 def draw():
 	if len(states) < 1:
 		Log.error("No game states present!")
