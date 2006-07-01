@@ -402,6 +402,9 @@ class Mesh:
 		
 		self.hull = optimize_hull2d(self.hull, 6)
 		Log.debug("Hull optimized to " + str(len(self.hull)) + " points")
+		
+		self.hull.calc_center()
+		self.hull.calc_radius()
 
 	def load_materials(self, filename):
 		"""
@@ -491,52 +494,28 @@ class Mesh:
 class Hull2d(list):
 	def __init__(self):
 		list.__init__(self)
-		self.__center = None
-		self.__radius = None
+		self.center = None
+		self.radius = None
 	
-	def __setitem__(self, item, value):
-		self.__center = None
-		self.__radius = None
-		list.__setitem__(self, item, value)
-	
-	def __get_center(self):
-		if self.__center != None:
-			return self.__center
-		else:
-			self.__center = Point2d(0, 0)
-			for vertex in self:
-				self.__center.x += vertex.x
-				self.__center.y += vertex.y
-			self.__center.x /= len(self)
-			self.__center.y /= len(self)
-			return self.__center
-	
-	def __set_center(self, center):
-		self.__center = center
-	
-	def __get_radius(self):
-		if self.__radius != None:
-			return self.__radius
-		else:
-			if self.__center == None:
-				center = self.__get_center()
-			else:
-				center = self.__center
-			max_dist = 0
-			for vertex in self:
-				dx = center.x - vertex.x
-				dy = center.y - vertex.y
-				dist = dx * dx + dy * dy
-				if dist > max_dist:
-					max_dist = dist
-			self.__radius = sqrt(max_dist)
-			return self.__radius
-	
-	def __set_radius(self, radius):
-		self.__radius = radius
-	
-	center = property(__get_center, __set_center)
-	radius = property(__get_radius, __set_radius)
+	def calc_center(self):
+		self.center = Point2d(0, 0)
+		for vertex in self:
+			self.center.x += vertex.x
+			self.center.y += vertex.y
+		self.center.x /= len(self)
+		self.center.y /= len(self)
+		
+	def calc_radius(self):
+		if self.center == None:
+			self.calc_center()
+		max_dist = 0
+		for vertex in self:
+			dx = self.center.x - vertex.x
+			dy = self.center.y - vertex.y
+			dist = dx * dx + dy * dy
+			if dist > max_dist:
+				max_dist = dist
+		self.radius = sqrt(max_dist)
 
 """
 def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
@@ -735,6 +714,8 @@ def optimize_hull2d(hull, vertex_count):
 	step = (2 * pi) / vertex_count
 	current_angle = 0.0
 	new_hull = Hull2d()
+	hull.calc_center()
+	hull.calc_radius()
 	center = hull.center
 	radius = hull.radius
 	for c in range(vertex_count):
