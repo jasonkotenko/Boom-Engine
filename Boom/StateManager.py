@@ -96,18 +96,24 @@ class PlayingState(GameState):
 		GameState.__init__(self)
 		self.name = "Playing"
 		self.level = None
+		self.keyboard_control = Objects.Movement()
 	
 	def key_pressed(self, key):
+		motion = self.level.player.motion
 		if key == Keyboard.KEY_PAUSE:
 			push(PausedState())
 		elif key == Keyboard.KEY_MOVE_UP:
-			self.level.player.moving.up = True
+			self.keyboard_control.up = True
+			motion.angle, motion.moving = self.keyboard_control.get_angle()
 		elif key == Keyboard.KEY_MOVE_LEFT:
-			self.level.player.moving.left = True
+			self.keyboard_control.left = True
+			motion.angle, motion.moving = self.keyboard_control.get_angle()
 		elif key == Keyboard.KEY_MOVE_DOWN:
-			self.level.player.moving.down = True
+			self.keyboard_control.down = True
+			motion.angle, motion.moving = self.keyboard_control.get_angle()
 		elif key == Keyboard.KEY_MOVE_RIGHT:
-			self.level.player.moving.right = True
+			self.keyboard_control.right = True
+			motion.angle, motion.moving = self.keyboard_control.get_angle()
 		elif key == Keyboard.KEY_LAY_BOMB:
 			if self.level.player.life:
 				self.level.add_bomb(self.level.player.x, self.level.player.y)
@@ -118,15 +124,20 @@ class PlayingState(GameState):
 				Log.info("Key pressed (keycode " + str(key) + ")")
 	
 	def key_released(self, key):
+		motion = self.level.player.motion
 		if key == Keyboard.KEY_MOVE_UP:
-			self.level.player.moving.up = False
+			self.keyboard_control.up = False
+			motion.angle, motion.moving = self.keyboard_control.get_angle()
 		elif key == Keyboard.KEY_MOVE_LEFT:
-			self.level.player.moving.left = False
+			self.keyboard_control.left = False
+			motion.angle, motion.moving = self.keyboard_control.get_angle()
 		elif key == Keyboard.KEY_MOVE_DOWN:
-			self.level.player.moving.down = False
+			self.keyboard_control.down = False
+			motion.angle, motion.moving = self.keyboard_control.get_angle()
 		elif key == Keyboard.KEY_MOVE_RIGHT:
-			self.level.player.moving.right = False
-	
+			self.keyboard_control.right = False
+			motion.angle, motion.moving = self.keyboard_control.get_angle()
+		
 	def update(self):
 		self.level.update()
 	
@@ -148,10 +159,12 @@ class PausedState(GameState):
 		self.menu = Interface.Menu("Paused")
 		self.menu.add_item("Resume Game", self.resume)
 		self.menu.add_item("Exit", self.exit)
-		self.movement = deepcopy(current.level.player.moving)
+		self.movement = deepcopy(states[-1].keyboard_control)
 	
 	def resume(self):
-		states[-2].level.player.moving = self.movement
+		states[-2].keyboard_control = self.movement
+		motion = states[-2].level.player.motion
+		motion.angle, motion.moving = self.movement.get_angle()
 		pop()
 	
 	def exit(self):

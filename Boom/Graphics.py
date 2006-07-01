@@ -105,6 +105,24 @@ class Point3d:
 		return "[" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + "]"
 
 #-------------------------------------------------------------------------------
+class PolarVector2d:
+	"""
+	Polar Two-dimensional Vector
+	================================
+		Stores a polar angle and radius in two-dimensional space. Can be accessed
+		through angle and radius members.
+	"""
+	def __init__(self, angle = 0, radius = 1.0):
+		self.angle = angle
+		self.radius = radius
+	
+	def __repr__(self):
+		"""
+		Represent the polar vector as [angle, radius]
+		"""
+		return "[" + str(self.angle) + ", " + str(self.radius) + "]"
+
+#-------------------------------------------------------------------------------
 class Color:
 	"""
 	Color Value

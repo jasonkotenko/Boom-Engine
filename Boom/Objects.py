@@ -32,7 +32,7 @@ import Event
 
 from Graphics import *
 
-from math import sin, asin, sqrt, degrees, pi
+from math import sin, asin, sqrt, degrees, radians, pi, atan2
 
 ITEM_ANIM_NONE = 0
 ITEM_ANIM_THROB = 1
@@ -90,6 +90,28 @@ class Movement:
 		self.down = False
 		self.left = False
 		self.right = False
+	
+	def get_angle(self):
+		if self.up and self.left:
+			angle = 135
+		elif self.up and self.right:
+			angle = 45
+		elif self.down and self.left:
+			angle = 225
+		elif self.down and self.right:
+			angle = 315
+		elif self.up:
+			angle = 90
+		elif self.down:
+			angle = 270
+		elif self.left:
+			angle = 180
+		elif self.right:
+			angle = 0
+		try:
+			return radians(angle), True
+		except:
+			return None, False
 
 #-------------------------------------------------------------------------------
 class GameObject:
@@ -98,48 +120,64 @@ class GameObject:
 		self.mesh = mesh
 		self.x = x
 		self.y = y
+		self.motion = PolarVector2d(None, 1.0)
+		self.motion.moving = False
 		self.scale = 1.0
 	
 	def update(self, level):
+		if self.motion.moving:
+			oldpos = Point2d(self.x, self.y)
+			self.x += cos(self.motion.angle) * self.motion.radius * Interface.tdiff
+			self.y += sin(self.motion.angle) * self.motion.radius * Interface.tdiff
+			if self.check_collisions(level, oldpos):
+				self.x, self.y = oldpos.x, oldpos.y
 		return True
 	
 	def draw(self):
 		pass
-
-	def check_collision(self, object):
-		return object_hull_collision2d(self, object)
-
-def object_bounding_sphere_collision(object1, object2):
-	mesh1 = DataManager.meshes[object1.mesh]
-	mesh2 = DataManager.meshes[object2.mesh]
-	xdiff = (object1.x + mesh1.center.x) - (object2.x + mesh2.center.x)
-	ydiff = (object1.y + mesh1.center.y) - (object2.y + mesh2.center.y)
-	length = xdiff * xdiff + ydiff * ydiff
-	if length < ((mesh1.radius * mesh1.radius) + (mesh2.radius * mesh2.radius)):
-		return True
-	else:
-		return False
-
-def object_hull_collision2d(object1, object2):
-	mesh1 = DataManager.meshes[object1.mesh]
-	mesh2 = DataManager.meshes[object2.mesh]
-	xdiff = (object1.x + mesh1.hull.center.x) - (object2.x + mesh2.hull.center.x)
-	ydiff = (object1.y + mesh1.hull.center.y) - (object2.y + mesh2.hull.center.y)
 	
-	# Get out before length calc if at all possible (sqrt, ** are expensive)
-	if xdiff > (mesh1.hull.radius + mesh2.hull.radius) or ydiff > (mesh1.hull.radius + mesh2.hull.radius):
+	def check_collisions(self, level, oldpos):
+		for player in level.players:
+			if player != self:
+				d1 = (oldpos.x - player.x) * (oldpos.x - player.x) + \
+					 (oldpos.y - player.y) * (oldpos.y - player.y)
+				d2 = (self.x - player.x) * (self.x - player.x) + \
+					 (self.y - player.y) * (self.y - player.y)
+				if d2 < d1:
+					if self.hull_collision2d(player):
+						return True
+		
+		for item in level.items:
+			if item != self:
+				d1 = (oldpos.x - item.x) * (oldpos.x - item.x) + \
+					 (oldpos.y - item.y) * (oldpos.y - item.y)
+				d2 = (self.x - item.x) * (self.x - item.x) + \
+					 (self.y - item.y) * (self.y - item.y)
+				if d2 < d1:
+					if self.hull_collision2d(item):
+						return True
 		return False
 	
-	radius1 = mesh1.hull.radius * mesh1.hull.radius
-	radius2 = mesh2.hull.radius * mesh2.hull.radius
-	length = xdiff * xdiff + ydiff * ydiff
-	if length < radius1 + radius2:
-		if hull_collision2d(mesh1.hull, object1, mesh2.hull, object2):
-			return True
+	def hull_collision2d(self, object):
+		mesh1 = DataManager.meshes[self.mesh]
+		mesh2 = DataManager.meshes[object.mesh]
+		xdiff = (self.x + mesh1.hull.center.x) - (object.x + mesh2.hull.center.x)
+		ydiff = (self.y + mesh1.hull.center.y) - (object.y + mesh2.hull.center.y)
+		
+		# Get out before length calc if at all possible (sqrt, ** are expensive)
+		if xdiff > (mesh1.hull.radius + mesh2.hull.radius) or ydiff > (mesh1.hull.radius + mesh2.hull.radius):
+			return False
+	
+		radius1 = mesh1.hull.radius * mesh1.hull.radius
+		radius2 = mesh2.hull.radius * mesh2.hull.radius
+		length = xdiff * xdiff + ydiff * ydiff
+		if length < radius1 + radius2:
+			if hull_collision2d(mesh1.hull, self, mesh2.hull, object):
+				return True
+			else:
+				return False
 		else:
 			return False
-	else:
-		return False
 
 #-------------------------------------------------------------------------------
 class Player(GameObject):
@@ -147,86 +185,18 @@ class Player(GameObject):
 		GameObject.__init__(self)
 		self.name = "Player"
 		self.itemids = []
-		self.moving = Movement()
-		self.speed = 3
+		self.motion.radius = 3.0
 		self.life = 1
 		self.mesh = "player.obj"
-		self.current_angle = 0
 	
 	def update(self, level):
-		newpos = Point2d(self.x, self.y)
-		if self.moving.up:
-			newpos.y = self.y + Interface.tdiff * self.speed
-		elif self.moving.down:
-			newpos.y = self.y - Interface.tdiff * self.speed
-		if self.moving.left:
-			newpos.x = self.x - Interface.tdiff * self.speed
-		elif self.moving.right:
-			newpos.x = self.x + Interface.tdiff * self.speed
-		# Check if we are allowed to move there!
-		allow_x = True
-		allow_y = True
-		mesh1 = DataManager.meshes[self.mesh]
-		for player in level.players:
-			if player != self:
-				d1 = (self.x - player.x) * (self.x - player.x) + \
-					 (self.y - player.y) * (self.y - player.y)
-				d2 = (newpos.x - player.x) * (newpos.x - player.x) + \
-					 (newpos.y - player.y) * (newpos.y - player.y)
-				if d2 < d1:
-					old = Point2d(self.x, self.y)
-					self.x = newpos.x
-					self.y = newpos.y
-					if self.check_collision(player):
-						allow_x = False
-						allow_y = False
-					self.x = old.x
-					self.y = old.y
+		return GameObject.update(self, level)
 		
-		for item in level.items:
-			d1 = (self.x - item.x) * (self.x - item.x) + \
-				 (self.y - item.y) * (self.y - item.y)
-			d2 = (newpos.x - item.x) * (newpos.x - item.x) + \
-				 (newpos.y - item.y) * (newpos.y - item.y)
-			if d2 < d1:
-				old = Point2d(self.x, self.y)
-				self.x = newpos.x
-				self.y = newpos.y
-				if self.check_collision(item):
-					allow_x = False
-					allow_y = False
-				self.x = old.x
-				self.y = old.y
-		
-		if allow_x:
-			self.x = newpos.x
-		if allow_y:
-			self.y = newpos.y
-		
-		return True
-	
 	def draw(self):
 		glPushMatrix()
 		glTranslatef(self.x, self.y, 0.0)
-		angle = self.current_angle
-		if self.moving.up and self.moving.left:
-			angle = 225
-		elif self.moving.up and self.moving.right:
-			angle = 135
-		elif self.moving.down and self.moving.left:
-			angle = 315
-		elif self.moving.down and self.moving.right:
-			angle = 45
-		elif self.moving.up:
-			angle = 180
-		elif self.moving.down:
-			angle = 0
-		elif self.moving.left:
-			angle = 270
-		elif self.moving.right:
-			angle = 90
-		self.current_angle = angle
-		glRotatef(self.current_angle, 0, 0, 1)
+		if self.motion.angle:
+			glRotatef(degrees(self.motion.angle), 0, 0, 1)
 		DataManager.meshes[self.mesh].render()
 		glPopMatrix()
 
@@ -238,6 +208,7 @@ class CPUPlayer(Player):
 	def update(self, level):
 		# See if we need to run away from any bombs!
 		running = False
+		self.motion.moving = False
 		bombs = []
 		for item in level.items:
 			if item.type == "Bomb":
@@ -246,14 +217,8 @@ class CPUPlayer(Player):
 				distance = diffx * diffx + diffy * diffy
 				if distance < (item.radius * item.radius) + 0.1:
 					bombs.append([item, distance])
-					if self.x <= item.x:
-						self.moving.left = True
-					else:
-						self.moving.right = True
-					if self.y <= item.y:
-						self.moving.down = True
-					else:
-						self.moving.up = True
+					self.motion.angle = atan2(diffy, diffx)
+					self.motion.moving = True
 					running = True
 		
 		# Select our closest target and go after her!
@@ -266,37 +231,15 @@ class CPUPlayer(Player):
 					diffy = self.y - player.y
 					distance = diffx * diffx + diffy * diffy
 					if distance < closest[1]:
-						closest = [player, distance]
-			player, distance = closest
+						closest = [player, distance, diffx, diffy]
+			player, distance, diffx, diffy = closest
 			if player:
 				chasing = True
-				if self.x < player.x - 0.1:
-					self.moving.right = True
-					self.moving.left = False
-				elif self.x > player.x + 0.1:
-					self.moving.left = True
-					self.moving.right = False
-				else:
-					self.moving.left = False
-					self.moving.right = False
-				if self.y < player.y - 0.1:
-					self.moving.up = True
-					self.moving.down = False
-				elif self.y > player.y + 0.1:
-					self.moving.down = True
-					self.moving.up = False
-				else:
-					self.moving.down = False
-					self.moving.up = False
+				self.motion.angle = atan2(-diffy, -diffx)
+				self.motion.moving = True
 				min_radius = DataManager.meshes[self.mesh].hull.radius + DataManager.meshes[player.mesh].hull.radius
 				if distance < (min_radius * min_radius) + 0.1:
 					level.add_bomb(self.x, self.y)
-		
-			if not chasing:
-				self.moving.left = False
-				self.moving.right = False
-				self.moving.up = False
-				self.moving.down = False
 		
 		Player.update(self, level)
 
@@ -311,7 +254,7 @@ class Item(GameObject):
 		self.anim_type = ITEM_ANIM_NONE
 	
 	def update(self, level):
-		retval = True
+		retval = GameObject.update(self, level)
 		self.timer -= Interface.tdiff
 		if self.timer <= 0:
 			retval = self.timeout()
