@@ -129,16 +129,24 @@ class PlayingState(GameState):
 		motion = self.level.player.motion
 		if key == Keyboard.KEY_MOVE_UP:
 			self.keyboard_control.up = False
-			motion.angle, motion.moving = self.keyboard_control.get_angle()
+			angle, motion.moving = self.keyboard_control.get_angle()
+			if motion.moving:
+				motion.angle = angle
 		elif key == Keyboard.KEY_MOVE_LEFT:
 			self.keyboard_control.left = False
-			motion.angle, motion.moving = self.keyboard_control.get_angle()
+			angle, motion.moving = self.keyboard_control.get_angle()
+			if motion.moving:
+				motion.angle = angle
 		elif key == Keyboard.KEY_MOVE_DOWN:
 			self.keyboard_control.down = False
-			motion.angle, motion.moving = self.keyboard_control.get_angle()
+			angle, motion.moving = self.keyboard_control.get_angle()
+			if motion.moving:
+				motion.angle = angle
 		elif key == Keyboard.KEY_MOVE_RIGHT:
 			self.keyboard_control.right = False
-			motion.angle, motion.moving = self.keyboard_control.get_angle()
+			angle, motion.moving = self.keyboard_control.get_angle()
+			if motion.moving:
+				motion.angle = angle
 		
 	def update(self):
 		self.camera.update()

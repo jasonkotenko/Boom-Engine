@@ -204,6 +204,8 @@ class Player(GameObject):
 class CPUPlayer(Player):
 	def __init__(self):
 		Player.__init__(self)
+		# Set whether this player thinks (enable/disable artificial intelligence)
+		self.thinks = True
 
 	def update(self, level):
 		# See if we need to run away from any bombs!
@@ -222,7 +224,7 @@ class CPUPlayer(Player):
 					running = True
 		
 		# Select our closest target and go after her!
-		if not running:
+		if not running and self.thinks:
 			chasing = False
 			closest = [None, 1000]
 			for player in level.players:

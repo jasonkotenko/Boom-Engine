@@ -35,9 +35,12 @@ sys.path.append(os.getcwd() + "/../")
 
 # Parse command line options (so far only option for no sounds)
 nosound = False
+noai = False
 for x in sys.argv[1:]:
-	if x == "--nosound":
+	if x == "--nosound" or x == "--no-sound":
 		nosound = True
+	elif x == "--no-ai":
+		noai = True
 
 import Boom
 
@@ -63,6 +66,9 @@ class MainMenuState(Boom.StateManager.GameState):
 		level.add_player("Daniel", 0, 0, True)
 		level.add_player("CPU 1", 4, 1)
 		level.add_player("CPU 2", -2, -4)
+		if noai:
+			level.players[1].thinks = False
+			level.players[2].thinks = False
 		if not nosound:
 			level_music = Boom.Sound.Music("Sounds/Level.ogg")
 			level_music.play()

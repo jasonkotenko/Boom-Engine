@@ -431,13 +431,14 @@ class Mesh:
 						glNormal3fv(self.normals[normal])
 					glVertex3fv(self.vertices[vertex].array())
 				glEnd()
+				glDisable(GL_TEXTURE_2D)
 				# Draw convex hull
 				glPushMatrix()
 				glDisable(GL_LIGHTING)
 				glColor3f(0, 1.0, 0)
 				glBegin(GL_LINE_LOOP)
 				for v in self.hull:
-					glVertex3f(v.x, v.y, 0.1)
+					glVertex3f(v.x, v.y, 0.01)
 				glEnd()
 				glEnable(GL_LIGHTING)
 				glPopMatrix()
