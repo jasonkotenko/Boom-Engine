@@ -485,6 +485,7 @@ class Hull2d(list):
 				max_dist = dist
 		self.radius = sqrt(max_dist)
 
+#-------------------------------------------------------------------------------
 """
 def line_intersection2d(p1, p2, offset1, p3, p4, offset2):
 	try:

@@ -48,6 +48,7 @@ Log.info("Initializing game state manager...")
 import Objects
 import DataManager
 import Interface
+import Camera
 import Keyboard
 import Event
 
@@ -96,6 +97,7 @@ class PlayingState(GameState):
 		GameState.__init__(self)
 		self.name = "Playing"
 		self.level = None
+		self.camera = Camera.Camera3d()
 		self.keyboard_control = Objects.Movement()
 	
 	def key_pressed(self, key):
@@ -139,12 +141,14 @@ class PlayingState(GameState):
 			motion.angle, motion.moving = self.keyboard_control.get_angle()
 		
 	def update(self):
+		self.camera.update()
 		self.level.update()
 	
 	def draw(self):
-		gluLookAt(0, -25, 25, \
-				  0, 0, 0, \
-				  0, 0, 1)
+		cam = self.camera
+		gluLookAt(cam.pos.x,	cam.pos.y,		cam.pos.z,
+				  cam.lookat.x,	cam.lookat.y,	cam.lookat.z,
+				  cam.up.x,		cam.up.y,		cam.up.z)
 		self.level.draw()
 	
 	def load_level(self, level):
