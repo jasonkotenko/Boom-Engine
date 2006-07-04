@@ -397,8 +397,8 @@ class Mesh:
 				glTexImage2D(GL_TEXTURE_2D, 0, 3, data.size[0], \
 							 data.size[1], 0, GL_RGB, GL_UNSIGNED_BYTE, \
 							 datastring)
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
 				#gluBuild2DMipmaps(GL_TEXTURE_2D, 3, data.size[0], \
 				#				  data.size[1], GL_RGB, GL_UNSIGNED_BYTE, \
 				#				  datastring)

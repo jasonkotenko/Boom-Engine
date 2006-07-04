@@ -63,7 +63,7 @@ class MainMenuState(Boom.StateManager.GameState):
 	def start_demo(self):
 		# Load a simple level and add a few players
 		level = Boom.load_level("simpleplane")
-		level.add_player("Daniel", 0, 0, True)
+		level.add_player("Daniel", -1, 0, True)
 		level.add_player("CPU 1", 4, 1)
 		level.add_player("CPU 2", -2, -4)
 		if noai:
