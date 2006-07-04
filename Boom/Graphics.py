@@ -45,6 +45,14 @@ except:
 	Log.info("Please install them from http://pyopengl.sourceforge.net/")
 	sys.exit(1)
 
+# Python Imaging Library
+try:
+	import Image
+except:
+	Log.critical("Can't import Python Imaging Library...")
+	Log.info("Please install from ...")
+	sys.exit(1)
+
 #-------------------------------------------------------------------------------
 class Point2d:
 	"""
@@ -157,72 +165,6 @@ class Color:
 			   ", " + str(self.alpha) + "]"
 
 #-------------------------------------------------------------------------------
-class Image:
-	"""
-	Image
-	=====
-		Stores information about an image.
-	"""
-	def __init__(self):
-		self.width = 0
-		self.height = 0
-		self.data = ""
-	
-	def load(self, filename):
-		"""
-		Load the image from a file.
-		"""
-		Log.debug("Loading " + filename)
-		# Clear previous data
-		self.width = 0
-		self.height = 0
-		self.data = []
-		# Check the format of the file
-		if filename[-4:] == ".ppm":
-			# Load from a PPM
-			return self.load_ppm(VirtualFS.open(filename))
-		else:
-			Log.error("Uknown image format!")
-	
-	def load_ppm(self, data):
-		"""
-		Load an image from a Portable PixMap file. Warning: this is SLOW!
-		"""
-		data2 = []
-		# Strip out all comment lines
-		for line in data:
-			if line[0] != "#":
-				for part in line.split("\t"):
-					for piece in part.split(" "):
-						if piece and ord(piece[0]) >= 48:
-							data2.append(piece.strip())
-		# Check for magic number
-		if data2[0] != "P3":
-			Log.warning("PPM Header not found...")
-			return False
-		
-		# Set the width and height of the image
-		self.width = int(data2[1])
-		self.height = int(data2[2])
-		
-		# Setup the data array
-		for y in range(self.height):
-			self.data.append([])
-		
-		# Get the maximum allowed color value per component (e.g. 255)
-		maxvalue = int(data2[3])
-		pos = 4
-		
-		# Read in the image data
-		for y in range(self.height):
-			for x in range(self.width):
-				self.data[y].append([float(data2[pos]) / maxvalue,
-								   float(data2[pos + 1]) / maxvalue,
-								   float(data2[pos + 2]) / maxvalue])
-				pos += 3
-		return True
-
-#-------------------------------------------------------------------------------
 class Material:
 	"""
 	Material Properties
@@ -248,7 +190,12 @@ class Material:
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, self.diffuse.array())
 		glMaterialfv(GL_FRONT, GL_SPECULAR, self.specular.array())
 		glMateriali(GL_FRONT, GL_SHININESS, self.shininess)
-		#glBindTexture(GL_TEXTURE_2D, texture)
+		
+		if self.texture:
+			glEnable(GL_TEXTURE_2D)
+			glBindTexture(GL_TEXTURE_2D, self.texture)
+		else:
+			glDisable(GL_TEXTURE_2D)
 
 #-------------------------------------------------------------------------------
 class Vertex2d(Point2d):
@@ -462,6 +409,17 @@ class Mesh:
 			elif line[:2] == "Ns":
 				# Set the material shininess
 				current.shininess = int(float(line[3:].strip()))
+			elif line[:6] == "map_Kd":
+				# Create a new texture
+				print "Loading " + line
+				data = Image.open("/Users/dan/Desktop/Bomberman/Demo/Images/" + line[7:].strip())
+				current.texture = glGenTextures(1)
+				glBindTexture(GL_TEXTURE_2D, current.texture)
+				glTexImage2D(GL_TEXTURE_2D, 0, 3, data.size[0], \
+							 data.size[1], 0, GL_RGB, GL_UNSIGNED_BYTE, \
+							 data.tostring())
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		if current:
 			# Save the last material
 			self.materials[current.name] = current
@@ -479,7 +437,9 @@ class Mesh:
 			dlist = glGenLists(1)
 			glNewList(dlist, GL_COMPILE_AND_EXECUTE)
 			for poly in self.polygons:
-				self.materials[poly.material].set()
+				try:
+					self.materials[poly.material].set()
+				except: pass
 				glBegin(GL_POLYGON)
 				for vertex, texture, normal in poly.vertices:
 					if texture != None:
@@ -507,6 +467,20 @@ class Mesh:
 				glPopMatrix()
 			glEndList()
 			self.display_list = dlist
+
+#------------------------------------------------------------------------------
+class NaviMeshTriangle:
+	def __init__(self):
+		self.vertices = []
+		self.neighbors = []
+	
+	def calc_neighbors(self, triangles):
+		pass
+
+#-------------------------------------------------------------------------------
+class NaviMesh:
+	def __init__(self):
+		self.triangles = []
 
 #-------------------------------------------------------------------------------
 class Hull2d(list):

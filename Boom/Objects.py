@@ -195,8 +195,8 @@ class Player(GameObject):
 	def draw(self):
 		glPushMatrix()
 		glTranslatef(self.x, self.y, 0.0)
-		if self.motion.angle:
-			glRotatef(degrees(self.motion.angle), 0, 0, 1)
+		if self.motion.angle != None:
+			glRotatef(degrees(self.motion.angle + (pi / 2.0)), 0, 0, 1)
 		DataManager.meshes[self.mesh].render()
 		glPopMatrix()
 

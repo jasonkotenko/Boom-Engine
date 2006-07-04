@@ -80,10 +80,6 @@ class BaseInterface:
 		# Use smooth shading
 		glShadeModel(GL_SMOOTH)
 		
-		# Enable textures
-		#glEnable(GL_COLOR_MATERIAL)
-		#glEnable(GL_TEXTURE_2D)
-		
 		# Enable backface culling
 		glCullFace(GL_BACK)
 		glEnable(GL_CULL_FACE)
@@ -92,7 +88,7 @@ class BaseInterface:
 		glLightfv(GL_LIGHT1, GL_AMBIENT, (0.2, 0.2, 0.2, 1.0))
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, (1.0, 1.0, 1.0, 1.0))
 		glLightfv(GL_LIGHT1, GL_SPECULAR, (1.0, 1.0, 1.0, 1.0))
-		glLightfv(GL_LIGHT1, GL_POSITION, (25.0, -25.0, 25.0, 1.0))
+		glLightfv(GL_LIGHT1, GL_POSITION, (50.0, -50.0, 150.0, 1.0))
 		glEnable(GL_LIGHT1)
 		glEnable(GL_LIGHTING)
 		glEnable(GL_NORMALIZE)
