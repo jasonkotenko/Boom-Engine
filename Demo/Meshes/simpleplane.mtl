@@ -1,0 +1,54 @@
+# Blender MTL File: simpleplane.blend
+# Material Count: 5
+newmtl StoneGrass_stonegrass.png
+Ns 53.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.157522 0.157522 0.157522
+Ni 1.0
+d 1.0
+illum 2
+map_Kd stonegrass.png
+
+
+newmtl SandStone_Light_sandstone_light.png
+Ns 53.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.157522 0.157522 0.157522
+Ni 1.0
+d 1.0
+illum 2
+map_Kd sandstone_light.png
+
+
+newmtl NaviMesh
+Ns 53.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.130318 0.130318 0.130318
+Ni 1.0
+d 1.0
+illum 0
+
+
+newmtl OutsideStone_stepblock.png
+Ns 125.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.26769 0.26769 0.26769
+Ni 1.0
+d 1.0
+illum 2
+map_Kd stepblock.png
+
+
+newmtl Ground_grass-dark-center.png
+Ns 59.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.057951 0.057951 0.057951
+Ni 1.0
+d 1.0
+illum 0
+map_Kd grass-dark-center.png

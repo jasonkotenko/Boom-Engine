@@ -274,7 +274,6 @@ class Mesh:
 		self.polygons = []
 		self.materials = {}
 		self.display_list = None
-		#self.bounding_box = None
 		self.center = Point3d()
 		self.radius = 0
 	
@@ -292,9 +291,6 @@ class Mesh:
 		data = VirtualFS.open(filename).readlines()
 		dir, file = os.path.split(filename)
 		
-		#bbmin = Point3d(1000, 1000, 1000)
-		#bbmax = Point3d(-1000, -1000, -1000)
-		
 		# Process the file line by line
 		for line in data:
 			if line[:6] == "mtllib":
@@ -307,25 +303,11 @@ class Mesh:
 			elif line[:2] == "vt":
 				# A vertex texture coordinate (x, y)
 				tex = line[3:].strip().split(" ")
-				self.texture_coords.append([float(tex[0]), float(tex[1])])
+				self.texture_coords.append([float(tex[0]), -float(tex[1])])
 			elif line[0] == "v":
 				# A vertex (x, y, z)
 				verts = line[2:].strip().split(" ")
 				x, y, z = float(verts[0]), float(verts[1]), float(verts[2])
-				"""
-				if x < bbmin.x:
-					bbmin.x = x
-				if x > bbmax.x:
-					bbmax.x = x
-				if y < bbmin.y:
-					bbmin.y = y
-				if y > bbmax.y:
-					bbmax.y = y
-				if z < bbmin.z:
-					bbmin.z = z
-				if z > bbmax.z:
-					bbmax.z = z
-				"""
 				self.vertices.append(Vertex3d(x, y, z))
 			elif line[:6] == "usemtl":
 				# Set the current material
@@ -352,12 +334,9 @@ class Mesh:
 						else:
 							newpoly.vertices.append([int(parts[0]) - 1, int(parts[1]) - 1, int(parts[2]) - 1])
 				self.polygons.append(newpoly)
-				
-		#self.bounding_box = [bbmin, bbmax]
 		
 		Log.debug("Loaded " + str(len(self.vertices)) + " vertices.")
 		Log.debug("Loaded " + str(len(self.polygons)) + " polygons.")
-		#Log.debug("Bounding box at " + str(bbmin) + ", " + str(bbmax))
 		
 		self.generate_convex_hull()
 	
@@ -411,15 +390,19 @@ class Mesh:
 				current.shininess = int(float(line[3:].strip()))
 			elif line[:6] == "map_Kd":
 				# Create a new texture
-				print "Loading " + line
-				data = Image.open("/Users/dan/Desktop/Bomberman/Demo/Images/" + line[7:].strip())
+				data = Image.open(VirtualFS.open("Images/" + line[7:].strip()))
+				datastring = data.tostring()
 				current.texture = glGenTextures(1)
 				glBindTexture(GL_TEXTURE_2D, current.texture)
 				glTexImage2D(GL_TEXTURE_2D, 0, 3, data.size[0], \
 							 data.size[1], 0, GL_RGB, GL_UNSIGNED_BYTE, \
-							 data.tostring())
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+							 datastring)
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				#gluBuild2DMipmaps(GL_TEXTURE_2D, 3, data.size[0], \
+				#				  data.size[1], GL_RGB, GL_UNSIGNED_BYTE, \
+				#				  datastring)
+		
 		if current:
 			# Save the last material
 			self.materials[current.name] = current
@@ -448,13 +431,6 @@ class Mesh:
 						glNormal3fv(self.normals[normal])
 					glVertex3fv(self.vertices[vertex].array())
 				glEnd()
-				"""
-				# Draw the mesh's bounding sphere
-				glPushMatrix()
-				glTranslatef(self.center.x, self.center.y, self.center.z)
-				glutWireSphere(self.radius, 12, 12)
-				glPopMatrix()
-				"""
 				# Draw convex hull
 				glPushMatrix()
 				glDisable(GL_LIGHTING)

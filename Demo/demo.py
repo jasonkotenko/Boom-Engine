@@ -59,7 +59,7 @@ class MainMenuState(Boom.StateManager.GameState):
 	
 	def start_demo(self):
 		# Load a simple level and add a few players
-		level = Boom.load_level("simple2")
+		level = Boom.load_level("simpleplane")
 		level.add_player("Daniel", 0, 0, True)
 		level.add_player("CPU 1", 4, 1)
 		level.add_player("CPU 2", -2, -4)
@@ -90,7 +90,7 @@ class MainMenuState(Boom.StateManager.GameState):
 		self.menu.draw()
 
 # Create an interface
-interface = Boom.Interface.SDLInterface()
+interface = Boom.Interface.SDLInterface(640, 480)
 
 Boom.StateManager.push(MainMenuState())
 
