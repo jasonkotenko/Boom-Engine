@@ -130,7 +130,7 @@ class BaseInterface:
 		glViewport(0, 0, width, height)
 		glMatrixMode(GL_PROJECTION)
 		glLoadIdentity()
-		gluPerspective(25.0, float(width)/float(height), 0.1, 1000.0)
+		gluPerspective(25.0, float(width)/float(height), 10.0, 100.0)
 		glMatrixMode(GL_MODELVIEW)
 	
 	def shutdown(self):
