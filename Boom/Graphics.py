@@ -150,6 +150,11 @@ class PolarVector3d:
 				self.rho * sin(self.phi) * sin(self.theta), \
 				self.rho * cos(self.phi))
 
+	def equals(self, v):
+		if self.theta == v.theta and self.phi == v.phi:
+			return True
+		return False
+
 	def __repr__(self):
 		"""
 		Represents the vector as [rho, theta, phi]

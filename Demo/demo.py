@@ -12,7 +12,7 @@
 		
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor, Jason F. Kotenko
+		Copyright (C) 2006 Daniel G. Taylor, Jason F. Kotenko, Jens Taylor
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ class MainMenuState(Boom.StateManager.GameState):
 		self.name = "Main Menu"
 		self.menu = Boom.Interface.Menu("Boom Demo")
 		self.menu.add_item("Start Demo", self.start_demo)
+		self.menu.add_item("Camera Demo", self.camera_demo)
 		#self.menu.add_item("Credits", self.show_credits)
 		self.menu.add_item("Exit", self.exit_demo)
 		Boom.Event.register(Boom.Event.MATCH_WON, self.match_won)
@@ -72,6 +73,9 @@ class MainMenuState(Boom.StateManager.GameState):
 		if not nosound:
 			level_music = Boom.Sound.Music("Sounds/Level.ogg")
 			level_music.play()
+
+	def camera_demo(self):
+		Boom.StateManager.push(CameraDemo())
 	
 	def match_won(self):
 		Boom.StateManager.pop()
@@ -94,6 +98,43 @@ class MainMenuState(Boom.StateManager.GameState):
 	
 	def draw(self):
 		self.menu.draw()
+
+class CameraDemo(Boom.StateManager.GameState):
+	def __init__(self):
+		Boom.StateManager.GameState.__init__(self)
+		self.name = "Camera Demo"
+		self.camera = Boom.Camera.CubeCamera(0, 25.0, 10.0, 0)
+
+	def update(self):
+		self.camera.update()
+
+	def draw(self):
+		cam = self.camera
+		Boom.Graphics.gluLookAt(cam.pos.x,	cam.pos.y,		cam.pos.z,
+				  cam.lookat.x,	cam.lookat.y,	cam.lookat.z,
+				  cam.up.x,		cam.up.y,		cam.up.z)
+		Boom.Graphics.glColor3f(1.0, 1.0, 1.0)
+		Boom.Graphics.glutSolidCube(10.0)
+
+	def key_pressed(self, key):
+		if key == ord("1"):
+			self.camera.rotate(.8, self.camera.FACE1)
+		elif key == ord("2"):
+			self.camera.rotate(.8, self.camera.FACE2)
+		elif key == ord("3"):
+			self.camera.rotate(.8, self.camera.FACE3)
+		elif key == ord("4"):
+			self.camera.rotate(.8, self.camera.FACE4)
+		elif key == ord("5"):
+			self.camera.rotate(.8, self.camera.FACE5)
+		elif key == ord("6"):
+			self.camera.rotate(.8, self.camera.FACE6)
+		elif key == Boom.Keyboard.KEY_PAUSE:
+			Boom.StateManager.pop()
+		elif key == Boom.Keyboard.KEY_MOVE_UP:
+			self.camera.zoom(.8, self.camera.zooms[1] - 20)
+		elif key == Boom.Keyboard.KEY_MOVE_DOWN:
+			self.camera.zoom(.8, self.camera.zooms[1] + 20)
 
 # Create an interface
 interface = Boom.Interface.SDLInterface(640, 480)

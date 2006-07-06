@@ -195,7 +195,7 @@ class CubeCamera(Camera3d):
 				curr_up = 5
 			elif curr_up > 5:
 				curr_up = 0
-			tmp = LOOK_UP[curr_up][new_up]
+			tmp = self.LOOK_UP[curr_up][new_up]
 			for pos in tmp:
 				if pos == None:
 					self.animated[0] = False
