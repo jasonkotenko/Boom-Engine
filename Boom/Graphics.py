@@ -9,7 +9,7 @@
 	
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor
+		Copyright (C) 2006 Daniel G. Taylor, Jens Taylor
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -129,6 +129,32 @@ class PolarVector2d:
 		Represent the polar vector as [angle, radius]
 		"""
 		return "[" + str(self.angle) + ", " + str(self.radius) + "]"
+
+#-------------------------------------------------------------------------------
+class PolarVector3d:
+	"""
+	Polar Three-dimensional Vector
+	================================
+		Stores a three-dimensional vector.
+	"""
+	def __init__(self, rho = 1.0, theta = pi / 2.0, phi = pi / 2.0):
+		self.rho = rho
+		self.theta = theta
+		self.phi = phi
+
+	def get_xyz(self):
+		"""
+		Returns the x, y, and z equivilants of rho, theta, and phi
+		"""
+		return Point3d(self.rho * sin(self.phi) * cos(self.theta), \
+				self.rho * sin(self.phi) * sin(self.theta), \
+				self.rho * cos(self.phi))
+
+	def __repr__(self):
+		"""
+		Represents the vector as [rho, theta, phi]
+		"""
+		return "[" + str(self.rho) + ", " + str(self.theta) + ", " + str(self.phi) + "]"
 
 #-------------------------------------------------------------------------------
 class Color:

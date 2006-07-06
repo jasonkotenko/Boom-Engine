@@ -97,7 +97,7 @@ class PlayingState(GameState):
 		GameState.__init__(self)
 		self.name = "Playing"
 		self.level = None
-		self.camera = Camera.Camera3d()
+		self.camera = Camera.CubeCamera(3, 35.0, 0.0, 0)
 		self.keyboard_control = Objects.Movement()
 	
 	def key_pressed(self, key):
@@ -119,6 +119,11 @@ class PlayingState(GameState):
 		elif key == Keyboard.KEY_LAY_BOMB:
 			if self.level.player.life:
 				self.level.add_bomb(self.level.player.x, self.level.player.y)
+		elif key == ord("]"):
+			self.camera.zoom(.8, self.camera.zooms[1] + 15)
+		elif key == ord("["):
+			self.camera.zoom(.8, self.camera.zooms[1] - 15)
+
 		else:
 			try:
 				Log.info("Key pressed: " + chr(key))
