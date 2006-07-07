@@ -109,10 +109,7 @@ class CameraDemo(Boom.StateManager.GameState):
 		self.camera.update()
 
 	def draw(self):
-		cam = self.camera
-		Boom.Graphics.gluLookAt(cam.pos.x,	cam.pos.y,		cam.pos.z,
-				  cam.lookat.x,	cam.lookat.y,	cam.lookat.z,
-				  cam.up.x,		cam.up.y,		cam.up.z)
+		self.camera.draw()
 		Boom.Graphics.glColor3f(1.0, 1.0, 1.0)
 		Boom.Graphics.glutSolidCube(10.0)
 
@@ -132,9 +129,9 @@ class CameraDemo(Boom.StateManager.GameState):
 		elif key == Boom.Keyboard.KEY_PAUSE:
 			Boom.StateManager.pop()
 		elif key == Boom.Keyboard.KEY_MOVE_UP:
-			self.camera.zoom(.8, self.camera.zooms[1] - 20)
+			self.camera.zoom(.8, self.camera.zooms[1] - 30)
 		elif key == Boom.Keyboard.KEY_MOVE_DOWN:
-			self.camera.zoom(.8, self.camera.zooms[1] + 20)
+			self.camera.zoom(.8, self.camera.zooms[1] + 30)
 
 # Create an interface
 interface = Boom.Interface.SDLInterface(640, 480)

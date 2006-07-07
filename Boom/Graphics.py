@@ -151,6 +151,10 @@ class PolarVector3d:
 				self.rho * cos(self.phi))
 
 	def equals(self, v):
+		"""
+		Quick function to tell if the angles, but not the length, of two
+		PolarVector3d objects are the same. Useful for camera class.
+		"""
 		if self.theta == v.theta and self.phi == v.phi:
 			return True
 		return False
