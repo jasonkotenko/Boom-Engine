@@ -295,12 +295,12 @@ class CubeCamera(Camera3d):
 	"""
 	Simple blow-back animation that can be used for big explosions, etc
 	"""
-	def boom(self, time = .4, percent = .1):
+	def boom(self, time = .4, percent = .1, percent2 = .3):
 		if self.animated[2]:
 			return
 		self.animated[2] = True
 		# Set the variables to current/final position and percent change
-		self.booms = [self.posp.rho, percent]
+		self.booms = [self.posp.rho, percent, self.cube_size, percent2]
 		self.boom_time = [0.0, time]
 
 	"""
@@ -427,9 +427,11 @@ class CubeCamera(Camera3d):
 			percent = sin(func) / func
 
 			self.posp.rho = self.booms[0] * self.booms[1] * percent + self.booms[0]
+			self.cube_size = percent * self.booms[2] * self.booms[3] + self.booms[2]
 		else:
 			self.boom_time = [0.0, 0.5]
 			self.posp.rho = self.booms[0]
+			self.cube_size = self.booms[2]
 			self.animated[2] = False
 
 	#def draw(self):
