@@ -115,23 +115,25 @@ class CameraDemo(Boom.StateManager.GameState):
 
 	def key_pressed(self, key):
 		if key == ord("1"):
-			self.camera.rotate(.8, self.camera.FACE1)
+			self.camera.rotate(self.camera.FACE1)
 		elif key == ord("2"):
-			self.camera.rotate(.8, self.camera.FACE2)
+			self.camera.rotate(self.camera.FACE2)
 		elif key == ord("3"):
-			self.camera.rotate(.8, self.camera.FACE3)
+			self.camera.rotate(self.camera.FACE3)
 		elif key == ord("4"):
-			self.camera.rotate(.8, self.camera.FACE4)
+			self.camera.rotate(self.camera.FACE4)
 		elif key == ord("5"):
-			self.camera.rotate(.8, self.camera.FACE5)
+			self.camera.rotate(self.camera.FACE5)
 		elif key == ord("6"):
-			self.camera.rotate(.8, self.camera.FACE6)
+			self.camera.rotate(self.camera.FACE6)
 		elif key == Boom.Keyboard.KEY_PAUSE:
 			Boom.StateManager.pop()
 		elif key == Boom.Keyboard.KEY_MOVE_UP:
-			self.camera.zoom(.8, self.camera.zooms[1] - 30)
+			self.camera.zoom(self.camera.zooms[1] - 30)
 		elif key == Boom.Keyboard.KEY_MOVE_DOWN:
-			self.camera.zoom(.8, self.camera.zooms[1] + 30)
+			self.camera.zoom(self.camera.zooms[1] + 30)
+		elif key == ord("s"):
+			self.camera.boom()
 
 # Create an interface
 interface = Boom.Interface.SDLInterface(640, 480)

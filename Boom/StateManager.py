@@ -120,9 +120,11 @@ class PlayingState(GameState):
 			if self.level.player.life:
 				self.level.add_bomb(self.level.player.x, self.level.player.y)
 		elif key == ord("]"):
-			self.camera.zoom(.8, self.camera.zooms[1] + 15)
+			self.camera.zoom(self.camera.zooms[1] + 15)
 		elif key == ord("["):
-			self.camera.zoom(.8, self.camera.zooms[1] - 15)
+			self.camera.zoom(self.camera.zooms[1] - 15)
+		elif key == ord("s"):
+			self.camera.boom()
 
 		else:
 			try:

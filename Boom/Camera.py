@@ -31,6 +31,7 @@ from copy import deepcopy
 import Interface
 
 # Ease of use constants
+fourpi = pi * 4.0
 threepi = pi * 3.0
 twopi = pi * 2.0
 pi4 = pi / 4.0
@@ -161,6 +162,7 @@ class CubeCamera(Camera3d):
 		self.up_vectors = [up, up]
 		self.pos_vectors = [pos, pos]
 		self.zooms = [zoom, zoom]
+		self.booms = [0.0, 0.0]
 		# Cube_size defines the size of the underlying cube
 		# Divided in half for calculations for gluLookAt
 		self.cube_size = cube_size / 2.0
@@ -174,10 +176,11 @@ class CubeCamera(Camera3d):
 		# Animation time values, both [current time, total]
 		self.rotate_time = [0.0, 0.0]
 		self.zoom_time = [0.0, 0.0]
+		self.boom_time = [0.0, 0.0]
 		# Animation acceleration, [Position, Up] <Deprecated>
 		self.acceleration = [PolarVector3d(0.0, 0.0, 0.0), PolarVector3d(0.0, 0.0, 0.0)]
 		# Whether or not the camera is animated, [rotate, zoom]
-		self.animated = [False, False]
+		self.animated = [False, False, False]
 
 	"""
 	Return a vector, or Point3d class, of the lookat value on the current
@@ -198,7 +201,7 @@ class CubeCamera(Camera3d):
 		far the movement is going to be, quite honestly; my general case is about
 		20 to 30 units in .8 seconds. Use whatever please you!
 	"""
-	def zoom(self, time, new_rho):
+	def zoom(self, new_rho, time = .8):
 		if self.animated[1] or self.posp.rho == new_rho:
 			return
 		self.animated[1] = True
@@ -212,7 +215,7 @@ class CubeCamera(Camera3d):
 		I personally suggest using a time of about .8 seconds. Too long or too short
 		and the motion does not look good.
 	"""
-	def rotate(self, time, new_up, new_pos = -1):
+	def rotate(self, new_up, time = .8, new_pos = -1):
 		if self.animated[0]:
 			return
 		self.animated[0] = True
@@ -290,6 +293,17 @@ class CubeCamera(Camera3d):
 		self.acceleration[1].phi = self.FACE_ARRAY[self.up_vectors[1]].phi - self.upp.phi
 
 	"""
+	Simple blow-back animation that can be used for big explosions, etc
+	"""
+	def boom(self, time = .4, percent = .1):
+		if self.animated[2]:
+			return
+		self.animated[2] = True
+		# Set the variables to current/final position and percent change
+		self.booms = [self.posp.rho, percent]
+		self.boom_time = [0.0, time]
+
+	"""
 	Called once every frame to update the positions, etc, for the camera.
 	"""
 	def update(self):
@@ -298,6 +312,8 @@ class CubeCamera(Camera3d):
 			self.posp.rho = self.zooms[1]
 		if self.animated[1]:
 			self.zoom_step()
+		if self.animated[2]:
+			self.boom_step()
 		if True in self.animated:
 			# Regenerate position, up, and lookat Point3d vectors
 			self.pos = self.posp.get_xyz()
@@ -398,6 +414,23 @@ class CubeCamera(Camera3d):
 			self.zoom_time = [0.0, 0.0]
 			self.acceleration[0].rho = 0.0
 			self.animated[1] = False
+
+	def boom_step(self):
+		self.boom_time[0] += Interface.tdiff
+		if self.animated[1]:
+			# If the camera is zooming, the initial position changes
+			self.booms[0] = self.posp.rho
+		if self.boom_time[0] <= self.boom_time[1]:
+			# More voodoo, just that this time the function is used with
+			# with an offset to increase, then decrease
+			func = self.boom_time[0] / self.boom_time[1] * fourpi - pi
+			percent = sin(func) / func
+
+			self.posp.rho = self.booms[0] * self.booms[1] * percent + self.booms[0]
+		else:
+			self.boom_time = [0.0, 0.5]
+			self.posp.rho = self.booms[0]
+			self.animated[2] = False
 
 	#def draw(self):
 	#	gluLookAt(self.pos.x, self.pos.y, self.pos.z, \
