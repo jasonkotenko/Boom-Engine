@@ -155,7 +155,7 @@ class PolarVector3d:
 		Quick function to tell if the angles, but not the length, of two
 		PolarVector3d objects are the same. Useful for camera class.
 		"""
-		if self.theta == v.theta and self.phi == v.phi:
+		if round(self.theta, 12) == round(v.theta, 12) and round(self.phi, 12) == round(v.phi, 12):
 			return True
 		return False
 

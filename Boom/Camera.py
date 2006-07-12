@@ -28,7 +28,7 @@
 from Graphics import Point3d, PolarVector3d, gluLookAt
 from math import sin, cos, pi, fabs
 from copy import deepcopy
-import Interface
+import Interface, Event
 
 # Ease of use constants
 fourpi = pi * 4.0
@@ -41,6 +41,12 @@ pi54 = 5.0 * pi / 4.0
 pi32 = 3.0 * pi / 2.0
 pi74 = 7.0 * pi / 4.0
 pi94 = 9.0 * pi / 4.0
+pi114 = 11.0 * pi / 4.0
+
+"""# Event callback values
+CUBE_ROTATE = 5
+CUBE_ZOOM = 6
+CUBE_SHAKE = 7"""
 
 #-------------------------------------------------------------------------------
 class Camera3d:
@@ -74,6 +80,11 @@ class CubeCamera(Camera3d):
 
 		TODO: Add rotation and zoom queues. Probably a lot more, too...
 	"""
+
+	# Event callback values
+	#ROTATE = 5
+	#ZOOM = 6
+	#SHAKE = 7
 
 	# Face constants
 	FACE1 = 0 # PolarVector3d(1.0, 0.0, 0.0)
@@ -111,7 +122,8 @@ class CubeCamera(Camera3d):
 					PolarVector3d(1.0, pi94, pi2), PolarVector3d(1.0, twopi, pi34), \
 					PolarVector3d(1.0, pi32, pi54), PolarVector3d(1.0, pi, pi54), \
 					PolarVector3d(1.0, pi2, pi54), PolarVector3d(1.0, -pi2, pi4), \
-					PolarVector3d(1.0, -pi2, pi34), PolarVector3d(1.0, 0.0, pi54)]
+					PolarVector3d(1.0, -pi2, pi34), PolarVector3d(1.0, 0.0, pi54), \
+					PolarVector3d(1.0, pi114, pi2)]
 
 
 	# Ludicrous lookup! Do not look any lower if you want to keep your sanity!
@@ -123,32 +135,32 @@ class CubeCamera(Camera3d):
 			[[0, 14], [1, 5], [2, 10], [3, 6]], \
 			[[0, 4], [1, 9], [2, 5], [3, 15]], \
 			[[0, 8], [1, 4], [2, 16], [3, 7]], \
-			[None]], \
+			[[0, 25], [1, 22], [2, 21], [3, 20]]], \
 			[[[3, 15], [6, 2], [7, 17], [11, 3]], \
 			[None], \
 			[[3, 2], [6, 5], [7, 6], [11, 10]], \
-			[None], \
+			[[3, 1], [6, 4], [7, 5], [11, 9]], \
 			[[3, 17], [6, 7], [7, 18], [11, 19]], \
 			[[3, 11], [6, 10], [7, 19], [11, 20]]], \
 			[[[2, 16], [5, 1], [6, 3], [10, 2]], \
 			[[2, 3], [5, 6], [6, 7], [10, 11]], \
 			[None], \
 			[[2, 1], [5, 4], [6, 5], [10, 9]], \
-			[None], \
+			[[2, 0], [5, 12], [6, 4], [10, 8]], \
 			[[2, 10], [5, 9], [6, 11], [10, 21]]], \
 			[[[1, 13], [4, 0], [5, 2], [9, 1]], \
-			[None], \
+			[[1, 3], [4, 6], [5, 7], [9, 11]], \
 			[[1, 2], [4, 5], [5, 6], [9, 10]], \
 			[None], \
 			[[1, 0], [4, 12], [5, 4], [9, 8]], \
 			[[1, 9], [4, 8], [5, 10], [9, 22]]], \
 			[[[0, 14], [4, 1], [7, 3], [8, 0]], \
 			[[0, 23], [4, 12], [7, 6], [8, 24]], \
-			[None], \
+			[[0, 2], [4, 6], [7, 26], [8, 10]], \
 			[[0, 1], [4, 5], [7, 18], [8, 9]], \
 			[None], \
 			[[0, 8], [4, 9], [7, 11], [8, 25]]], \
-			[[None], \
+			[[[8, 14], [9, 13], [10, 16], [11, 15]], \
 			[[8, 12], [9, 22], [10, 6], [11, 3]], \
 			[[8, 25], [9, 5], [10, 2], [11, 6]], \
 			[[8, 4], [9, 1], [10, 5], [11, 20]], \
@@ -181,6 +193,10 @@ class CubeCamera(Camera3d):
 		self.acceleration = [PolarVector3d(0.0, 0.0, 0.0), PolarVector3d(0.0, 0.0, 0.0)]
 		# Whether or not the camera is animated, [rotate, zoom]
 		self.animated = [False, False, False]
+		# Initialize callback functions
+		Interface.Event.register(Event.CAMERA_ROTATE, self.rotate)
+		Interface.Event.register(Event.CAMERA_ZOOM, self.zoom)
+		Interface.Event.register(Event.CAMERA_SHAKE, self.boom)
 
 	"""
 	Return a vector, or Point3d class, of the lookat value on the current
@@ -201,7 +217,9 @@ class CubeCamera(Camera3d):
 		far the movement is going to be, quite honestly; my general case is about
 		20 to 30 units in .8 seconds. Use whatever please you!
 	"""
-	def zoom(self, new_rho, time = .8):
+	def zoom(self, args): #new_rho, time = .8):
+		defaultargs = [None, .8]
+		new_rho, time = args + defaultargs[len(args):]
 		if self.animated[1] or self.posp.rho == new_rho:
 			return
 		self.animated[1] = True
@@ -215,12 +233,15 @@ class CubeCamera(Camera3d):
 		I personally suggest using a time of about .8 seconds. Too long or too short
 		and the motion does not look good.
 	"""
-	def rotate(self, new_up, time = .8, new_pos = -1):
+	def rotate(self, args): #new_up, time = .8, new_pos = -1):
 		if self.animated[0]:
 			return
+		defaultargs = [None, .8, -1]
+		new_up, time, new_pos = args + defaultargs[len(args):]
 		self.animated[0] = True
 		self.rotate_time = [0.0, time]
 		curr_up = self.up_vectors[1]
+		curr_pos = self.pos_vectors[1]
 		# If we weren't passed the position, find it!
 		if new_pos == -1:
 			if curr_up == 13:
@@ -240,7 +261,8 @@ class CubeCamera(Camera3d):
 				if pos == None:
 					self.animated[0] = False
 					return
-				if self.posp.equals(self.POSITION_ARRAY[pos[0]]):
+				#if self.posp.equals(self.POSITION_ARRAY[pos[0]]):
+				if curr_pos == pos[0]:
 					new_pos = pos[1]
 					break
 
@@ -255,6 +277,10 @@ class CubeCamera(Camera3d):
 				curr_up = 7
 			elif new_up == 3:
 				curr_up = 6
+			elif new_up == 5:
+				if curr_pos != 0:
+					curr_up = curr_pos + 5
+					new_up = curr_up + 3
 		elif curr_up == 5:
 			if new_up == 1:
 				curr_up = 11
@@ -262,6 +288,10 @@ class CubeCamera(Camera3d):
 				curr_up = 10
 			elif new_up == 3:
 				curr_up = 9
+			elif new_up == 0:
+				if curr_pos != 8:
+					curr_up = curr_pos
+					new_up = curr_up - 3
 		elif new_up == 0:
 			if curr_up == 1:
 				new_up = 8
@@ -281,7 +311,7 @@ class CubeCamera(Camera3d):
 		elif curr_up == 1 and new_up == 4:
 			new_up = 13
 
-		self.pos_vectors = [self.pos_vectors[1], new_pos]
+		self.pos_vectors = [curr_pos, new_pos]
 		self.up_vectors = [curr_up, new_up]
 
 		# Somewhat deprecated. I'll prune this out when I have time and feel like
@@ -295,9 +325,11 @@ class CubeCamera(Camera3d):
 	"""
 	Simple blow-back animation that can be used for big explosions, etc
 	"""
-	def boom(self, time = .4, percent = .1, percent2 = .3):
+	def boom(self, args = []): #time = .4, percent = .1, percent2 = .3):
 		if self.animated[2]:
 			return
+		defaultargs = [.4, .1, .3]
+		time, percent, percent2 = args + defaultargs[len(args):]
 		self.animated[2] = True
 		# Set the variables to current/final position and percent change
 		self.booms = [self.posp.rho, percent, self.cube_size, percent2]

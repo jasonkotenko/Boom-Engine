@@ -35,6 +35,10 @@ QUIT = 2
 LEVEL_LOADED = 3
 MATCH_WON = 4
 
+CAMERA_ROTATE = 5
+CAMERA_ZOOM = 6
+CAMERA_SHAKE = 7
+
 queue = []
 callbacks = {}
 
@@ -49,11 +53,11 @@ def register(event, callback):
 	callbacks[event].append(callback)
 
 #-------------------------------------------------------------------------------
-def post(event):
+def post(event, args = []):
 	"""
 	Post a new event to the internal event queue.
 	"""
-	queue.append(event)
+	queue.append([event, args])
 
 #-------------------------------------------------------------------------------
 def handle_events():
@@ -61,8 +65,11 @@ def handle_events():
 	Handle the event queue.
 	"""
 	global queue
-	for event in queue:
+	for event, args in queue:
 		if event in callbacks.keys():
 			for callback in callbacks[event]:
-				callback()
+				if len(args) > 0:
+					callback(args)
+				else:
+					callback()
 	queue = []

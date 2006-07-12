@@ -103,7 +103,7 @@ class CameraDemo(Boom.StateManager.GameState):
 	def __init__(self):
 		Boom.StateManager.GameState.__init__(self)
 		self.name = "Camera Demo"
-		self.camera = Boom.Camera.CubeCamera(0, 25.0, 10.0, 0)
+		self.camera = Boom.Camera.CubeCamera(0, 25.0, 10.0, Boom.Camera.CubeCamera.FACE1)
 
 	def update(self):
 		self.camera.update()
@@ -115,25 +115,36 @@ class CameraDemo(Boom.StateManager.GameState):
 
 	def key_pressed(self, key):
 		if key == ord("1"):
-			self.camera.rotate(self.camera.FACE1)
+			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE1])
+			#self.camera.rotate(self.camera.FACE1)
 		elif key == ord("2"):
-			self.camera.rotate(self.camera.FACE2)
+			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE2])
+			#self.camera.rotate(self.camera.FACE2)
 		elif key == ord("3"):
-			self.camera.rotate(self.camera.FACE3)
+			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE3])
+			#self.camera.rotate(self.camera.FACE3)
 		elif key == ord("4"):
-			self.camera.rotate(self.camera.FACE4)
+			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE4])
+			#self.camera.rotate(self.camera.FACE4)
 		elif key == ord("5"):
-			self.camera.rotate(self.camera.FACE5)
+			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE5])
+			#self.camera.rotate(self.camera.FACE5)
 		elif key == ord("6"):
-			self.camera.rotate(self.camera.FACE6)
+			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE6])
+			#self.camera.rotate(self.camera.FACE6)
 		elif key == Boom.Keyboard.KEY_PAUSE:
 			Boom.StateManager.pop()
 		elif key == Boom.Keyboard.KEY_MOVE_UP:
-			self.camera.zoom(self.camera.zooms[1] - 30)
+			Boom.Event.post(Boom.Event.CAMERA_ZOOM, [self.camera.zooms[1] - 30])
+			#self.camera.zoom(self.camera.zooms[1] - 30)
 		elif key == Boom.Keyboard.KEY_MOVE_DOWN:
-			self.camera.zoom(self.camera.zooms[1] + 30)
+			Boom.Event.post(Boom.Event.CAMERA_ZOOM, [self.camera.zooms[1] + 30])
+			#self.camera.zoom(self.camera.zooms[1] + 30)
 		elif key == ord("s"):
-			self.camera.boom()
+			Boom.Event.post(Boom.Event.CAMERA_SHAKE)
+			#self.camera.boom()
+		#elif key == ord("g"):
+			#self.camera.rotate(self.camera.FACE1, .8, 2)
 
 # Create an interface
 interface = Boom.Interface.SDLInterface(640, 480)
