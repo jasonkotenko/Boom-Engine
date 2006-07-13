@@ -43,11 +43,6 @@ pi74 = 7.0 * pi / 4.0
 pi94 = 9.0 * pi / 4.0
 pi114 = 11.0 * pi / 4.0
 
-"""# Event callback values
-CUBE_ROTATE = 5
-CUBE_ZOOM = 6
-CUBE_SHAKE = 7"""
-
 #-------------------------------------------------------------------------------
 class Camera3d:
 	"""
@@ -80,11 +75,6 @@ class CubeCamera(Camera3d):
 
 		TODO: Add rotation and zoom queues. Probably a lot more, too...
 	"""
-
-	# Event callback values
-	#ROTATE = 5
-	#ZOOM = 6
-	#SHAKE = 7
 
 	# Face constants
 	FACE1 = 0 # PolarVector3d(1.0, 0.0, 0.0)
@@ -168,13 +158,17 @@ class CubeCamera(Camera3d):
 			[None]], \
 			]
 
-
+	"""
+		Initialization function; pos represents a 'pointer' to the position in
+			POSITION_ARRAY, zoom represents current radius, cube_size is the size
+			of the object's base cube, and up is a pointer to FACE_ARRAY.
+	"""
 	def __init__(self, pos = 0, zoom = 30.0, cube_size = 1.0, up = 0):
 		# Some necessary values for the animations
 		self.up_vectors = [up, up]
 		self.pos_vectors = [pos, pos]
 		self.zooms = [zoom, zoom]
-		self.booms = [0.0, 0.0]
+		self.shakes = [0.0, 0.0, 0.0, 0.0]
 		# Cube_size defines the size of the underlying cube
 		# Divided in half for calculations for gluLookAt
 		self.cube_size = cube_size / 2.0
@@ -188,15 +182,17 @@ class CubeCamera(Camera3d):
 		# Animation time values, both [current time, total]
 		self.rotate_time = [0.0, 0.0]
 		self.zoom_time = [0.0, 0.0]
-		self.boom_time = [0.0, 0.0]
+		self.shake_time = [0.0, 0.0]
 		# Animation acceleration, [Position, Up] <Deprecated>
 		self.acceleration = [PolarVector3d(0.0, 0.0, 0.0), PolarVector3d(0.0, 0.0, 0.0)]
-		# Whether or not the camera is animated, [rotate, zoom]
+		# Whether or not the camera is animated, [rotate, zoom, shake]
 		self.animated = [False, False, False]
+		# Animation queue, [rotate, zoom, shake]
+		self.queue = [[], []] #, []]
 		# Initialize callback functions
-		Interface.Event.register(Event.CAMERA_ROTATE, self.rotate)
-		Interface.Event.register(Event.CAMERA_ZOOM, self.zoom)
-		Interface.Event.register(Event.CAMERA_SHAKE, self.boom)
+		Interface.Event.register(Event.EVENT_CAMERA_ROTATE, self.rotate)
+		Interface.Event.register(Event.EVENT_CAMERA_ZOOM, self.zoom)
+		Interface.Event.register(Event.EVENT_CAMERA_SHAKE, self.shake)
 
 	"""
 	Return a vector, or Point3d class, of the lookat value on the current
@@ -221,6 +217,7 @@ class CubeCamera(Camera3d):
 		defaultargs = [None, .8]
 		new_rho, time = args + defaultargs[len(args):]
 		if self.animated[1] or self.posp.rho == new_rho:
+			self.queue[1].append([new_rho, time])
 			return
 		self.animated[1] = True
 		self.zooms = [self.posp.rho, new_rho]
@@ -234,10 +231,11 @@ class CubeCamera(Camera3d):
 		and the motion does not look good.
 	"""
 	def rotate(self, args): #new_up, time = .8, new_pos = -1):
-		if self.animated[0]:
-			return
 		defaultargs = [None, .8, -1]
 		new_up, time, new_pos = args + defaultargs[len(args):]
+		if self.animated[0]:
+			self.queue[0].append([new_up, time, new_pos])
+			return
 		self.animated[0] = True
 		self.rotate_time = [0.0, time]
 		curr_up = self.up_vectors[1]
@@ -325,15 +323,16 @@ class CubeCamera(Camera3d):
 	"""
 	Simple blow-back animation that can be used for big explosions, etc
 	"""
-	def boom(self, args = []): #time = .4, percent = .1, percent2 = .3):
-		if self.animated[2]:
-			return
+	def shake(self, args = []): #time = .4, percent = .1, percent2 = .3):
 		defaultargs = [.4, .1, .3]
 		time, percent, percent2 = args + defaultargs[len(args):]
+		if self.animated[2]:
+			#self.queue[2].append([time, percent, percent2])
+			return
 		self.animated[2] = True
 		# Set the variables to current/final position and percent change
-		self.booms = [self.posp.rho, percent, self.cube_size, percent2]
-		self.boom_time = [0.0, time]
+		self.shakes = [self.posp.rho, percent, self.cube_size, percent2]
+		self.shake_time = [0.0, time]
 
 	"""
 	Called once every frame to update the positions, etc, for the camera.
@@ -345,7 +344,7 @@ class CubeCamera(Camera3d):
 		if self.animated[1]:
 			self.zoom_step()
 		if self.animated[2]:
-			self.boom_step()
+			self.shake_step()
 		if True in self.animated:
 			# Regenerate position, up, and lookat Point3d vectors
 			self.pos = self.posp.get_xyz()
@@ -429,7 +428,14 @@ class CubeCamera(Camera3d):
 				i.theta = 0.0
 				i.phi = 0.0
 			self.animated[0] = False
+			if len(self.queue[0]) > 0:
+				self.rotate(self.queue[0][0])
+				del self.queue[0][0]
 
+	"""
+	Called if animated[1] is set to True (zooming). Steps the animation one 'frame' further
+		using the time difference between frames.
+	"""
 	def zoom_step(self):
 		self.zoom_time[0] += Interface.tdiff
 		if self.zoom_time[0] <= self.zoom_time[1]:
@@ -446,27 +452,32 @@ class CubeCamera(Camera3d):
 			self.zoom_time = [0.0, 0.0]
 			self.acceleration[0].rho = 0.0
 			self.animated[1] = False
+			if len(self.queue[1]) > 0:
+				self.zoom(self.queue[1][0])
+				del self.queue[1][0]
 
-	def boom_step(self):
-		self.boom_time[0] += Interface.tdiff
+	"""
+	Called if animated[2] is set to True (shaking). Steps the shake animation one
+		step according to the time difference calculated in Interface.
+	"""
+	def shake_step(self):
+		self.shake_time[0] += Interface.tdiff
 		if self.animated[1]:
 			# If the camera is zooming, the initial position changes
-			self.booms[0] = self.posp.rho
-		if self.boom_time[0] <= self.boom_time[1]:
+			self.shakes[0] = self.posp.rho
+		if self.shake_time[0] <= self.shake_time[1]:
 			# More voodoo, just that this time the function is used with
 			# with an offset to increase, then decrease
-			func = self.boom_time[0] / self.boom_time[1] * fourpi - pi
+			func = self.shake_time[0] / self.shake_time[1] * fourpi - pi
 			percent = sin(func) / func
 
-			self.posp.rho = self.booms[0] * self.booms[1] * percent + self.booms[0]
-			self.cube_size = percent * self.booms[2] * self.booms[3] + self.booms[2]
+			self.posp.rho = self.shakes[0] * self.shakes[1] * percent + self.shakes[0]
+			self.cube_size = percent * self.shakes[2] * self.shakes[3] + self.shakes[2]
 		else:
-			self.boom_time = [0.0, 0.5]
-			self.posp.rho = self.booms[0]
-			self.cube_size = self.booms[2]
+			self.shake_time = [0.0, 0.0]
+			self.posp.rho = self.shakes[0]
+			self.cube_size = self.shakes[2]
 			self.animated[2] = False
-
-	#def draw(self):
-	#	gluLookAt(self.pos.x, self.pos.y, self.pos.z, \
-	#			self.lookat.x, self.lookat.y, self.lookat.z, \
-	#			self.up.x, self.up.y, self.up.z)
+			#if len(self.queue[2]) > 0:
+			#	self.shake(self.queue[2][0])
+			#	del self.queue[2][0]

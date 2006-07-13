@@ -8,7 +8,7 @@
 	
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor
+		Copyright (C) 2006 Daniel G. Taylor, Jens Taylor
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -28,18 +28,23 @@
 import Log
 Log.info("Initializing internal event handler...")
 
-INITIALIZED = 0
-STATE_CHANGED = 1
-QUIT = 2
+MAX_EVENTS = 15
+PRIORITY_HIGH = 0
+PRIORITY_NORMAL = 1
+PRIORITY_LOW = 2
 
-LEVEL_LOADED = 3
-MATCH_WON = 4
+EVENT_INITIALIZED = 0
+EVENT_STATE_CHANGED = 1
+EVENT_QUIT = 2
 
-CAMERA_ROTATE = 5
-CAMERA_ZOOM = 6
-CAMERA_SHAKE = 7
+EVENT_LEVEL_LOADED = 3
+EVENT_MATCH_WON = 4
 
-queue = []
+EVENT_CAMERA_ROTATE = 5
+EVENT_CAMERA_ZOOM = 6
+EVENT_CAMERA_SHAKE = 7
+
+queue = [[], [], []]
 callbacks = {}
 
 #-------------------------------------------------------------------------------
@@ -53,23 +58,48 @@ def register(event, callback):
 	callbacks[event].append(callback)
 
 #-------------------------------------------------------------------------------
-def post(event, args = []):
+def unregister(event, callback):
+	"""
+	Unregister a callback function from the event handler so that it is no
+	longer called on event.
+	"""
+	global callbacks
+	for f in range(len(callbacks[event])):
+		if callbacks[event][f] == callback:
+			del callbacks[event][f]
+			break
+	if len(callbacks[event]) < 1:
+		del callbacks[event]
+
+#-------------------------------------------------------------------------------
+def post(event, args = [], priority = PRIORITY_NORMAL):
 	"""
 	Post a new event to the internal event queue.
 	"""
-	queue.append([event, args])
+	queue[priority].append([event, args])
 
 #-------------------------------------------------------------------------------
 def handle_events():
 	"""
-	Handle the event queue.
+	Handle the event queue. Process all high priority events, and then
+	if there's still time (<= MAX_EVENTS), handle the normal and low 
+	priority events.
 	"""
 	global queue
-	for event, args in queue:
-		if event in callbacks.keys():
-			for callback in callbacks[event]:
-				if len(args) > 0:
-					callback(args)
-				else:
-					callback()
-	queue = []
+	processed = 0
+	for priority in range(len(queue)):
+		for event in range(len(queue[priority])):
+			if priority == PRIORITY_HIGH or processed < MAX_EVENTS:
+				if queue[priority][event][0] in callbacks.keys():
+					for callback in callbacks[queue[priority][event][0]]:
+						if len(queue[priority][event][1]) > 0:
+							callback(queue[priority][event][1])
+						else:
+							callback()
+					processed += 1
+			else:
+				del queue[priority][:event]
+				return
+		queue[priority] = []
+	
+	#queue = []

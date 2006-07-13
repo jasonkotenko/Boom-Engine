@@ -56,7 +56,7 @@ class MainMenuState(Boom.StateManager.GameState):
 		self.menu.add_item("Camera Demo", self.camera_demo)
 		#self.menu.add_item("Credits", self.show_credits)
 		self.menu.add_item("Exit", self.exit_demo)
-		Boom.Event.register(Boom.Event.MATCH_WON, self.match_won)
+		Boom.Event.register(Boom.Event.EVENT_MATCH_WON, self.match_won)
 		if not nosound:
 			self.music = Boom.Sound.Music("Sounds/Menu.ogg")
 			self.music.play()
@@ -86,11 +86,11 @@ class MainMenuState(Boom.StateManager.GameState):
 		pass
 	
 	def exit_demo(self):
-		Boom.Event.post(Boom.Event.QUIT)
+		Boom.Event.post(Boom.Event.EVENT_QUIT)
 	
 	def key_pressed(self, key):
 		if key == 27:
-			Boom.Event.post(Boom.Event.QUIT)
+			Boom.Event.post(Boom.Event.EVENT_QUIT)
 		self.menu.key_pressed(key)
 	
 	def update(self):
@@ -115,36 +115,25 @@ class CameraDemo(Boom.StateManager.GameState):
 
 	def key_pressed(self, key):
 		if key == ord("1"):
-			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE1])
-			#self.camera.rotate(self.camera.FACE1)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE1])
 		elif key == ord("2"):
-			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE2])
-			#self.camera.rotate(self.camera.FACE2)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE2])
 		elif key == ord("3"):
-			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE3])
-			#self.camera.rotate(self.camera.FACE3)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE3])
 		elif key == ord("4"):
-			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE4])
-			#self.camera.rotate(self.camera.FACE4)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE4])
 		elif key == ord("5"):
-			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE5])
-			#self.camera.rotate(self.camera.FACE5)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE5])
 		elif key == ord("6"):
-			Boom.Event.post(Boom.Event.CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE6])
-			#self.camera.rotate(self.camera.FACE6)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_ROTATE, [Boom.Camera.CubeCamera.FACE6])
 		elif key == Boom.Keyboard.KEY_PAUSE:
 			Boom.StateManager.pop()
 		elif key == Boom.Keyboard.KEY_MOVE_UP:
-			Boom.Event.post(Boom.Event.CAMERA_ZOOM, [self.camera.zooms[1] - 30])
-			#self.camera.zoom(self.camera.zooms[1] - 30)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_ZOOM, [self.camera.zooms[1] - 30])
 		elif key == Boom.Keyboard.KEY_MOVE_DOWN:
-			Boom.Event.post(Boom.Event.CAMERA_ZOOM, [self.camera.zooms[1] + 30])
-			#self.camera.zoom(self.camera.zooms[1] + 30)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_ZOOM, [self.camera.zooms[1] + 30])
 		elif key == ord("s"):
-			Boom.Event.post(Boom.Event.CAMERA_SHAKE)
-			#self.camera.boom()
-		#elif key == ord("g"):
-			#self.camera.rotate(self.camera.FACE1, .8, 2)
+			Boom.Event.post(Boom.Event.EVENT_CAMERA_SHAKE)
 
 # Create an interface
 interface = Boom.Interface.SDLInterface(640, 480)

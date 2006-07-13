@@ -11,7 +11,7 @@
 	
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor
+		Copyright (C) 2006 Daniel G. Taylor, Jens Taylor
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -152,7 +152,7 @@ class SDLInterface(BaseInterface):
 	def __init__(self, width = 640, height = 480):
 		self.init_sdl(width, height)
 		BaseInterface.__init__(self)
-		Event.register(Event.QUIT, self.shutdown)
+		Event.register(Event.EVENT_QUIT, self.shutdown)
 	
 	def init_sdl(self, width, height):
 		"""

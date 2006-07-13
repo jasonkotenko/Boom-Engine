@@ -21,11 +21,11 @@
 			>>>> pop()
 			StateManager [x]: INFO Changing game state to Playing
 			>>>> replace(MainMenuState())
-			StateManager [x]: INFO Chaning game state to Main Menu
+			StateManager [x]: INFO Changing game state to Main Menu
 	
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor
+		Copyright (C) 2006 Daniel G. Taylor, Jens Taylor
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -120,11 +120,11 @@ class PlayingState(GameState):
 			if self.level.player.life:
 				self.level.add_bomb(self.level.player.x, self.level.player.y)
 		elif key == ord("]"):
-			self.camera.zoom(self.camera.zooms[1] + 15)
+			Event.post(Event.EVENT_CAMERA_ZOOM, [self.camera.zooms[1] + 15])
 		elif key == ord("["):
-			self.camera.zoom(self.camera.zooms[1] - 15)
+			Event.post(Event.EVENT_CAMERA_ZOOM, [self.camera.zooms[1] - 15])
 		elif key == ord("s"):
-			self.camera.boom()
+			Event.post(Event.EVENT_CAMERA_SHAKE)
 
 		else:
 			try:
@@ -187,7 +187,7 @@ class PausedState(GameState):
 		pop()
 	
 	def exit(self):
-		Event.post(Event.QUIT)
+		Event.post(Event.EVENT_QUIT)
 		clear()
 	
 	def key_pressed(self, key):
@@ -246,7 +246,7 @@ def push(state):
 	Log.info("Changing game state to " + state.name)
 	states.append(state)
 	current = state
-	Event.post(Event.STATE_CHANGED)
+	Event.post(Event.EVENT_STATE_CHANGED)
 
 #-------------------------------------------------------------------------------
 def replace(state):
@@ -257,7 +257,7 @@ def replace(state):
 	Log.info("Changing game state to " + state.name)
 	states[-1] = state
 	current = state
-	Event.post(Event.STATE_CHANGED)
+	Event.post(Event.EVENT_STATE_CHANGED)
 
 #-------------------------------------------------------------------------------
 def pop():
@@ -273,7 +273,7 @@ def pop():
 	else:
 		current = states[-1]
 		Log.info("Changing game state to " + current.name)
-	Event.post(Event.STATE_CHANGED)
+	Event.post(Event.EVENT_STATE_CHANGED)
 
 #-------------------------------------------------------------------------------
 def clear():
@@ -281,7 +281,7 @@ def clear():
 	states = []
 	current = None
 	Log.info("Clearing game state stack...")
-	Event.post(Event.STATE_CHANGED)
+	Event.post(Event.EVENT_STATE_CHANGED)
 
 #-------------------------------------------------------------------------------
 def update():

@@ -8,7 +8,7 @@
 	
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor, Jason F. Kotenko
+		Copyright (C) 2006 Daniel G. Taylor, Jason F. Kotenko, Jens Taylor
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ import Event
 from Graphics import *
 
 from math import sin, asin, sqrt, degrees, radians, pi, atan2
+from time import time
 
 ITEM_ANIM_NONE = 0
 ITEM_ANIM_THROB = 1
@@ -47,6 +48,9 @@ class Level:
 		self.player = None
 		self.items = []
 		self.timer = 180
+		self.explosion_last = 0.0
+		self.explosion_counter = 1
+		self.explosion_links = []
 	
 	def add_player(self, name, x = 0, y = 0, control = False):
 		if control:
@@ -259,7 +263,7 @@ class Item(GameObject):
 		retval = GameObject.update(self, level)
 		self.timer -= Interface.tdiff
 		if self.timer <= 0:
-			retval = self.timeout()
+			retval = self.timeout(level)
 		return retval
 	
 	def draw(self):
@@ -282,7 +286,7 @@ class Item(GameObject):
 		DataManager.meshes[self.mesh].render()
 		glPopMatrix()
 	
-	def timeout(self):
+	def timeout(self, level):
 		return False
 
 #-------------------------------------------------------------------------------
@@ -295,6 +299,8 @@ class Bomb(Item):
 		self.radius = 2.0
 		self.current_size = 0.5
 		self.exploding = 0
+		self.explosion_index = -1
+		self.hit_bomb = False
 	
 	def update(self, level):
 		if not self.exploding:
@@ -303,6 +309,8 @@ class Bomb(Item):
 			size_diff = (self.radius - self.current_size)
 			self.current_size += Interface.tdiff * (size_diff + 0.5) * 2
 			if self.current_size >= self.radius:
+				if not self.hit_bomb:
+					level.explosion_links[self.explosion_index] = 0
 				return False
 				
 			for pos in range(len(level.players) - 1, -1, -1):
@@ -316,7 +324,7 @@ class Bomb(Item):
 						del level.players[pos]
 						if len(level.players) == 1:
 							Log.info(level.players[0].name + " wins the match!")
-							Event.post(Event.MATCH_WON)
+							Event.post(Event.EVENT_MATCH_WON)
 					else:
 						Log.info("Damaged " + player.name)
 			
@@ -326,7 +334,9 @@ class Bomb(Item):
 				ydiff = item.y - self.y
 				if xdiff * xdiff + ydiff * ydiff <= self.current_size * self.current_size:
 					if item.type == "Bomb":
-						item.timeout()
+						if item is not self and not item.exploding:
+							self.hit_bomb = True
+							item.timeout(level, self.explosion_index)
 					else:
 						Log.info("Destroyed " + item.type)
 						del level.items[pos]
@@ -353,6 +363,31 @@ class Bomb(Item):
 			glDisable(GL_BLEND)
 			glPopMatrix()
 	
-	def timeout(self):
+	def timeout(self, level, linkindex = -1):
 		self.exploding = True
+		old_time = level.explosion_last
+		level.explosion_last = time()
+		if level.explosion_last - old_time <= .15:
+			level.explosion_counter += 1
+		else:
+			level.explosion_counter = 1
+		if level.explosion_counter > 4:
+			Event.post(Event.EVENT_CAMERA_SHAKE)
+			#self.radius *= 2.0
+		self.explosion_index = linkindex
+		if linkindex == -1:
+			for links in range(len(level.explosion_links)):
+				if level.explosion_links[links] == 0:
+					level.explosion_links[links] = 1
+					self.explosion_index = links
+					break
+			if self.explosion_index == -1:
+				level.explosion_links.append(1)
+				self.explosion_index = len(level.explosion_links) - 1
+		else:
+			level.explosion_links[self.explosion_index] += 1
+			if level.explosion_links[self.explosion_index] > 4:
+				Event.post(Event.EVENT_CAMERA_SHAKE)
+				self.radius *= 2.0
+		print self.explosion_index
 		return True

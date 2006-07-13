@@ -33,7 +33,7 @@
 	
 		License
 		-------
-		Copyright (C) 2006 Daniel G. Taylor
+		Copyright (C) 2006 Daniel G. Taylor, Jens Taylor
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -60,6 +60,7 @@ Objects = None
 StateManager = None
 Interface = None
 Sound = None
+Camera = None
 
 version = 0.1
 
@@ -72,6 +73,7 @@ def init():
 	global StateManager
 	global Interface
 	global Sound
+	global Camera
 	
 	import Event
 	import VirtualFS
@@ -81,6 +83,7 @@ def init():
 	import StateManager
 	import Interface
 	import Sound
+	import Camera
 
 def load_level(level):
 	"""
