@@ -385,9 +385,17 @@ class Bomb(Item):
 				level.explosion_links.append(1)
 				self.explosion_index = len(level.explosion_links) - 1
 		else:
+			for pos in range(len(level.items) - 1, -1, -1):
+				item = level.items[pos]
+				xdiff = item.x - self.x
+				ydiff = item.y - self.y
+				if xdiff * xdiff + ydiff * ydiff <= self.radius * self.radius:
+					if item.type == "Bomb":
+						if item is not self and not item.exploding: 
+							self.hit_bomb = True
+
 			level.explosion_links[self.explosion_index] += 1
-			if level.explosion_links[self.explosion_index] > 4:
+			if level.explosion_links[self.explosion_index] > 4 and not self.hit_bomb:
 				Event.post(Event.EVENT_CAMERA_SHAKE)
-				self.radius *= 2.0
-		print self.explosion_index
+				self.radius *= 1.5
 		return True

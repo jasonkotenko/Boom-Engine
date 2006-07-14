@@ -125,6 +125,9 @@ class PlayingState(GameState):
 			Event.post(Event.EVENT_CAMERA_ZOOM, [self.camera.zooms[1] - 15])
 		elif key == ord("s"):
 			Event.post(Event.EVENT_CAMERA_SHAKE)
+		elif key == ord("g"):
+			for x,y in [[7, 7], [7, 3], [-7, 6], [-3, -3], [5, -2]]:
+				self.level.add_bomb(x, y)
 
 		else:
 			try:
