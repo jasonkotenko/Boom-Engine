@@ -175,6 +175,9 @@ class SDLInterface(BaseInterface):
 		"""
 		Start the game engine.
 		"""
+		lasttime = time()
+		curtime = 0
+		frames = 0
 		# Start the main event loop
 		while 1:
 			# Process the internal event queue
@@ -195,6 +198,13 @@ class SDLInterface(BaseInterface):
 			# Update and draw the current state
 			StateManager.update()
 			self.draw()
+			
+			frames += 1
+			curtime = time()
+			if curtime - lasttime >= 1:
+				Log.info("FPS: " + str(frames / (curtime - lasttime)))
+				frames = 0
+				lasttime = curtime
 	
 	def flip(self):
 		"""

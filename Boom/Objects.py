@@ -43,7 +43,11 @@ ITEM_ANIM_BOUNCE = 3
 #-------------------------------------------------------------------------------
 class Level:
 	def __init__(self, name = None):
+		self.name = name
+		self.description = ""
 		self.mesh = name + ".obj"
+		self.navimesh = None
+		self.blockmesh = None
 		self.players = []
 		self.player = None
 		self.items = []
@@ -51,6 +55,21 @@ class Level:
 		self.explosion_last = 0.0
 		self.explosion_counter = 1
 		self.explosion_links = []
+	
+	def load(self, name):
+		data = VirtualFS.open("Levels/" + name).readlines()
+		for line in data:
+			if line[:4] == "name":
+				self.name = line[6:]
+			elif line[:11] == "description":
+				self.description = line[12:]
+			elif line[:4] == "mesh":
+				self.mesh = line[6:] + ".obj"
+			elif line[:8] == "navimesh":
+				self.navimesh = line[10:] + ".obj"
+			elif line[:9] == "blockmesh":
+				self.blockmesh = line[11:] + ".obj"
+			
 	
 	def add_player(self, name, x = 0, y = 0, control = False):
 		if control:
@@ -192,9 +211,6 @@ class Player(GameObject):
 		self.motion.radius = 3.0
 		self.life = 1
 		self.mesh = "player.obj"
-	
-	def update(self, level):
-		return GameObject.update(self, level)
 		
 	def draw(self):
 		glPushMatrix()

@@ -432,11 +432,11 @@ class Mesh:
 				glTexImage2D(GL_TEXTURE_2D, 0, 3, data.size[0], \
 							 data.size[1], 0, GL_RGB, GL_UNSIGNED_BYTE, \
 							 datastring)
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
 				#gluBuild2DMipmaps(GL_TEXTURE_2D, 3, data.size[0], \
 				#				  data.size[1], GL_RGB, GL_UNSIGNED_BYTE, \
 				#				  datastring)
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
 		
 		if current:
 			# Save the last material
@@ -451,12 +451,15 @@ class Mesh:
 		if self.display_list != None:
 			glCallList(self.display_list)
 		else:
+			last_mat = "none"
 			# Generate a new display list and render
 			dlist = glGenLists(1)
 			glNewList(dlist, GL_COMPILE_AND_EXECUTE)
 			for poly in self.polygons:
 				try:
+					#if last_mat != poly.material:
 					self.materials[poly.material].set()
+					last_mat = poly.material
 				except: pass
 				glBegin(GL_POLYGON)
 				for vertex, texture, normal in poly.vertices:
@@ -485,14 +488,29 @@ class NaviMeshTriangle:
 	def __init__(self):
 		self.vertices = []
 		self.neighbors = []
-	
-	def calc_neighbors(self, triangles):
-		pass
 
 #-------------------------------------------------------------------------------
 class NaviMesh:
 	def __init__(self):
 		self.triangles = []
+
+	def generate(self, mesh):
+		for polygon in mesh.polys:
+			tri = NaviMeshTriangle()
+			for vertex in polygon.vertices:
+				tri.vertices.append(mesh.vertices[vertex])
+			self.triangles.append(tri)
+		
+		for triangle in self.triangles:
+			for v1, v2 in [[triangle.vertices[0], triangle.vertices[1]], \
+						   [triangle.vertices[1], triangle.vertices[2]], \
+						   [triangle.vertices[2], triangle.vertices[0]]]:
+				for triangle2 in self.triangles:
+					if triangle is not triangle2:
+						if v1 in triangle2.vertices and v2 in triangle2.vertices:
+							triangle.neighbors.append(triangle2)
+	
+	
 
 #-------------------------------------------------------------------------------
 class Hull2d(list):
