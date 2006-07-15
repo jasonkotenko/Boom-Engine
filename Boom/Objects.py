@@ -40,6 +40,12 @@ ITEM_ANIM_THROB = 1
 ITEM_ANIM_ROTATE = 2
 ITEM_ANIM_BOUNCE = 3
 
+PICKUP_ESPRESSO = 0
+PICKUP_MOLASSES = 1
+PICKUP_BIG_BOMBS = 2
+PICKUP_MINI_BOMBS = 3
+PICKUP_TYPE_COUNT = 4
+
 #-------------------------------------------------------------------------------
 class Level:
 	def __init__(self, name = "No Name"):
@@ -62,6 +68,7 @@ class Level:
 			self.load(name)
 	
 	def load(self, name):
+		Log.info("Loading level " + name)
 		data = VirtualFS.open("Levels/" + name).readlines()
 		for line in data:
 			if line[:4] == "name":
@@ -72,15 +79,30 @@ class Level:
 				self.mesh = line[5:].strip() + ".obj"
 			elif line[:8] == "navimesh":
 				self.navimesh = line[9:].strip() + ".obj"
+				try:
+					DataManager.meshes.load(self.navimesh)
+				except:
+					self.navimesh = None
+					Log.warning("Couldn't load navigation mesh, level collision detection disabled...")
 			elif line[:14] == "blockspawnmesh":
 				self.blockspawnmesh = line[15:].strip() + ".obj"
+				try:
+					DataManager.meshes.load(self.blockspawnmesh)
+				except:
+					self.blockspawnmesh = None
+					Log.warning("Couldn't load block spawn mesh...")
 			elif line[:9] == "blockmesh":
 				self.blockmesh = line[10:].strip() + ".obj"
+				try:
+					DataManager.meshes.load(self.blockmesh)
+				except:
+					self.blockmesh = None
+					Log.warning("Couldn't load block mesh...")
 			elif line[:10] == "blocktimer":
 				self.blocktimer = float(line[11:])
 			elif line[:5] == "block":
 				spawn = BlockSpawn(self.blockspawnmesh, self.blockmesh, self.blocktimer)
-				spawn.x, spawn.y = line[6:].split()
+				spawn.x, spawn.y = [float(x) for x in line[6:].split()]
 				self.blockspawns.append(spawn)
 	
 	def add_player(self, name, x = 0, y = 0, control = False):
@@ -102,6 +124,8 @@ class Level:
 		self.items.append(bomb)
 	
 	def update(self):
+		for spawn in self.blockspawns:
+			spawn.update(self)
 		for pos in range(len(self.players) - 1, -1, -1):
 			retval = self.players[pos].update(self)
 			if retval == False:
@@ -114,6 +138,8 @@ class Level:
 	def draw(self):
 		if self.mesh:
 			DataManager.meshes[self.mesh].render()
+		for spawn in self.blockspawns:
+			spawn.draw()
 		for player in self.players:
 			player.draw()
 		for item in self.items:
@@ -223,6 +249,7 @@ class Player(GameObject):
 		self.itemids = []
 		self.motion.radius = 3.0
 		self.life = 1
+		self.bomb_radius = 3.0
 		self.mesh = "player.obj"
 		
 	def draw(self):
@@ -329,7 +356,7 @@ class BlockSpawn(Item):
 		self.type = "BlockSpawn"
 		self.mesh = mesh
 		self.blockmesh = blockmesh
-		self.block = False
+		self.block = True
 		self.timer = timer
 		self.default_time = timer
 	
@@ -340,7 +367,11 @@ class BlockSpawn(Item):
 	def draw(self):
 		if self.mesh:
 			Item.draw(self)
-		if self.block:
+		glPushMatrix()
+		glTranslatef(self.x, self.y, 0.0)
+		glutSolidCube(0.5)
+		glPopMatrix()
+		if self.block and self.blockmesh:
 			glPushMatrix()
 			glTranslatef(self.x, self.y, 0.0)
 			DataManager.meshes[self.blockmesh].render()
@@ -350,9 +381,39 @@ class BlockSpawn(Item):
 		self.block = True
 		return True
 	
-	def destroy_block(self):
+	def destroy_block(self, level):
 		self.block = False
 		self.timer = self.default_time
+		level.items.append(Pickup())
+
+#-------------------------------------------------------------------------------
+class Pickup(Item):
+	def __init__(self):
+		Item.__init__(self)
+		self.type = "Pickup"
+		self.anim_type = ITEM_ANIM_ROTATE
+		self.timer = 5.0
+		self.pickup_type = int(random() * PICKUP_TYPE_COUNT)
+		if self.pickup_type == PICKUP_ESPRESSO:
+			self.mesh = "pickup_speed.obj"
+		elif self.pickup_type == PICKUP_MOLASSES:
+			self.mesh = "pickup_slow.obj"
+		elif self.pickup_type == PICKUP_BIG_BOMBS:
+			self.mesh = "pickup_big_bomb.obj"
+		elif self.pickup_type == PICKUP_MINI_BOMBS:
+			self.mesh = "pickup_mini_bomb.obj"
+	
+	def apply(self, player):
+		if self.pickup_type == PICKUP_ESPRESSO:
+			player.motion.radius += 0.5
+		elif self.pickup_type == PICKUP_MOLASSES:
+			if player.motion.radius > 0.5:
+				player.motion.radius -= 0.5
+		elif self.pickup_type == PICKUP_BIG_BOMBS:
+			player.bomb_radius += 0.5
+		elif self.pickup_type == PICKUP_MINI_BOMBS:
+			if player.bomb_radius > 0.5:
+				player.bomb_radius -= 0.5
 
 #-------------------------------------------------------------------------------
 class Bomb(Item):
