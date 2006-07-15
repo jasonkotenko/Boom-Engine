@@ -42,12 +42,15 @@ ITEM_ANIM_BOUNCE = 3
 
 #-------------------------------------------------------------------------------
 class Level:
-	def __init__(self, name = None):
+	def __init__(self, name = "No Name"):
 		self.name = name
 		self.description = ""
-		self.mesh = name + ".obj"
+		self.mesh = None
 		self.navimesh = None
+		self.blockspawnmesh = None
 		self.blockmesh = None
+		self.blocktimer = 10.0
+		self.blockspawns = []
 		self.players = []
 		self.player = None
 		self.items = []
@@ -55,21 +58,30 @@ class Level:
 		self.explosion_last = 0.0
 		self.explosion_counter = 1
 		self.explosion_links = []
+		if name is not "No Name":
+			self.load(name)
 	
 	def load(self, name):
 		data = VirtualFS.open("Levels/" + name).readlines()
 		for line in data:
 			if line[:4] == "name":
-				self.name = line[6:]
+				self.name = line[5:]
 			elif line[:11] == "description":
-				self.description = line[12:]
+				self.description = line[11:]
 			elif line[:4] == "mesh":
-				self.mesh = line[6:] + ".obj"
+				self.mesh = line[5:].strip() + ".obj"
 			elif line[:8] == "navimesh":
-				self.navimesh = line[10:] + ".obj"
+				self.navimesh = line[9:].strip() + ".obj"
+			elif line[:14] == "blockspawnmesh":
+				self.blockspawnmesh = line[15:].strip() + ".obj"
 			elif line[:9] == "blockmesh":
-				self.blockmesh = line[11:] + ".obj"
-			
+				self.blockmesh = line[10:].strip() + ".obj"
+			elif line[:10] == "blocktimer":
+				self.blocktimer = float(line[11:])
+			elif line[:5] == "block":
+				spawn = BlockSpawn(self.blockspawnmesh, self.blockmesh, self.blocktimer)
+				spawn.x, spawn.y = line[6:].split()
+				self.blockspawns.append(spawn)
 	
 	def add_player(self, name, x = 0, y = 0, control = False):
 		if control:
@@ -100,7 +112,8 @@ class Level:
 				del self.items[pos]
 	
 	def draw(self):
-		DataManager.meshes[self.mesh].render()
+		if self.mesh:
+			DataManager.meshes[self.mesh].render()
 		for player in self.players:
 			player.draw()
 		for item in self.items:
@@ -286,6 +299,10 @@ class Item(GameObject):
 		self.anim_angle += Interface.tdiff * self.anim_speed
 		if self.anim_angle >= 6.28:
 			self.anim_angle = 0
+		
+		if self.mesh is None:
+			return
+		
 		glPushMatrix()
 		glTranslatef(self.x, self.y, 0.0)
 		if self.anim_type == ITEM_ANIM_THROB:
@@ -304,6 +321,38 @@ class Item(GameObject):
 	
 	def timeout(self, level):
 		return False
+
+#-------------------------------------------------------------------------------
+class BlockSpawn(Item):
+	def __init__(self, mesh = None, blockmesh = None, timer = 10.0):
+		Item.__init__(self)
+		self.type = "BlockSpawn"
+		self.mesh = mesh
+		self.blockmesh = blockmesh
+		self.block = False
+		self.timer = timer
+		self.default_time = timer
+	
+	def update(self, level):
+		if not self.block:
+			Item.update(self, level)
+	
+	def draw(self):
+		if self.mesh:
+			Item.draw(self)
+		if self.block:
+			glPushMatrix()
+			glTranslatef(self.x, self.y, 0.0)
+			DataManager.meshes[self.blockmesh].render()
+			glPopMatrix()
+	
+	def timeout(self, level):
+		self.block = True
+		return True
+	
+	def destroy_block(self):
+		self.block = False
+		self.timer = self.default_time
 
 #-------------------------------------------------------------------------------
 class Bomb(Item):

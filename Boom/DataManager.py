@@ -64,7 +64,7 @@ class OnDemandLoader:
 				self.load(key)
 				return self.data[key]
 			else:
-				Log.error("Failed to load " + key)
+				Log.error("Failed to load " + os.path.join(self.path, key))
 				return None
 	
 	def __setitem__(self, key, value):

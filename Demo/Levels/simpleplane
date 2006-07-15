@@ -1,0 +1,19 @@
+# Level Description File
+name Simple Demo Level
+description A recreation of a classic Bomberman 64 level!
+
+# Meshes
+mesh simpleplane
+navimesh simpleplane_navimesh
+blockmesh block_stone
+#blockspawnmesh none
+
+# Block spawn points
+blocktimer 10.0
+block  2.0  3.0
+block -2.0  1.0
+block  1.0 -4.0
+
+# Scripts
+scriptfile simpleplane_scripts
+trigger testfunc (-3.0, 2.0, 0.0) (-1.0, 0.0, 0.0)
