@@ -5,11 +5,12 @@
 		
 		Modules
 		-------
-		Log			 - Generic logging facility
 		Event		 - Event handling and dispatching
 		Graphics	 - Classes and functions dealing with graphics objects
 					   such as 2d/3d points, materials, meshes, etc.
-		VirtualFS	 - Virtual Filesystem
+		Log			 - Generic logging facility
+		State		 - Game state management
+		VirtualFS	 - Virtual filesystem
 
 		License
 		-------

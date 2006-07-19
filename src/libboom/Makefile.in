@@ -21,6 +21,7 @@ OBJECTS =	log.o \
 			stringfuncs.o \
 			loadpng.o \
 			graphics.o \
+			state.o \
 			boom.o
 
 all::libboom.so
@@ -39,6 +40,8 @@ stringfuncs.o: stringfuncs.h
 loadpng.o: loadpng.h
 
 graphics.o: graphics.h loadpng.h
+
+state.o: state.h
 
 boom.o: boom.h
 
