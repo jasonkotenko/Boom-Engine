@@ -1,0 +1,52 @@
+PREFIX = INSTALL_PREFIX
+
+LIB_CXXFLAGS = `sdl-config --cflags` `pkg-config --cflags libpng sigc++-2.0`
+LIB_LDFLAGS = `sdl-config --libs` `pkg-config --libs libpng sigc++-2.0` -lbz2
+
+OPTIMIZATIONS = -O2 -fomit-frame-pointer -pipe
+
+OSX_CXXFLAGS = -D_OSX_
+OSX_LDFLAGS = -framework OpenGL -framework GLUT
+
+LINUX_CXXFLAGS = -march=i686
+LINUX_LDFLAGS = -lGL -lGLU -lglut -L/usr/X11R6/lib -lXi
+
+CXXFLAGS = $(OPTIMIZATIONS) $(LIB_CXXFLAGS) -Wall $(OS_CXXFLAGS)
+LDFLAGS = $(LIB_LDFLAGS) $(OS_LDFLAGS)
+
+
+OBJECTS =	log.o \
+			vfs.o \
+			event.o \
+			stringfuncs.o \
+			loadpng.o \
+			graphics.o \
+			boom.o
+
+all::libboom.so
+
+libboom.so: $(OBJECTS)
+	$(CC) -shared $(OBJECTS) -o $@
+
+log.o: log.h
+
+vfs.o: vfs.h log.h
+
+event.o: event.h log.h
+
+stringfuncs.o: stringfuncs.h
+
+loadpng.o: loadpng.h
+
+graphics.o: graphics.h loadpng.h
+
+boom.o: boom.h
+
+install:
+	install libboom.so $(PREFIX)/lib/
+
+uninstall:
+	rm $(PREFIX)/lib/libboom.so
+
+clean:
+	rm -rf *.o *.so core

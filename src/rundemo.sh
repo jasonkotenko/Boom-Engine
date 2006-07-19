@@ -1,4 +1,3 @@
 #!/bin/bash
 
-make
-LD_LIBRARY_PATH=. ./test
+LD_LIBRARY_PATH=libboom demo/test

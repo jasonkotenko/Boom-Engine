@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import os, sys
+from os.path import join, sep
+
+prefix = "/usr/local"
+
+if sys.platform == "linux2":
+	operating_system = "LINUX"
+else:
+	print "Don't know how to build for this operating system!"
+	sys.exit(1)
+
+for arg in sys.argv:
+	if arg[:9] == "--prefix=":
+		prefix = arg[9:]
+
+for root, dirs, files in os.walk("."):
+	if "Makefile.in" in files:
+		data = open(join(root, "Makefile.in")).read()
+		data = data.replace("INSTALL_PREFIX", prefix)
+		data = data.replace("OS_CXXFLAGS", operating_system + "_CXXFLAGS")
+		data = data.replace("OS_LDFLAGS", operating_system + "_LDFLAGS")
+		open(join(root, "Makefile"), "w").write(data)
+		print "Created " + join(root, "Makefile")
+	if ".svn" in dirs:
+		dirs.remove(".svn")
+
+print "Ready to build. Please type 'make'"
