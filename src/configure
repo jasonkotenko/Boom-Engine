@@ -7,6 +7,8 @@ prefix = "/usr/local"
 
 if sys.platform == "linux2":
 	operating_system = "LINUX"
+elif sys.platform == "darwin":
+	operating_system = "OSX"
 else:
 	print "Don't know how to build for this operating system!"
 	sys.exit(1)
@@ -21,6 +23,7 @@ for root, dirs, files in os.walk("."):
 		data = data.replace("INSTALL_PREFIX", prefix)
 		data = data.replace("OS_CXXFLAGS", operating_system + "_CXXFLAGS")
 		data = data.replace("OS_LDFLAGS", operating_system + "_LDFLAGS")
+		data = data.replace("OS_TARGET", operating_system + "_TARGET")
 		open(join(root, "Makefile"), "w").write(data)
 		print "Created " + join(root, "Makefile")
 	if ".svn" in dirs:

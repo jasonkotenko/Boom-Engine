@@ -1,15 +1,17 @@
 PREFIX = INSTALL_PREFIX
+OSX_TARGET = libboom.dylib
+LINUX_TARGET = libboom.so
 
 LIB_CXXFLAGS = `sdl-config --cflags` `pkg-config --cflags libpng sigc++-2.0`
-LIB_LDFLAGS = `sdl-config --libs` `pkg-config --libs libpng sigc++-2.0` -lbz2
+LIB_LDFLAGS = `sdl-config --cflags | sed 's/-lSDLmain//'`  `pkg-config --libs libpng sigc++-2.0` -lbz2
 
 OPTIMIZATIONS = -O2 -fomit-frame-pointer -pipe
 
 OSX_CXXFLAGS = -D_OSX_
-OSX_LDFLAGS = -framework OpenGL -framework GLUT
+OSX_LDFLAGS = -framework OpenGL -framework GLUT -dynamiclib
 
 LINUX_CXXFLAGS = -march=i686
-LINUX_LDFLAGS = -lGL -lGLU -lglut -L/usr/X11R6/lib -lXi
+LINUX_LDFLAGS = -lGL -lGLU -lglut -L/usr/X11R6/lib -lXi -shared
 
 CXXFLAGS = $(OPTIMIZATIONS) $(LIB_CXXFLAGS) -Wall $(OS_CXXFLAGS)
 LDFLAGS = $(LIB_LDFLAGS) $(OS_LDFLAGS)
@@ -24,10 +26,13 @@ OBJECTS =	log.o \
 			state.o \
 			boom.o
 
-all::libboom.so
+all::$(OS_TARGET)
 
 libboom.so: $(OBJECTS)
-	$(CC) -shared $(OBJECTS) -o $@
+	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
+
+libboom.dylib: $(OBJECTS)
+	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
 
 log.o: log.h
 
@@ -46,10 +51,10 @@ state.o: state.h
 boom.o: boom.h
 
 install:
-	install libboom.so $(PREFIX)/lib/
+	install $(OS_TARGET) $(PREFIX)/lib
 
 uninstall:
-	rm $(PREFIX)/lib/libboom.so
+	rm $(PREFIX)/lib/$(OS_TARGET)
 
 clean:
-	rm -rf *.o *.so core
+	rm -rf *.o $(OS_TARGET) core
