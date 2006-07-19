@@ -38,6 +38,7 @@
 #include "vfs.h"
 #include "event.h"
 #include "graphics.h"
+#include "state.h"
 
 namespace Boom
 {

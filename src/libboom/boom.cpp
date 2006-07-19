@@ -15,11 +15,13 @@ namespace Boom
 		Log::init();
 		VirtualFS::init();
 		Event::init();
+		State::init();
 	}
 	
 	void cleanup()
 	{
 		LOG_INFO << "Shutting down..." << endl;
+		State::cleanup();
 		Event::cleanup();
 		VirtualFS::cleanup();
 		Log::cleanup();

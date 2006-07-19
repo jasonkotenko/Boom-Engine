@@ -43,7 +43,7 @@ namespace Boom
 			Material *current = NULL;
 			string label;
 			
-			LOG_INFO << "Loading " << filename << endl;
+			LOG_DEBUG << "Loading " << filename << endl;
 			
 			data = VirtualFS::open(filename);
 			if (!data)
