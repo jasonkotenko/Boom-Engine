@@ -53,4 +53,4 @@ namespace Boom
 	}
 }
 
-#endif _EVENT_H
+#endif
