@@ -10,18 +10,6 @@ namespace Boom
 	{
 		vector <MountPoint> mtab;
 		
-		/*File::File()
-		{
-			fd = NULL;
-		}
-		
-		File::~File()
-		{
-		
-		}*/
-		
-		
-		
 		void init()
 		{
 			char cwd[255];
@@ -63,7 +51,7 @@ namespace Boom
 		
 		File *open(string filename, FileMode mode)
 		{
-			fstream *infile;
+			fstream *file;
 			string fullname;
 			
 			for(vector <MountPoint>::iterator point = mtab.begin();
@@ -75,23 +63,37 @@ namespace Boom
 						fullname = point->path + "/" + filename;
 						if (!access(fullname.c_str(), F_OK))
 						{
-							infile = new fstream();
+							file = new fstream();
+							fstream::openmode fmode;
 							switch(mode)
 							{
 								case MODE_READ:
-									infile->open(fullname.c_str());
+									fmode = fstream::in;
+									break;
+								case MODE_WRITE:
+									fmode = fstream::out;
 									break;
 								case MODE_READ_BINARY:
-									infile->open(fullname.c_str(), fstream::in | fstream::binary);
+									fmode = fstream::in | fstream::binary;
+									break;
+								case MODE_WRITE_BINARY:
+									fmode = fstream::out | fstream::binary;
+									break;
+								default:
+									LOG_WARNING << "Unknown file mode, "
+												<< "defaulting to MODE_READ..."
+												<< endl;
+									fmode = fstream::in;
 									break;
 							}
+							file->open(fullname.c_str(), fmode);
 							
-							if (!infile)
+							if (!file)
 							{
 								LOG_ERROR << "Unable to open " << filename << endl;
 								return NULL;
 							}
-							return infile;
+							return file;
 						}
 						break;
 					case TYPE_BZIP_TAR:

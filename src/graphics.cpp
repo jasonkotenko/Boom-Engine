@@ -13,11 +13,7 @@ namespace Boom
 	{
 		//----------------------------------------------------------------------
 		void Material::set()
-		{
-			if(!textured)
-			{
-				glDisable(GL_TEXTURE_2D);
-			}
+		{	
 			glMaterialfv(GL_FRONT, GL_AMBIENT, &(ambient.red));
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, &(diffuse.red));
 			glMaterialfv(GL_FRONT, GL_SPECULAR, &(specular.red));
@@ -26,10 +22,6 @@ namespace Boom
 			if (textured)
 			{
 				glBindTexture(GL_TEXTURE_2D, texture);
-			}
-			else
-			{
-				glEnable(GL_TEXTURE_2D);
 			}
 		}
 		
@@ -41,7 +33,7 @@ namespace Boom
 			texture_coords.clear();
 			polygons.clear();
 			materials.clear();
-			x = y = 0;
+			textured = false;
 		}
 		
 		//----------------------------------------------------------------------
@@ -139,6 +131,7 @@ namespace Boom
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 					current->texture = texture;
 					current->textured = true;
+					textured = true;
 				}
 			} while (*data);
 			materials[current->name] = *current;
@@ -218,16 +211,14 @@ namespace Boom
 					char line[256];
 					vector <string> polys;
 					
-					//cout << "Loading poly..." << endl;
-					
 					data->getline(line, 256);
-					//cout << line << endl;
+					
 					split(line, polys, " ");
 					
 					if (polys.size() < 1)
 						continue;
 					
-					for (int x = 0; x < polys.size(); x++)
+					for (unsigned int x = 0; x < polys.size(); x++)
 					{
 						MeshVertex vertex;
 						vector <string> parts;
@@ -265,7 +256,7 @@ namespace Boom
 				}
 			} while (*data);
 			
-			//data->close();
+			data->close();
 			delete data;
 			
 			LOG_DEBUG << "Loaded " << normals.size() << " normals and " 
@@ -283,7 +274,7 @@ namespace Boom
 			
 			display_list = glGenLists(1);
 			glNewList(display_list, GL_COMPILE);
-			for (int x = 0; x < polygons.size(); x++)
+			for (unsigned int x = 0; x < polygons.size(); x++)
 			{
 				if (polygons[x].material != NULL)
 				{
@@ -295,7 +286,7 @@ namespace Boom
 				}
 				
 				glBegin(GL_POLYGON);
-				for (int y = 0; y < polygons[x].vertices.size(); y++)
+				for (unsigned int y = 0; y < polygons[x].vertices.size(); y++)
 				{
 					if (polygons[x].vertices[y].texture_coord != -1)
 					{
@@ -316,7 +307,16 @@ namespace Boom
 		//----------------------------------------------------------------------
 		void Mesh::render()
 		{
-			glCallList(display_list);
+			if (textured)
+			{
+				glCallList(display_list);
+			}
+			else
+			{
+				glDisable(GL_TEXTURE_2D);
+				glCallList(display_list);
+				glEnable(GL_TEXTURE_2D);
+			}
 		}
 		
 		//----------------------------------------------------------------------

@@ -34,7 +34,7 @@ namespace Boom
 			}
 		};
 		
-		unsigned short process_max = 15;
+		unsigned short process_max = PROCESS_MAX_DEFAULT;
 		
 		sigc::signal<void> sig_quit;
 		sigc::signal<void> sig_state_changed;
@@ -42,7 +42,9 @@ namespace Boom
 		sigc::signal<void, int> sig_key_down;
 		sigc::signal<void, int> sig_key_up;
 		
-		priority_queue <PostedEvent*, deque <PostedEvent*>, PostedEventComparison> posted_events;
+		priority_queue <PostedEvent*,
+						deque <PostedEvent*>,
+						PostedEventComparison> posted_events;
 	
 		void init()
 		{
@@ -70,6 +72,8 @@ namespace Boom
 				case EVENT_STATE_CHANGED:
 					sig_state_changed.connect(sigc::ptr_fun(func));
 					break;
+				default:
+					break;
 			}
 		}
 		
@@ -83,6 +87,8 @@ namespace Boom
 				case EVENT_KEY_UP:
 					sig_key_up.connect(sigc::ptr_fun(func));
 					break;
+				default:
+					break;
 			}
 		}
 		
@@ -90,7 +96,8 @@ namespace Boom
 		{
 			switch(type)
 			{
-				
+				default:
+					break;
 			}
 		}
 		
@@ -152,6 +159,10 @@ namespace Boom
 					case EVENT_KEY_UP:
 						sig_key_up(reinterpret_cast<PostedEventInt*>(event)->arg);
 						delete reinterpret_cast<PostedEventInt*>(event);
+						break;
+					case EVENT_NULL:
+						LOG_WARNING << "EVENT_NULL is a placeholder and should not be used!"
+									<< endl;
 						break;
 				}
 				

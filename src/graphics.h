@@ -93,7 +93,6 @@ namespace Boom
 				vector <Point2d> texture_coords;
 				vector <MeshPolygon> polygons;
 				map <string, Material> materials;
-				float x, y;
 				
 				void clear();
 				void load(const char *filename);
@@ -101,6 +100,7 @@ namespace Boom
 			
 			private:
 				int display_list;
+				bool textured;
 				
 				void load_materials(const char *filename);
 				void generate_display_list();

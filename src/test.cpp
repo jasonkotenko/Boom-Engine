@@ -77,9 +77,12 @@ int main(int argc, char *argv[])
 	
 	Boom::init();
 	
-	LOG_DEBUG << "Using BOOM version " << Boom::VERSION << endl;
+	LOG_DEBUG << "Using BOOM version " << Boom::VERSION << " compiled on " << Boom::COMPILE_DATE << " " << Boom::COMPILE_TIME << endl;
 	
-	VirtualFS::mount("/Users/dan/Desktop/Bomberman/Demo");
+	char path[255];
+	getcwd(path, 255);
+	
+	VirtualFS::mount(string(path) + "/../Demo");
     
     SDL_Surface *screen;
     
@@ -94,7 +97,13 @@ int main(int argc, char *argv[])
 	
 	glEnable(GL_LIGHT0);
 	float position[] = {50.0, 50.0, 150.0, 0.0};
+	float ambient[] = {0.2, 0.2, 0.2};
+	float diffuse[] = {1.0, 1.0, 1.0};
+	float specular[] = {1.0, 1.0, 1.0};
 	glLightfv(GL_LIGHT0, GL_POSITION, position);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 	glEnable(GL_LIGHTING);
 	
 	glEnable(GL_DEPTH_TEST);
@@ -108,6 +117,8 @@ int main(int argc, char *argv[])
 	scene.add("simpleplane", 0, 0, 0);
 	scene.add("player", 3, 2, 0);
 	scene.add("player", -3, 1, 0);
+	scene.add("player", 3, -3, 0);
+	scene.add("bomb", -2, -1, 0);
 	
 	SDL_Event event;
 	

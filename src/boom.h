@@ -54,6 +54,7 @@ namespace Boom
 	
 	void cleanup()
 	{
+		LOG_INFO << "Shutting down..." << endl;
 		Event::cleanup();
 		VirtualFS::cleanup();
 		Log::cleanup();

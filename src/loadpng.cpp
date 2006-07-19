@@ -17,7 +17,7 @@ using namespace Boom;
 
 #define ERROR_MEM 4
 
-extern "C" void vfs_png_read(png_structp png_ptr, png_bytep data, png_uint_32 size)
+extern "C" void vfs_png_read(png_structp png_ptr, png_bytep data, png_size_t size)
 {
 	VirtualFS::File *infile = static_cast<VirtualFS::File*>(png_get_io_ptr(png_ptr));
 
@@ -146,7 +146,7 @@ int load_png(const char *filename, PNGData &data)
 	}
 	
 	// Flip the image row pointers so the image starts in the bottom left
-	for (int i = 0;  i < data.height;  i++)
+	for (unsigned long i = 0;  i < data.height;  i++)
 	{
 		row_pointers[data.height - 1 - i] = image_data + (i * row_bytes);
 	}

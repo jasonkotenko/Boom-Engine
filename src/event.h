@@ -18,11 +18,11 @@ namespace Boom
 {
 	enum EventType
 	{
-		EVENT_QUIT,
-		EVENT_STATE_CHANGED,
-		EVENT_KEY_DOWN,
-		EVENT_KEY_UP,
-		EVENT_NULL
+		EVENT_QUIT,				// void
+		EVENT_STATE_CHANGED,	// void
+		EVENT_KEY_DOWN,			// int
+		EVENT_KEY_UP,			// int
+		EVENT_NULL				// placeholder, used internally
 	};
 	
 	enum PriorityType
@@ -34,6 +34,7 @@ namespace Boom
 	
 	extern unsigned short process_max;	// Maximum number of events to process
 										// in a single call to process()
+	const unsigned short PROCESS_MAX_DEFAULT = 15;
 	
 	namespace Event
 	{	

@@ -1,11 +1,13 @@
 LIB_CXXFLAGS = `sdl-config --cflags` `pkg-config --cflags libpng sigc++-2.0`
 LIB_LDFLAGS = `sdl-config --libs` `pkg-config --libs libpng sigc++-2.0` -lbz2
 
-OSX_CXXFLAGS = -O3 $(LIB_CXXFLAGS) -D_OSX_
+OPTIMIZATIONS = -O2 -fomit-frame-pointer -pipe
+
+OSX_CXXFLAGS = $(OPTIMIZATIONS) $(LIB_CXXFLAGS) -D_OSX_ -Wall
 OSX_LDFLAGS = -framework OpenGL -framework GLUT $(LIB_LDFLAGS)
 
-LINUX_CXXFLAGS = -O3 $(LIB_CXXFLAGS)
-LINUX_LDFLAGS = -lGL -lGLU -lglut $(LIB_LDFLAGS) -L/usr/X11R6/lib -lXmu -lXi
+LINUX_CXXFLAGS = $(OPTIMIZATIONS) $(LIB_CXXFLAGS) -Wall -march=i686
+LINUX_LDFLAGS = -lGL -lGLU -lglut $(LIB_LDFLAGS) -L/usr/X11R6/lib -lXi
 
 # Uncomment these for OSX
 CXXFLAGS = $(OSX_CXXFLAGS)
