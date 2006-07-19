@@ -40,25 +40,16 @@
 
 namespace Boom
 {
-	const float VERSION = 0.1;
+	extern const float VERSION;
 
-	const char *COMPILE_DATE = __DATE__;
-	const char *COMPILE_TIME = __TIME__;
+	extern const char *COMPILE_DATE;
+	extern const char *COMPILE_TIME;
 	
-	void init()
-	{
-		Log::init();
-		VirtualFS::init();
-		Event::init();
-	}
+	// Initialize all modules
+	void init();
 	
-	void cleanup()
-	{
-		LOG_INFO << "Shutting down..." << endl;
-		Event::cleanup();
-		VirtualFS::cleanup();
-		Log::cleanup();
-	}
+	// Cleanup all modules
+	void cleanup();
 }
 
 #endif

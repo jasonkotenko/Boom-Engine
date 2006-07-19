@@ -6,7 +6,7 @@
 
 void split(const string& str,
            vector<string>& tokens,
-           const string& delimiters = " ")
+           const string& delimiters)
 {
     // Skip delimiters at beginning.
     string::size_type lastPos = str.find_first_not_of(delimiters, 0);

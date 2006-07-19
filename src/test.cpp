@@ -44,12 +44,14 @@ void display()
 	fps++;
 	if (fps_timer <= seconds())
 	{
-		LOG_DEBUG << "Frames per second: " << fps / FPS_PRINT_DELAY << endl;
+		LOG_INFO << "Frames per second: " << fps / FPS_PRINT_DELAY << endl;
 		fps = 0;
 		fps_timer = seconds() + FPS_PRINT_DELAY;
 	}
 	
 	SDL_GL_SwapBuffers();
+	
+	//usleep(1);
 }
 
 void quit()
