@@ -139,10 +139,10 @@ int main(int argc, char *argv[])
 			switch(event.type)
 			{
 				case SDL_QUIT:
-					Event::post(EVENT_QUIT, PRIORITY_HIGH);
+					Event::post(EVENT_QUIT, Event::PRIORITY_HIGH);
 					break;
 				case SDL_KEYDOWN:
-					Event::post(EVENT_KEY_DOWN, event.key.keysym.sym);
+					Event::post(EVENT_KEY_DOWN, int(event.key.keysym.sym));
 			}
 		}
 		

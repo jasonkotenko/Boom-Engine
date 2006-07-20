@@ -4,6 +4,8 @@
 	Copyright 2006 Daniel G. Taylor
 */
 
+#include <map>
+
 #include "event.h"
 
 namespace Boom
@@ -12,8 +14,10 @@ namespace Boom
 	{
 		struct PostedEvent
 		{
-			EventType		type;
-			PriorityType	priority;
+			Event		name;
+			Priority	priority;
+			
+			virtual ~PostedEvent() {}
 		};
 		
 		struct PostedEventInt: public PostedEvent
@@ -26,6 +30,19 @@ namespace Boom
 			float arg;
 		};
 		
+		struct PostedEventString: public PostedEvent
+		{
+			const char *arg;
+		};
+		
+		unsigned short process_max = PROCESS_MAX_DEFAULT;
+		
+		map <Event, Type>								type_map;
+		map <Event, sigc::signal <void> >				sig_void;
+		map <Event, sigc::signal <void, int> >			sig_int;
+		map <Event, sigc::signal <void, float> >		sig_float;
+		map <Event, sigc::signal <void, const char *> >	sig_string;
+		
 		struct PostedEventComparison
 		{
 			bool operator() (const PostedEvent *left, const PostedEvent *right)
@@ -34,14 +51,6 @@ namespace Boom
 			}
 		};
 		
-		unsigned short process_max = PROCESS_MAX_DEFAULT;
-		
-		sigc::signal<void> sig_quit;
-		sigc::signal<void> sig_state_changed;
-		
-		sigc::signal<void, int> sig_key_down;
-		sigc::signal<void, int> sig_key_up;
-		
 		priority_queue <PostedEvent*,
 						deque <PostedEvent*>,
 						PostedEventComparison> posted_events;
@@ -49,11 +58,16 @@ namespace Boom
 		void init()
 		{
 			LOG_INFO << "Initializing event system..." << endl;
+			add(TYPE_VOID, EVENT_QUIT);
+			add(TYPE_VOID, EVENT_STATE_CHANGED);
+			add(TYPE_INT,  EVENT_KEY_DOWN);
+			add(TYPE_INT,  EVENT_KEY_UP);
 		}
 		
 		void cleanup()
 		{
 			PostedEvent *event;
+			
 			while (posted_events.size() > 0)
 			{
 				event = posted_events.top();
@@ -62,75 +76,99 @@ namespace Boom
 			}
 		}
 		
-		void connect(EventType type, void (*func)(void))
+		void add(Type type, Event event)
 		{
+			sigc::signal <void> *sv;
+			sigc::signal <void, int> *si;
+			sigc::signal <void, float> *sf;
+			sigc::signal <void, const char *> *ss;
+			
 			switch(type)
 			{
-				case EVENT_QUIT:
-					sig_quit.connect(sigc::ptr_fun(func));
+				case TYPE_VOID:
+					sv = new sigc::signal <void> ();
+					sig_void[event] = *sv;
+					delete sv;
 					break;
-				case EVENT_STATE_CHANGED:
-					sig_state_changed.connect(sigc::ptr_fun(func));
+				case TYPE_INT:
+					si = new sigc::signal <void, int> ();
+					sig_int[event] = *si;
+					delete si;
+					break;
+				case TYPE_FLOAT:
+					sf = new sigc::signal <void, float> ();
+					sig_float[event] = *sf;
+					delete sf;
+					break;
+				case TYPE_STRING:
+					ss = new sigc::signal <void, const char *> ();
+					sig_string[event] = *ss;
+					delete ss;
 					break;
 				default:
-					break;
+					LOG_WARNING << "Uknown type '" << type << "' passed to Event::add()"
+								<< endl;
+					return;
 			}
+			type_map[event] = type;
 		}
 		
-		void connect(EventType type, void (*func)(int))
+		void connect(Event event, void (*func)(void))
 		{
-			switch(type)
-			{
-				case EVENT_KEY_DOWN:
-					sig_key_down.connect(sigc::ptr_fun(func));
-					break;
-				case EVENT_KEY_UP:
-					sig_key_up.connect(sigc::ptr_fun(func));
-					break;
-				default:
-					break;
-			}
+			sig_void[event].connect(sigc::ptr_fun(func));
 		}
 		
-		void connect(EventType type, void (*func)(float))
+		void connect(Event event, void (*func)(int))
 		{
-			switch(type)
-			{
-				default:
-					break;
-			}
+			sig_int[event].connect(sigc::ptr_fun(func));
 		}
 		
-		void post(EventType type, PriorityType priority)
+		void connect(Event event, void (*func)(float))
 		{
-			PostedEvent *event = new PostedEvent();
-			
-			event->type = type;
-			event->priority = priority;
-			
-			posted_events.push(event);
+			sig_float[event].connect(sigc::ptr_fun(func));
 		}
 		
-		void post(EventType type, int arg, PriorityType priority)
+		void post(Event event, Priority priority)
 		{
-			PostedEventInt *event = new PostedEventInt();
+			PostedEvent *e = new PostedEvent();
 			
-			event->type = type;
-			event->arg = arg;
-			event->priority = priority;
+			e->name = event;
+			e->priority = priority;
 			
-			posted_events.push(static_cast<PostedEvent*>(event));
+			posted_events.push(e);
 		}
 		
-		void post(EventType type, float arg, PriorityType priority)
+		void post(Event event, int arg, Priority priority)
 		{
-			PostedEventFloat *event = new PostedEventFloat();
+			PostedEventInt *e = new PostedEventInt();
 			
-			event->type = type;
-			event->arg = arg;
-			event->priority = priority;
+			e->name = event;
+			e->arg = arg;
+			e->priority = priority;
 			
-			posted_events.push(static_cast<PostedEvent*>(event));
+			posted_events.push(static_cast <PostedEvent*> (e));
+		}
+		
+		void post(Event event, float arg, Priority priority)
+		{
+			PostedEventFloat *e = new PostedEventFloat();
+			
+			e->name = event;
+			e->arg = arg;
+			e->priority = priority;
+			
+			posted_events.push(static_cast <PostedEvent*> (e));
+		}
+		
+		void post(Event event, const char *arg, Priority priority)
+		{
+			PostedEventString *e = new PostedEventString();
+			
+			e->name = event;
+			e->arg = arg;
+			e->priority = priority;
+			
+			posted_events.push(static_cast <PostedEvent*> (e));
 		}
 		
 		void process()
@@ -142,30 +180,25 @@ namespace Boom
 			{
 				event = posted_events.top();
 				
-				switch(event->type)
+				switch(type_map[event->name])
 				{
-					case EVENT_QUIT:
-						sig_quit();
-						delete event;
+					case TYPE_VOID:
+						sig_void[event->name]();
 						break;
-					case EVENT_STATE_CHANGED:
-						sig_state_changed();
-						delete event;
+					case TYPE_INT:
+						sig_int[event->name](dynamic_cast <PostedEventInt*> (event)->arg);
 						break;
-					case EVENT_KEY_DOWN:
-						sig_key_down(reinterpret_cast<PostedEventInt*>(event)->arg);
-						delete reinterpret_cast<PostedEventInt*>(event);
+					case TYPE_FLOAT:
+						sig_float[event->name](dynamic_cast <PostedEventFloat*> (event)->arg);
 						break;
-					case EVENT_KEY_UP:
-						sig_key_up(reinterpret_cast<PostedEventInt*>(event)->arg);
-						delete reinterpret_cast<PostedEventInt*>(event);
+					case TYPE_STRING:
+						sig_string[event->name](dynamic_cast <PostedEventString*> (event)->arg);
 						break;
-					case EVENT_NULL:
-						LOG_WARNING << "EVENT_NULL is a placeholder and should not be used!"
-									<< endl;
+					default:
 						break;
 				}
 				
+				delete event;
 				posted_events.pop();
 				processed++;
 			}

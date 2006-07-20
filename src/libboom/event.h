@@ -16,7 +16,7 @@ using namespace std;
 
 namespace Boom
 {
-	enum EventType
+	enum DefaultEvents
 	{
 		EVENT_QUIT,				// void
 		EVENT_STATE_CHANGED,	// void
@@ -25,30 +25,50 @@ namespace Boom
 		EVENT_NULL				// placeholder, used internally
 	};
 	
-	enum PriorityType
-	{
-		PRIORITY_LOW,		// Processed when there is extra time
-		PRIORITY_NORMAL,	// Processed as soon as possible
-		PRIORITY_HIGH		// Processed immediately
-	};
-	
-	extern unsigned short process_max;	// Maximum number of events to process
-										// in a single call to process()
-	const unsigned short PROCESS_MAX_DEFAULT = 15;
-	
 	namespace Event
-	{	
+	{
+		typedef unsigned int Event;
+		
+		enum Type
+		{
+			TYPE_VOID,			// No arguments
+			TYPE_INT,			// Single int argument
+			TYPE_FLOAT,			// Single float argument
+			TYPE_STRING			// Single string argument
+		};
+		
+		enum Priority
+		{
+			PRIORITY_LOW,		// Processed when there is extra time
+			PRIORITY_NORMAL,	// Processed as soon as possible
+			PRIORITY_HIGH		// Processed immediately
+		};
+		
+		extern unsigned short process_max;	// Maximum number of events to process
+											// in a single call to process()
+											
+		const unsigned short PROCESS_MAX_DEFAULT = 15;
+		
+		// Initialize and cleanup the event module
 		void init();
 		void cleanup();
 		
-		void connect(EventType type, void (*func)(void));
-		void connect(EventType type, void (*func)(int));
-		void connect(EventType type, void (*func)(float));
+		// Add a new unique event identifier
+		void add(Type type, Event event);
 		
-		void post(EventType type, PriorityType priority = PRIORITY_NORMAL);
-		void post(EventType type, int arg, PriorityType priority = PRIORITY_NORMAL);
-		void post(EventType type, float arg, PriorityType priority = PRIORITY_NORMAL);
+		// Connect a function to an event identifier
+		void connect(Event event, void (*func)(void));
+		void connect(Event event, void (*func)(int));
+		void connect(Event event, void (*func)(float));
+		void connect(Event event, void (*func)(const char *));
 		
+		// Post an event to the queue
+		void post(Event event, Priority priority = PRIORITY_NORMAL);
+		void post(Event event, int arg, Priority priority = PRIORITY_NORMAL);
+		void post(Event event, float arg, Priority priority = PRIORITY_NORMAL);
+		void post(Event event, const char *arg, Priority priority = PRIORITY_NORMAL);
+		
+		// Process the events posted to the queue
 		void process();
 	}
 }

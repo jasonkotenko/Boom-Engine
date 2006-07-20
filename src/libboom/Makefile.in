@@ -30,9 +30,11 @@ all::$(OS_TARGET)
 
 libboom.so: $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
+	touch ../demo/test.cpp
 
 libboom.dylib: $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@
+	touch ../demo/test.cpp
 
 log.o: log.h
 
