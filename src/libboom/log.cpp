@@ -4,6 +4,7 @@
 	Copyright 2006 Daniel G. Taylor
 */
 
+#include <fstream>
 #include "log.h"
 
 using namespace Boom;

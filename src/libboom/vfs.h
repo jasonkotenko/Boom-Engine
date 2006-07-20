@@ -8,12 +8,7 @@
 #define _VFS_H
 
 #include <string>
-#include <vector>
-
-#include <unistd.h>
-#include <bzlib.h>
-
-#include "log.h"
+#include <fstream>
 
 using namespace std;
 

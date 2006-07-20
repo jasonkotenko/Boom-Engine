@@ -3,6 +3,7 @@
 */
 
 #include <stack>
+#include <cstdlib>
 
 #include "state.h"
 

@@ -5,8 +5,13 @@
 */
 
 #include <map>
+#include <queue>
+#include <sigc++/sigc++.h>
 
 #include "event.h"
+#include "log.h"
+
+using namespace std;
 
 namespace Boom
 {

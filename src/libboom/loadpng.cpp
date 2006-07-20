@@ -9,7 +9,6 @@
 #include <cstdlib>
 
 #include "loadpng.h"
-
 #include "vfs.h"
 
 using namespace std;

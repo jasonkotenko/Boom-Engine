@@ -28,7 +28,6 @@
 #define _LOG_H
 
 #include <iostream>
-#include <fstream>
 
 using namespace std;
 
@@ -58,33 +57,38 @@ using namespace std;
 
 namespace Boom
 {
-
-namespace Log
-{
-	// Defines log output verbosity levels
-	enum LogLevel { LEVEL_DEBUG, LEVEL_INFO, LEVEL_WARNING, LEVEL_ERROR,
-											LEVEL_CRITICAL, LEVEL_DISABLED };
-
-	extern LogLevel level;
-	extern ostream *output;
+	namespace Log
+	{
+		// Defines log output verbosity levels
+		enum LogLevel
+		{
+			LEVEL_DEBUG,
+			LEVEL_INFO,
+			LEVEL_WARNING,
+			LEVEL_ERROR,
+			LEVEL_CRITICAL,
+			LEVEL_DISABLED
+		};
 	
-	// Initialize the logging system
-	void init();
-	
-	// Clean up memory before shutdown
-	void cleanup();
-	
-	// Set the output stream (e.g. cout, a file, etc)
-	void set_output(ostream *new_output);
-	
-	/*
-		Set the minimum output level, e.g. specifying LEVEL_INFO will only
-		print messages that have a level of INFO or higher, ignoring messages
-		with a level of DEBUG.
-	*/
-	void set_level(LogLevel new_level);
-}
-
+		extern LogLevel level;
+		extern ostream *output;
+		
+		// Initialize the logging system
+		void init();
+		
+		// Clean up memory before shutdown
+		void cleanup();
+		
+		// Set the output stream (e.g. cout, a file, etc)
+		void set_output(ostream *new_output);
+		
+		/*
+			Set the minimum output level, e.g. specifying LEVEL_INFO will
+			only print messages that have a level of INFO or higher,
+			ignoring messages with a level of DEBUG.
+		*/
+		void set_level(LogLevel new_level);
+	}
 }
 
 #endif

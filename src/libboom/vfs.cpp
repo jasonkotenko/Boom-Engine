@@ -2,7 +2,14 @@
 	Virtual Filesystem Implementation
 */
 
+#include <vector>
+#include <unistd.h>
+#include <bzlib.h>
+
+#include "log.h"
 #include "vfs.h"
+
+using namespace std;
 
 namespace Boom
 {

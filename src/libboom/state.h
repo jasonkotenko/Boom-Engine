@@ -10,10 +10,6 @@
 #ifndef _STATE_H
 #define _STATE_H
 
-#include <cstdlib>
-
-using namespace std;
-
 namespace Boom
 {
 	namespace State

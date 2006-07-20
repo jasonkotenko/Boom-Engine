@@ -7,13 +7,6 @@
 #ifndef _EVENT_H
 #define _EVENT_H
 
-#include <queue>
-#include <sigc++/sigc++.h>
-
-#include "log.h"
-
-using namespace std;
-
 namespace Boom
 {
 	enum DefaultEvents

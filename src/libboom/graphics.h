@@ -12,7 +12,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <fstream>
 
 #ifdef _OSX_
 	#include <OpenGL/GL.h>
