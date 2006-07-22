@@ -5,6 +5,9 @@
 */
 
 #include "graphics.h"
+#include "stringfuncs.h"
+#include "log.h"
+#include "loadpng.h"
 #include "vfs.h"
 
 namespace Boom

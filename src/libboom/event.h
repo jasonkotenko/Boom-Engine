@@ -7,6 +7,11 @@
 #ifndef _EVENT_H
 #define _EVENT_H
 
+#include <map>
+#include <sigc++/sigc++.h>
+
+using namespace std;
+
 namespace Boom
 {
 	enum DefaultEvents
@@ -20,15 +25,7 @@ namespace Boom
 	
 	namespace Event
 	{
-		typedef unsigned int Event;
-		
-		enum Type
-		{
-			TYPE_VOID,			// No arguments
-			TYPE_INT,			// Single int argument
-			TYPE_FLOAT,			// Single float argument
-			TYPE_STRING			// Single string argument
-		};
+		typedef unsigned int EventID;
 		
 		enum Priority
 		{
@@ -42,26 +39,29 @@ namespace Boom
 											
 		const unsigned short PROCESS_MAX_DEFAULT = 15;
 		
+		extern map <EventID, sigc::signal <void, void *> > signals;
+		
 		// Initialize and cleanup the event module
 		void init();
 		void cleanup();
 		
 		// Add a new unique event identifier
-		void add(Type type, Event event);
+		//void add(Type type, Event event);
+		void add(EventID event);
 		
 		// Connect a function to an event identifier
-		void connect(Event event, void (*func)(void));
-		void connect(Event event, void (*func)(int));
-		void connect(Event event, void (*func)(float));
-		void connect(Event event, void (*func)(const char *));
+		void connect(EventID event, void (*func)(void *));
+		
+		template <class Object>
+		void connect(EventID event, Object *instance, void (Object::*func)(void *))
+		{
+			signals[event].connect(sigc::mem_fun(*instance, func));
+		}
 		
 		// Post an event to the queue
-		void post(Event event, Priority priority = PRIORITY_NORMAL);
-		void post(Event event, int arg, Priority priority = PRIORITY_NORMAL);
-		void post(Event event, float arg, Priority priority = PRIORITY_NORMAL);
-		void post(Event event, const char *arg, Priority priority = PRIORITY_NORMAL);
+		void post(EventID event, void *args = NULL, Priority priority = PRIORITY_NORMAL);
 		
-		// Process the events posted to the queue
+		// Process posted events
 		void process();
 	}
 }

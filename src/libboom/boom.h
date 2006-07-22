@@ -39,6 +39,8 @@
 #include "event.h"
 #include "graphics.h"
 #include "state.h"
+#include "interface.h"
+#include "sdl_interface.h"
 
 namespace Boom
 {

@@ -3,9 +3,9 @@ OSX_TARGET = libboom.dylib
 LINUX_TARGET = libboom.so
 
 LIB_CXXFLAGS = `sdl-config --cflags` `pkg-config --cflags libpng sigc++-2.0`
-LIB_LDFLAGS = `sdl-config --cflags | sed 's/-lSDLmain//'`  `pkg-config --libs libpng sigc++-2.0` -lbz2
+LIB_LDFLAGS = `sdl-config --libs | sed 's/-lSDLmain//'`  `pkg-config --libs libpng sigc++-2.0` -lbz2
 
-OPTIMIZATIONS = -O2 -fomit-frame-pointer -pipe
+OPTIMIZATIONS = -fomit-frame-pointer -pipe
 
 OSX_CXXFLAGS = -D_OSX_
 OSX_LDFLAGS = -framework OpenGL -framework GLUT -dynamiclib
@@ -24,6 +24,8 @@ OBJECTS =	log.o \
 			loadpng.o \
 			graphics.o \
 			state.o \
+			interface.o \
+			sdl_interface.o \
 			boom.o
 
 all::$(OS_TARGET)
@@ -46,11 +48,15 @@ stringfuncs.o: stringfuncs.h
 
 loadpng.o: loadpng.h
 
-graphics.o: graphics.h loadpng.h
+graphics.o: graphics.h loadpng.h log.h
 
-state.o: state.h
+state.o: state.h log.h
 
-boom.o: boom.h
+boom.o: boom.h log.h
+
+interface.o: interface.h state.h
+
+sdl_interface.o: sdl_interface.h interface.h event.h state.h
 
 install:
 	install $(OS_TARGET) $(PREFIX)/lib
