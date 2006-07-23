@@ -11,6 +11,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 #include <map>
 
 #include "gl.h"
@@ -57,6 +58,28 @@ namespace Boom
 			
 			void set();
 		};
+		
+		/*
+		
+		*/
+		struct HullVertex2d: Point2d
+		{
+			double	angle;
+			Point2d *pivot;
+		};
+		
+		struct Hull2d
+		{
+			Hull2d();
+			void generate(vector <Point3d> &vertices);
+			void calc_center();
+			void calc_radius();
+			void optimize(unsigned int size);
+			
+			Point2d				center;
+			float				radius;
+			vector <Point2d>	vertices;
+		};
 
 		/*
 			
@@ -80,6 +103,7 @@ namespace Boom
 				vector <Point2d> texture_coords;
 				vector <MeshPolygon> polygons;
 				map <string, Material> materials;
+				Hull2d hull;
 				
 				void clear();
 				void load(const char *filename);
@@ -120,6 +144,10 @@ namespace Boom
 				map <unsigned int, SceneObject> objects;
 				map <string, Mesh> meshes;
 		};
+		
+		double distance2d(Point2d *v1, Point2d *v2);
+		double polar_angle2d(Point2d *pole, Point2d *point);
+		double cross2d(Point2d *v1, Point2d *v2, Point2d *v3);
 	}
 }
 
