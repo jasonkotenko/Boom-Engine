@@ -34,20 +34,36 @@ namespace Boom
 			PRIORITY_HIGH		// Processed immediately
 		};
 		
+		struct EventData
+		{
+			sigc::signal <void, void *> signal;
+			sigc::slot <void, void *> deallocator;
+		};
+		
 		extern unsigned short process_max;	// Maximum number of events to process
 											// in a single call to process()
 											
 		const unsigned short PROCESS_MAX_DEFAULT = 15;
 		
-		extern map <EventID, sigc::signal <void, void *> > signals;
+		//extern map <EventID, sigc::signal <void, void *> > signals;
+		extern map <EventID, EventData> signals;
 		
 		// Initialize and cleanup the event module
 		void init();
 		void cleanup();
 		
 		// Add a new unique event identifier
-		//void add(Type type, Event event);
-		void add(EventID event);
+		void add(EventID event, void (*deallocator)(void *) = NULL);
+		
+		template <class Object>
+		void add(EventID event, Object *instance, void (Object::*deallocator)(void *))
+		{
+			EventData data;
+			
+			data.deallocator = sigc::mem_fun(*instance, deallocator);
+			
+			signals[event] = data;
+		}
 		
 		// Connect a function to an event identifier
 		void connect(EventID event, void (*func)(void *));
@@ -55,7 +71,7 @@ namespace Boom
 		template <class Object>
 		void connect(EventID event, Object *instance, void (Object::*func)(void *))
 		{
-			signals[event].connect(sigc::mem_fun(*instance, func));
+			signals[event].signal.connect(sigc::mem_fun(*instance, func));
 		}
 		
 		// Post an event to the queue

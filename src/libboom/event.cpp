@@ -23,11 +23,9 @@ namespace Boom
 			Priority	priority;
 		};
 		
-		
-		
 		unsigned short process_max = PROCESS_MAX_DEFAULT;
 		
-		map <EventID, sigc::signal <void, void *> > signals;
+		map <EventID, EventData> signals;
 		
 		struct PostedEventComparison
 		{
@@ -40,12 +38,21 @@ namespace Boom
 		priority_queue <PostedEvent*,
 						deque <PostedEvent*>,
 						PostedEventComparison> posted_events;
+		
+		void dealloc_int(void *args)
+		{
+			int *i = reinterpret_cast<int *>(args);
+			
+			delete i;
+		}
 	
 		void init()
 		{
 			LOG_INFO << "Initializing event system..." << endl;
 			add(EVENT_QUIT);
-			add(EVENT_KEY_DOWN);
+			add(EVENT_STATE_CHANGED);
+			add(EVENT_KEY_DOWN, dealloc_int);
+			add(EVENT_KEY_UP, dealloc_int);
 		}
 		
 		void cleanup()
@@ -60,39 +67,57 @@ namespace Boom
 			}
 		}
 		
-		void add(EventID event)
+		void add(EventID event, void (*deallocator)(void *))
 		{
-			sigc::signal <void, void*> sig;
+			EventData data;
 			
-			signals[event] = sig;
+			if (deallocator != NULL)
+			{
+				data.deallocator = sigc::ptr_fun(deallocator);
+			}
+			
+			signals[event] = data;
 		}
 		
 		void connect(EventID event, void (*func)(void *))
 		{
-			signals[event].connect(sigc::ptr_fun(func));
+			signals[event].signal.connect(sigc::ptr_fun(func));
 		}
 		
 		void post(EventID event, void *args, Priority priority)
 		{
-			PostedEvent *e = new PostedEvent();
+			PostedEvent *e;
 			
-			e->name = event;
-			e->args = args;
-			e->priority = priority;
+			if (!signals[event].signal.empty())
+			{
+				e = new PostedEvent();
 			
-			posted_events.push(e);
+				e->name = event;
+				e->args = args;
+				e->priority = priority;
+			
+				posted_events.push(e);
+			}
 		}
 		
 		void process()
 		{
 			PostedEvent *event;
+			EventData *data;
 			unsigned short processed = 0;
 			
 			while (posted_events.size() > 0 && processed < process_max)
 			{
 				event = posted_events.top();
-				signals[event->name](event->args);
+				data = &signals[event->name];
+				
+				data->signal(event->args);
 			
+				if (data->deallocator)
+				{
+					data->deallocator(event->args);
+				}
+				
 				delete event;
 				posted_events.pop();
 				processed++;

@@ -16,27 +16,12 @@ namespace Boom
 		State *current;
 		stack <State*> state_stack;
 		
+		State::State()
+		{
+			running = true;
+		}
+		
 		State::~State()
-		{
-		
-		}
-		
-		void State::update()
-		{
-		
-		}
-		
-		void State::draw()
-		{
-		
-		}
-		
-		void State::key_pressed(int key)
-		{
-		
-		}
-		
-		void State::key_released(int key)
 		{
 		
 		}

@@ -17,15 +17,17 @@ namespace Boom
 		class State
 		{
 			public:
-				virtual ~State();
+				State();
+				virtual ~State() = 0;
 				
-				virtual void update();
-				virtual void draw();
+				virtual void update() = 0;
+				virtual void draw() = 0;
 			
-				virtual void key_pressed(int key);
-				virtual void key_released(int key);
-			private:
+				virtual void key_pressed(int key) = 0;
+				virtual void key_released(int key) = 0;
 				
+			protected:
+				bool running;
 		};
 		
 		extern State *current;

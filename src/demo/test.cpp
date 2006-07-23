@@ -35,7 +35,10 @@ class TestState: public State::State
 		
 		void update()
 		{
-			
+			if (running)
+			{
+				
+			}
 		}
 		
 		void draw()
@@ -78,11 +81,6 @@ class TestState: public State::State
 		Graphics::Scene scene;
 };
 
-void test(int x)
-{
-	cout << x << endl;
-}
-
 void start()
 {
 	Interface::SDLInterface interface;
@@ -92,8 +90,6 @@ void start()
 	
 	fps = 0;
 	fps_timer = Interface::seconds() + FPS_PRINT_DELAY;
-	
-	//Event::connect(EVENT_KEY_DOWN, sigc::ptr_fun(test));
 	
 	interface.start();
 	

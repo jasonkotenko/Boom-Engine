@@ -61,7 +61,9 @@ namespace Boom
 							{
 								State::current->key_pressed(int(event.key.keysym.sym));
 							}
-							Event::post(EVENT_KEY_DOWN, reinterpret_cast<void*>(&event.key.keysym.sym), Event::PRIORITY_HIGH);
+							int *i = new int();
+							*i = event.key.keysym.sym;
+							Event::post(EVENT_KEY_DOWN, reinterpret_cast<void*>(i), Event::PRIORITY_HIGH);
 							break;
 					}
 				}
