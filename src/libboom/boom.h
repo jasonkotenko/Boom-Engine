@@ -38,6 +38,7 @@
 #include "vfs.h"
 #include "event.h"
 #include "graphics.h"
+#include "scene.h"
 #include "state.h"
 #include "interface.h"
 #include "sdl_interface.h"

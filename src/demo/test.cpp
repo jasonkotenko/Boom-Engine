@@ -19,16 +19,30 @@ const double FPS_PRINT_DELAY = 5.0;
 double fps_timer;
 int fps;
 
+//------------------------------------------------------------------------------
 class TestState: public State::State
 {
 	public:
 		TestState()
 		{
-			scene.add("simpleplane", 0, 0, 0);
-			scene.add("player", 3, 2, 0);
-			scene.add("player", -3, 1, 0);
-			scene.add("player", 3, -3, 0);
-			scene.add("bomb", -2, -1, 0);
+			// Add some objects into the scene...
+			Scene::Object *obj;
+			
+			obj = new Scene::Object("simpleplane", 0, 0, 0);
+			scene.add(Scene::TYPE_LEVEL, obj);
+			
+			obj = new Scene::Object("player", 3, 2, 0);
+			player = obj;
+			scene.add(Scene::TYPE_PLAYER, obj);
+			
+			obj = new Scene::Object("player", -3, 1, 0);
+			scene.add(Scene::TYPE_PLAYER, obj);
+			
+			obj = new Scene::Object("player", 3, -3, 0);
+			scene.add(Scene::TYPE_PLAYER, obj);
+			
+			obj = new Scene::Object("bomb", -2, -1, 0);
+			scene.add(Scene::TYPE_BOMB, obj);
 		}
 		
 		~TestState() {}
@@ -37,7 +51,7 @@ class TestState: public State::State
 		{
 			if (running)
 			{
-				
+				scene.update();
 			}
 		}
 		
@@ -58,6 +72,8 @@ class TestState: public State::State
 				fps = 0;
 				fps_timer = current + FPS_PRINT_DELAY;
 			}
+			
+			usleep(1);
 		}
 		
 		void key_pressed(int key)
@@ -66,6 +82,18 @@ class TestState: public State::State
 			{
 				case 27:
 					Event::post(EVENT_QUIT);
+					break;
+				case 276: // left
+					player->x--;
+					break;
+				case 273: // up
+					player->y++;
+					break;
+				case 275: // right
+					player->x++;
+					break;
+				case 274: // down
+					player->y--;
 					break;
 				default:
 					LOG_INFO << "Key pressed: " << key << endl;
@@ -78,9 +106,11 @@ class TestState: public State::State
 		}
 		
 	private:
-		Graphics::Scene scene;
+		Scene::Scene scene;
+		Scene::Object *player;
 };
 
+//------------------------------------------------------------------------------
 void start()
 {
 	Interface::SDLInterface interface;
@@ -96,11 +126,14 @@ void start()
 	Boom::cleanup();
 }
 
+//==============================================================================
 int main(int argc, char *argv[])
-{	
+{
+	cout << "Using BOOM version " << Boom::VERSION << " compiled on " << Boom::COMPILE_DATE << " " << Boom::COMPILE_TIME << endl;
+	
 	Boom::init();
 	
-	LOG_DEBUG << "Using BOOM version " << Boom::VERSION << " compiled on " << Boom::COMPILE_DATE << " " << Boom::COMPILE_TIME << endl;
+	Log::set_level(Log::LEVEL_DEBUG);
 	
 	char path[255];
 	getcwd(path, 255);

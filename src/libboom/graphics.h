@@ -117,34 +117,9 @@ namespace Boom
 				void generate_display_list();
 		};
 		
-		struct SceneObject: public Point3d
-		{
-			string mesh;
-			bool render;
-		};
-		
-		class Scene
-		{
-			public:
-				Scene()
-				{
-					current_id = 0;
-				}
-				
-				~Scene() {}
-				
-				void clear();
-				int add(const char *mesh_name, float x, float y, float z);
-				bool move(int id, float dx, float dy, float dz);
-				void remove(int id);
-				void render();
+		/*
 			
-			private:
-				unsigned int current_id;
-				map <unsigned int, SceneObject> objects;
-				map <string, Mesh> meshes;
-		};
-		
+		*/
 		double distance2d(Point2d *v1, Point2d *v2);
 		double polar_angle2d(Point2d *pole, Point2d *point);
 		double cross2d(Point2d *v1, Point2d *v2, Point2d *v3);

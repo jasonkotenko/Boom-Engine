@@ -23,6 +23,7 @@ OBJECTS =	log.o \
 			stringfuncs.o \
 			loadpng.o \
 			graphics.o \
+			scene.o \
 			state.o \
 			interface.o \
 			sdl_interface.o \
@@ -49,6 +50,8 @@ stringfuncs.o: stringfuncs.h
 loadpng.o: loadpng.h
 
 graphics.o: graphics.h loadpng.h log.h
+
+scene.o: scene.h graphics.h log.h
 
 state.o: state.h log.h
 

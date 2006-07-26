@@ -75,16 +75,16 @@ namespace Boom
 							switch(mode)
 							{
 								case MODE_READ:
-									fmode = fstream::in;
+									fmode = ios::in;
 									break;
 								case MODE_WRITE:
-									fmode = fstream::out;
+									fmode = ios::out | ios::trunc;
 									break;
 								case MODE_READ_BINARY:
-									fmode = fstream::in | fstream::binary;
+									fmode = ios::in | ios::binary;
 									break;
 								case MODE_WRITE_BINARY:
-									fmode = fstream::out | fstream::binary;
+									fmode = ios::out | ios::trunc | ios::binary;
 									break;
 								default:
 									LOG_WARNING << "Unknown file mode, "
