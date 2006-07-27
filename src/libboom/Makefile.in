@@ -19,6 +19,7 @@ LDFLAGS = $(LIB_LDFLAGS) $(OS_LDFLAGS)
 
 OBJECTS =	log.o \
 			vfs.o \
+			tarfile.o \
 			event.o \
 			stringfuncs.o \
 			loadpng.o \
@@ -42,6 +43,8 @@ libboom.dylib: $(OBJECTS)
 log.o: log.h
 
 vfs.o: vfs.h log.h
+
+tarfile.o: tarfile.h
 
 event.o: event.h log.h
 
