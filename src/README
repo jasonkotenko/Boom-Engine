@@ -1,0 +1,14 @@
+===============
+= Boom Engine =
+===============
+
+About
+-----
+Boom is a game engine for 3d bomberman-like games.
+
+Build requirements
+------------------
+freeglut3-dev
+libsdl1.2-dev
+libsigc++-2.0-dev
+libbz2-dev
