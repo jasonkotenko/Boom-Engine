@@ -4,8 +4,6 @@
 	Copyright 2006 Daniel G. Taylor
 */
 
-#define DISPLAY_MESH_HULLS = 1;
-
 #include <algorithm>
 #include <cmath>
 
@@ -16,6 +14,8 @@
 #include "vfs.h"
 
 using namespace std;
+
+#define DISPLAY_MESH_HULLS = 1
 
 namespace Boom
 {
@@ -320,25 +320,6 @@ namespace Boom
 				glEnd();
 			}
 			
-			#ifdef DISPLAY_MESH_HULLS
-				
-				glDisable(GL_LIGHTING);
-				glDisable(GL_DEPTH_TEST);
-				glColor3f(0.0, 1.0, 0.0);
-				
-				glBegin(GL_LINE_LOOP);
-				for (vector <Point2d>::iterator vertex = hull.vertices.begin();
-					 vertex != hull.vertices.end(); vertex++)
-				{
-					glVertex3f(vertex->x, vertex->y, 0.1);
-				}
-				glEnd();
-				
-				glEnable(GL_DEPTH_TEST);
-				glEnable(GL_LIGHTING);
-				
-			#endif
-			
 			glEndList();
 		}
 		
@@ -355,6 +336,26 @@ namespace Boom
 				glCallList(display_list);
 				glEnable(GL_TEXTURE_2D);
 			}
+			
+			#ifdef DISPLAY_MESH_HULLS
+				
+				glDisable(GL_LIGHTING);
+				glDisable(GL_TEXTURE_2D);
+			
+				glColor3f(0.0, 0.8, 0.0);
+			
+				glBegin(GL_LINE_LOOP);
+				for (vector <Point2d>::iterator vertex = hull.vertices.begin();
+					 vertex != hull.vertices.end(); vertex++)
+				{
+					glVertex3f(vertex->x, vertex->y, 0.1);
+				}
+				glEnd();
+			
+				glEnable(GL_TEXTURE_2D);
+				glEnable(GL_LIGHTING);
+			
+			#endif
 		}
 		
 		//----------------------------------------------------------------------
