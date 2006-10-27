@@ -12,12 +12,12 @@
 		</head>
 		<body>
 			<h1><xsl:value-of select="/document/title"/></h1>
-			<p class="author">
-				Written by <xsl:value-of select="/document/author"/>
-			</p>
 			<xsl:for-each select="/document/section">
 				<xsl:apply-templates select="."/>
 			</xsl:for-each>
+			<p class="author">
+				Written by <xsl:value-of select="/document/author"/>
+			</p>
 		</body>
 	</html>
 </xsl:template>
@@ -29,11 +29,11 @@
 </xsl:template>
 
 <xsl:template match="heading">
-	<h2><xsl:value-of select="."/></h2>
+	<h2><xsl:apply-templates/></h2>
 </xsl:template>
 
 <xsl:template match="subheading">
-	<h3><xsl:value-of select="."/></h3>
+	<h3><xsl:apply-templates/></h3>
 </xsl:template>
 
 <xsl:template match="p">
@@ -47,7 +47,7 @@
 </xsl:template>
 
 <xsl:template match="def">
-	<span class="def"><strong><xsl:value-of select="./@term"/>:</strong> <span class="desc"><xsl:value-of select="."/></span></span>
+	<span class="def"><strong><xsl:value-of select="./@term"/>:</strong> <span class="desc"><xsl:apply-templates/></span></span>
 </xsl:template>
 
 <xsl:template match="list">

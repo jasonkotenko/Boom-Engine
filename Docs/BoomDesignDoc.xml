@@ -53,5 +53,18 @@
 		<p>
 			The event system allows messages to be passed around inside the engine. It provides facilities to create new events, register event handlers (functions or methods to be called when an event occurs), and to post new events to the queue. Events are stored in a prioritized queue.
 		</p>
+		<p>
+			On each game cycle a configurable number of events are processed, starting with the high priority events in the queue. As each event is processed its handlers will be called. As a simple example imagine this scenario:
+		</p>
+		<p>
+			The engine has an event defined called EVENT_KEY_DOWN. The game registers a handler function for that event. Each time a user presses a key on the keyboard, the handler is called with the appropriate key information as its arguments.
+		</p>
+		<p>
+			The game engine has several events defined by default, but more can be defined by the game itself. Once an event is defined it can be posted by the game engine itself.
+		</p>
+		<subheading>Virtual Filesystem</subheading>
+		<p>
+			The virtual filesystem is an abstraction layer for file access within the game engine.
+		</p>
 	</section>
 </document>
