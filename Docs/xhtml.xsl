@@ -38,12 +38,12 @@
 
 <xsl:template match="p">
 	<p>
-		<xsl:value-of select="."/>
+		<xsl:apply-templates/>
 	</p>
 </xsl:template>
 
 <xsl:template match="strong">
-	<strong><xsl:value-of select="."/></strong>
+	<strong><xsl:apply-templates/></strong>
 </xsl:template>
 
 <xsl:template match="def">
@@ -58,6 +58,10 @@
 		</li>
 	</xsl:for-each>
 	</ul>
+</xsl:template>
+
+<xsl:template match="img">
+	<img><xsl:attribute name="src"><xsl:value-of select="."/></xsl:attribute></img>
 </xsl:template>
 
 </xsl:stylesheet>

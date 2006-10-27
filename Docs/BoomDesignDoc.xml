@@ -12,6 +12,9 @@
 		<p>
 			Boom contains an event system, a logging system, a game state manager, a virtual filesystem, a menu system, and a scene manager, as well as various utility routines.
 		</p>
+		<p>
+			<img>Overview.png</img>
+		</p>
 		<subheading>Logging System</subheading>
 		<p>
 			One of the lowest level components of the game engine is its logging facility. This allows the engine itself to print or save prioritized messages about what is going on and provides this functionality to any game using the engine as well. The log messages themselves can be prioritized based on whether they are debug, informational, warning, error, or critical error statements:
@@ -45,6 +48,10 @@
 		</p>
 		<p>
 			The state manager allows states to be pushed and popped off of the stack. It also contains convenience functionality to clear the stack and to replace the top element of the stack.
+		</p>
+		<subheading>Event System</subheading>
+		<p>
+			The event system allows messages to be passed around inside the engine. It provides facilities to create new events, register event handlers (functions or methods to be called when an event occurs), and to post new events to the queue. Events are stored in a prioritized queue.
 		</p>
 	</section>
 </document>
