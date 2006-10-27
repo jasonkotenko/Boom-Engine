@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<document>
+	<title>Boom Engine Design Document</title>
+	<author>Daniel G. Taylor</author>
+	<heading>Engine Overview</heading>
+	<p>
+		Boom is a free software game engine with which to write three-dimensional Bomberman-like games. The engine is composed of various components that provide facilities for use by games that link with the engine. This document will describe these components, starting with a broad overview. This document is <strong>not</strong> meant to be an API reference, but instead a more general overview of how the engine functions.
+	</p>
+	<p>
+		Boom contains an event system, a logging system, a game state manager, a virtual filesystem, a menu system, and a scene manager, as well as various utility routines.
+	</p>
+	<subheading>Logging System</subheading>
+	<p>
+		One of the lowest level components of the game engine is its logging facility. This allows the engine itself to print or save prioritized messages about what is going on and provides this functionality to any game using the engine as well. The log messages themselves can be prioritized based on whether they are debug, informational, warning, error, or critical error statements:
+	</p>
+	<list>
+		<def term="Debug">
+			Low-level informational message used during development.
+		</def>
+		<def term="Informational">
+			General informational message.
+		</def>
+		<def term="Warning">
+			Something is wrong, but we can continue.
+		</def>
+		<def term="Error">
+			Something important went wrong, but we can recover.
+		</def>
+		<def term="Critical Error">
+			Something important went wrong, and we cannot recover.
+		</def>
+	</list>
+	<subheading>Game State Manager</subheading>
+	<def term="Game State">
+		A set of properties and handlers for the current situation within the game. Examples of game states could be the main menu, the loading screen, playing within a level, or when the game is paused.
+	</def>
+	<p>
+		The game state manager is in charge of handling what state the game is currently in and delegating input/calls to that state, as well as handling moving from one game state to another. You can think of the state manager as a stack. When a game is first started it can e.g. push a main menu state onto the stack, which will wait for user input. When an item is selected it will push the playing state, which will handle user input by moving a character around the screen. When the player dies, the playing state will be popped off of the stack and the user will find herself at the main menu state once again (or perhaps a game over state that is pushed onto the stack).
+	</p>
+	<p>
+		Every time a state is pushed onto the stack any user input will be delegated to that state. On each game update cycle the state will be updated and drawn to the screen. Therefore each state must contain this functionality.
+	</p>
+	<p>
+		The state manager allows states to be pushed and popped off of the stack. It also contains convenience functionality to clear the stack and to replace the top element of the stack.
+	</p>
+</document>
