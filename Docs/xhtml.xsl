@@ -64,4 +64,8 @@
 	<img><xsl:attribute name="src"><xsl:value-of select="."/></xsl:attribute></img>
 </xsl:template>
 
+<xsl:template match="acronym">
+	<acronym><xsl:attribute name="title"><xsl:value-of select="./@title"/></xsl:attribute><xsl:value-of select="."/></acronym>
+</xsl:template>
+
 </xsl:stylesheet>

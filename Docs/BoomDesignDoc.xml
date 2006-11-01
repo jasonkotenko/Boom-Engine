@@ -10,7 +10,7 @@
 			Boom is a free software game engine with which to write three-dimensional Bomberman-like games. The engine is composed of various components that provide facilities for use by games that link with the engine. This document will describe these components, starting with a broad overview. This document is <strong>not</strong> meant to be an API reference, but instead a more general overview of how the engine functions.
 		</p>
 		<p>
-			Boom contains an event system, a logging system, a game state manager, a virtual filesystem, a menu system, and a scene manager, as well as various utility routines.
+			Boom contains an event system, a logging system, a game state manager, a virtual filesystem, a menu system, an interface system, and a scene manager, as well as various utility routines.
 		</p>
 		<p>
 			<img>Overview.png</img>
@@ -50,21 +50,60 @@
 			The state manager allows states to be pushed and popped off of the stack. It also contains convenience functionality to clear the stack and to replace the top element of the stack.
 		</p>
 		<subheading>Event System</subheading>
+		<def term="Callback">
+			A function that is called when an event occurs
+		</def>
 		<p>
-			The event system allows messages to be passed around inside the engine. It provides facilities to create new events, register event handlers (functions or methods to be called when an event occurs), and to post new events to the queue. Events are stored in a prioritized queue.
+			The event system allows messages to be passed around inside the engine. It provides facilities to create new events, register event callbacks (functions or methods to be called when an event occurs), and to post new events to the queue. Events are stored in a prioritized queue.
 		</p>
 		<p>
-			On each game cycle a configurable number of events are processed, starting with the high priority events in the queue. As each event is processed its handlers will be called. As a simple example imagine this scenario:
+			On each game cycle a configurable number of events are processed, starting with the high priority events in the queue. As each event is processed its callbacks will be called. As a simple example imagine this scenario:
 		</p>
 		<p>
-			The engine has an event defined called EVENT_KEY_DOWN. The game registers a handler function for that event. Each time a user presses a key on the keyboard, the handler is called with the appropriate key information as its arguments.
+			The engine has an event defined called EVENT_KEY_DOWN. The game registers a callback function for that event. Each time a user presses a key on the keyboard, the handler is called with the appropriate key information as its arguments.
 		</p>
 		<p>
 			The game engine has several events defined by default, but more can be defined by the game itself. Once an event is defined it can be posted by the game engine itself.
 		</p>
 		<subheading>Virtual Filesystem</subheading>
 		<p>
-			The virtual filesystem is an abstraction layer for file access within the game engine.
+			The virtual filesystem is an abstraction layer for file access within the game engine. All file access is done through the virtual file system.
+		</p>
+		<p>
+			At its most basic level the <acronym title="Virtual Filesystem">VFS</acronym> can mount directories into its tree to allow other modules in the engine access. To keep things simple everything is mounted in the root directory, so for example if a directory '/home/dan/test' exists with a file called 'foo.bar' and the engine is told to mount '/home/dan/test', then modules within the engine will be able to access the file via '/foo.bar'.
+		</p>
+		<p>
+			Assuming that two files of the same name exist, the one mounted last will be used.
+		</p>
+		<p>
+			One useful feature of the virtual filesystem is that it hides how the files are accessed, so it is possible to write handlers for e.g. compressed archives (that is, the ability to mount and access files within a compressed archive just as if they were in some directory).
+		</p>
+		<subheading>Menu System</subheading>
+		<p>
+			The menu system provides a simple way for games to quickly create and display menus. Each menu can contain any number of items that each have a callback registered to them. Each menu item can also contain its own submenu.
+		</p>
+		<subheading>Interface System</subheading>
+		<p>
+			The interface system creates and displays windows, handles user input, etc. The default interface class that the engine uses is based on <acronym title="Simple DirectMedia Layer">SDL</acronym>. The main purpose of this system is to allow other interfaces to be used, such as one based on <acronym title="Graphics Library Utility Toolkit">GLUT</acronym>.
+		</p>
+		<subheading>Scene Manager</subheading>
+		<p>
+			The scene manager is the heart of the game itself. It handles drawing a level, characters, and items to the screen.
+		</p>
+		<p>
+			Each scene has a camera associated with it. The camera defines how the user will see the scene, and how her view of that scene changes when certain events occur (such as a camera shake, for example).
+		</p>
+		<p>
+			A scene is composed of multiple scene objects. A scene object is basically a point in space within the scene with an attached mesh. Players and items are examples of scene objects. The level is a scene object, too. On each game update cycle every scene object is given a chance to update. Objects will move, be tested for collisions, animate, etc.
+		</p>
+	</section>
+	<section>
+		<heading>Initialization Walkthrough</heading>
+		<p>
+			This section is meant to give a quick overview of what exactly happens from when a game calls the Boom's initialization routine to when the game is running.
+		</p>
+		<p>
+			When the engine's initialization routine is called each module within the engine will be initialized, starting with the logging system. The logging system will set the default log level and return. Next, the event system will register default events and callbacks. Then, the virtual filesystem will by default mount the current working directory and the game state stack is set to contain nothing. After this, the engine is initialized and it is up to the game developer to add her own states and start the main loop.
 		</p>
 	</section>
 </document>
