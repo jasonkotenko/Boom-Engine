@@ -17,20 +17,34 @@ using namespace std;
 
 namespace Boom
 {
+	//! The virtual file system.
+	/*!
+		An abstraction layer to file system access used within the engine.
+		Directories and compressed files can be mounted 
+	*/
 	namespace VirtualFS
-	{	
+	{
+		/*!
+			Mount point type, either a directory or compressed archive.
+		*/
 		enum MountPointType
 		{
 			TYPE_DIRECTORY,
 			TYPE_BZIP_TAR
 		};
 		
+		/*!
+			Mount point in the virtual file system
+		*/
 		struct MountPoint
 		{
 			string			path;
 			MountPointType	type;
 		};
 		
+		/*!
+			The mode a file is opened with (e.g. read, write, etc).
+		*/
 		enum FileMode
 		{
 			MODE_READ,
@@ -41,9 +55,20 @@ namespace Boom
 		
 		typedef fstream File;
 		
+		/*!
+			Initialize this module. This will mount the current working
+			directory.
+		*/
 		void init();
+		
+		/*!
+			Cleanup this module.
+		*/
 		void cleanup();
 		
+		/*!
+			Mount a location in the virtual file system.
+		*/
 		void mount(string location);
 		void umount(string location);
 		

@@ -14,9 +14,11 @@ LINUX_LDFLAGS = -lGL -lGLU -lglut -L/usr/X11R6/lib -lXi
 CXXFLAGS = $(OPTIMIZATIONS) $(LIB_CXXFLAGS) -Wall $(OS_CXXFLAGS) -I../libboom
 LDFLAGS = $(LIB_LDFLAGS) $(OS_LDFLAGS) -L../libboom -lboom
 
-all::test
+all::test bmesh
 
 test: test.cpp
+
+bmesh: bmesh.cpp
 
 clean:
 	rm -rf *.o test core

@@ -6,6 +6,9 @@ all:: all-recursive
 all-recursive:
 	for dir in $(SUBDIRS); do cd $$dir; $(MAKE) all; cd ..; done
 
+docs:
+	doxygen doxygen.config
+
 install:
 	for dir in $(SUBDIRS); do cd $$dir; $(MAKE) install; cd ..; done
 

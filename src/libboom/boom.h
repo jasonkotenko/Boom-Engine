@@ -31,6 +31,27 @@
 		Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 */
 
+/*! \mainpage
+
+	\section about About
+	Boom is an engine for creating bomberman-like games.
+	
+	\section simple_usage Simple Usage
+	Here is a quick example:
+	
+	\code
+	#include "boom.h"
+	
+	using namespace Boom;
+	
+	int main()
+	{
+		// Initialize Boom
+		init();
+	}
+	\endcode
+*/
+
 #ifndef _BOOM_H
 #define _BOOM_H
 
@@ -43,6 +64,11 @@
 #include "interface.h"
 #include "sdl_interface.h"
 
+/// The main Boom Engine namespace.
+/*!
+	This contains all of the engine functions and objects that can be used when
+	creating a game.
+*/
 namespace Boom
 {
 	extern const float VERSION;
@@ -50,10 +76,10 @@ namespace Boom
 	extern const char *COMPILE_DATE;
 	extern const char *COMPILE_TIME;
 	
-	// Initialize all modules
+	//! Initialize all modules
 	void init();
 	
-	// Cleanup all modules
+	//! Cleanup all modules
 	void cleanup();
 }
 

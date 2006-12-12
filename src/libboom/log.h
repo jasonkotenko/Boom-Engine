@@ -57,9 +57,13 @@ using namespace std;
 
 namespace Boom
 {
+	/// The logging system.
+	/*!
+		Provides facilities to output log messages.
+	*/
 	namespace Log
 	{
-		// Defines log output verbosity levels
+		// Defines log output verbosity levels.
 		enum LogLevel
 		{
 			LEVEL_DEBUG,
