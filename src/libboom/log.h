@@ -60,10 +60,22 @@ namespace Boom
 	/// The logging system.
 	/*!
 		Provides facilities to output log messages.
+		
+		Macros are defined so the functions below don't need to be used directly,
+		instead one can do something like
+		
+		\code
+		#include "boom/log.h"
+		
+		void myfunc()
+		{
+			LOG_DEBUG << "This is a debug message!" << endl;
+		}
+		\endcode
 	*/
 	namespace Log
 	{
-		// Defines log output verbosity levels.
+		//! Defines log output verbosity levels.
 		enum LogLevel
 		{
 			LEVEL_DEBUG,
@@ -77,16 +89,17 @@ namespace Boom
 		extern LogLevel level;
 		extern ostream *output;
 		
-		// Initialize the logging system
+		//! Initialize the logging system
 		void init();
 		
-		// Clean up memory before shutdown
+		//! Clean up memory before shutdown
 		void cleanup();
 		
-		// Set the output stream (e.g. cout, a file, etc)
+		//! Set the output stream (e.g. cout, a file, etc)
 		void set_output(ostream *new_output);
 		
-		/*
+		/// Set the minimum output level.
+		/*!
 			Set the minimum output level, e.g. specifying LEVEL_INFO will
 			only print messages that have a level of INFO or higher,
 			ignoring messages with a level of DEBUG.

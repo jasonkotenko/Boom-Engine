@@ -286,6 +286,7 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
+		// TODO: Use vertex lists???
 		void Mesh::generate_display_list()
 		{
 			Material *last = NULL;
