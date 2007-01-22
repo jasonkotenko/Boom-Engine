@@ -54,15 +54,17 @@ namespace Boom
 		*/
 		struct EventData
 		{
-			sigc::signal <void, void *> signal;
-			sigc::slot <void, void *> deallocator;
+			sigc::signal <void, void *> signal; //!< The callback
+			sigc::slot <void, void *> deallocator; //!< Called to deallocate mem
 		};
 		
-		extern unsigned short process_max;	// Maximum number of events to process
-											// in a single call to process()
-											
+		//! Maximum number of events to process in a single call to process()
+		extern unsigned short process_max;
+		
+		//! The default number of events to process in one call to process()
 		const unsigned short PROCESS_MAX_DEFAULT = 15;
 		
+		//! A dict mapping event IDs to their callbacks and deallocators
 		extern map <EventID, EventData> signals;
 		
 		//! Initialize the event module
