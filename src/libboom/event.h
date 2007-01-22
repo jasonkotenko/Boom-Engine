@@ -14,6 +14,10 @@ using namespace std;
 
 namespace Boom
 {
+	/// Default internal events
+	/*!
+		Events automatically registered for use within the engine and games.
+	*/
 	enum DefaultEvents
 	{
 		EVENT_QUIT,				// void
@@ -23,10 +27,20 @@ namespace Boom
 		EVENT_NULL				// placeholder, used internally
 	};
 	
+	/// The event system namespace
+	/*!
+		Utilities to add events to the system, connect to and post events, and
+		process the current event queue.
+	*/
 	namespace Event
 	{
 		typedef unsigned int EventID;
 		
+		/// Event priority
+		/*!
+			The priority of an event, from low to high. Higher priority events
+			take precedence over lower priority ones.
+		*/
 		enum Priority
 		{
 			PRIORITY_LOW,		// Processed when there is extra time
@@ -34,6 +48,10 @@ namespace Boom
 			PRIORITY_HIGH		// Processed immediately
 		};
 		
+		/// Information about an event
+		/*!
+			The signal and deallocator for an event type.
+		*/
 		struct EventData
 		{
 			sigc::signal <void, void *> signal;
@@ -45,16 +63,18 @@ namespace Boom
 											
 		const unsigned short PROCESS_MAX_DEFAULT = 15;
 		
-		//extern map <EventID, sigc::signal <void, void *> > signals;
 		extern map <EventID, EventData> signals;
 		
-		// Initialize and cleanup the event module
+		//! Initialize the event module
 		void init();
+		
+		//! Cleanup the event module
 		void cleanup();
 		
-		// Add a new unique event identifier
+		//! Add a new unique event identifier (function)
 		void add(EventID event, void (*deallocator)(void *) = NULL);
 		
+		//! Add a new unique event identifier (method)
 		template <class Object>
 		void add(EventID event, Object *instance, void (Object::*deallocator)(void *))
 		{
@@ -65,19 +85,20 @@ namespace Boom
 			signals[event] = data;
 		}
 		
-		// Connect a function to an event identifier
+		//! Connect a function to an event identifier
 		void connect(EventID event, void (*func)(void *));
 		
+		//! Connect a method to an event identifier
 		template <class Object>
 		void connect(EventID event, Object *instance, void (Object::*func)(void *))
 		{
 			signals[event].signal.connect(sigc::mem_fun(*instance, func));
 		}
 		
-		// Post an event to the queue
+		//! Post an event to the queue
 		void post(EventID event, void *args = NULL, Priority priority = PRIORITY_NORMAL);
 		
-		// Process posted events
+		//! Process posted events
 		void process();
 	}
 }

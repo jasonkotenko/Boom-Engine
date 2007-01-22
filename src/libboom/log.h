@@ -9,7 +9,7 @@
 			
 			LOG_INFO << "This is some info!" << endl;
 			// Do some stuff here...
-			LOG_WARNING << "Whoops, check out line: " << 10 << endl;
+			LOG_WARNING << "Whoops, something isn't right!" << endl;
 		
 		Log Message Types
 		-----------------
@@ -78,12 +78,12 @@ namespace Boom
 		//! Defines log output verbosity levels.
 		enum LogLevel
 		{
-			LEVEL_DEBUG,
-			LEVEL_INFO,
-			LEVEL_WARNING,
-			LEVEL_ERROR,
-			LEVEL_CRITICAL,
-			LEVEL_DISABLED
+			LEVEL_DEBUG,	//!< Debug messages
+			LEVEL_INFO,		//!< General informational messages
+			LEVEL_WARNING,	//!< Warning messages
+			LEVEL_ERROR,	//!< Recoverable error messages
+			LEVEL_CRITICAL,	//!< Non-recoverable error messages
+			LEVEL_DISABLED	//!< No logging
 		};
 	
 		extern LogLevel level;

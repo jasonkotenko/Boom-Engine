@@ -11,4 +11,8 @@ Build requirements
 freeglut3-dev
 libsdl1.2-dev
 libsigc++-2.0-dev
-libbz2-dev
+scons
+
+Building
+--------
+Just type 'scons' into a terminal. Use 'scons -c' to clean.

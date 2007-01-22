@@ -1,0 +1,38 @@
+# Generic build options
+LIB_CFLAGS = "`sdl-config --cflags` `pkg-config --cflags libpng sigc++-2.0`"
+
+DEMO_CFLAGS = LIB_CFLAGS + " -Ilibboom"
+DEMO_LDFLAGS = "`sdl-config --libs`  `pkg-config --libs libpng sigc++-2.0`"
+
+# Operating system specific build options
+import platform
+if platform.system() == "Linux":
+	DEMO_LDFLAGS += " -lGL -lGLU -lglut -L/usr/X11R6/lib -lXi"
+elif platform.system() == "Darwin":
+	DEMO_LDFLAGS += " -framework OpenGL -framework GLUT"
+
+# Library objects to build and link together
+LIB_OBJECTS = """
+				boom
+				event
+				graphics
+				interface
+				loadpng
+				log
+				scene
+				sdl_interface
+				state
+				stringfuncs
+				vfs
+			  """
+
+# Build the library
+objs = []
+for target in LIB_OBJECTS.split():
+	tmp = SharedObject("libboom/" + target + ".cpp", CPPPATH="libboom", CCFLAGS=LIB_CFLAGS)
+	objs.append(tmp)
+
+SharedLibrary("libboom/libboom", objs)
+
+# Build the demo
+Program("demo/test.cpp", CPPPATH="libboom", CCFLAGS=DEMO_CFLAGS, LINKFLAGS=DEMO_LDFLAGS, LIBPATH="libboom", LIBS="boom")
