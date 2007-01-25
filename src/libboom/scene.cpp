@@ -4,6 +4,9 @@
 
 #include "log.h"
 #include "scene.h"
+#include <cmath>
+
+using namespace std;
 
 namespace Boom
 {
@@ -45,7 +48,31 @@ namespace Boom
 		//----------------------------------------------------------------------
 		void Object::render(Scene *scene)
 		{
-			
+			scene->meshes[mesh].render();
+		}
+		
+		//----------------------------------------------------------------------
+		MovableObject::MovableObject(const char *mesh, float x, float y, float z)
+		{
+			this->mesh = mesh;
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			do_render = true;
+			collision_type = COLLISION_CONVEX_HULL;
+			angle = 0;
+			speed = 0;
+			moving = false;
+		}
+		
+		//----------------------------------------------------------------------
+		void MovableObject::update(Scene *scene)
+		{
+			if (moving)
+			{
+				x += cos(angle) * speed * tdiff;
+				y += sin(angle) * speed * tdiff;
+			}
 		}
 		
 		//----------------------------------------------------------------------
@@ -144,7 +171,7 @@ namespace Boom
 				{
 					glPushMatrix();
 					glTranslatef((*obj)->x, (*obj)->y, (*obj)->z);
-					meshes[(*obj)->mesh].render();
+					(*obj)->render(this);
 					glPopMatrix();
 				}
 			}

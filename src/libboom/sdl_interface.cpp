@@ -44,6 +44,7 @@ namespace Boom
 		void SDLInterface::start()
 		{
 			SDL_Event event;
+			int *i;
 			
 			while (running)
 			{
@@ -61,10 +62,18 @@ namespace Boom
 							{
 								State::current->key_pressed(int(event.key.keysym.sym));
 							}
-							int *i = new int();
+							i = new int();
 							*i = event.key.keysym.sym;
 							Event::post(EVENT_KEY_DOWN, reinterpret_cast<void*>(i), Event::PRIORITY_HIGH);
 							break;
+						case SDL_KEYUP:
+							if (State::current)
+							{
+								State::current->key_released(int (event.key.keysym.sym));
+							}
+							i = new int();
+							*i = event.key.keysym.sym;
+							Event::post(EVENT_KEY_UP, reinterpret_cast<void*>(i), Event::PRIORITY_HIGH);
 					}
 				}
 				

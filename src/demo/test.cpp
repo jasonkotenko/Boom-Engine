@@ -31,8 +31,8 @@ class TestState: public State::State
 			obj = new Scene::Object("simpleplane", 0, 0, 0);
 			scene.add(Scene::TYPE_LEVEL, obj);
 			
-			obj = new Scene::Object("player", 3, 2, 0);
-			player = obj;
+			player = new Scene::MovableObject("player", 3, 2, 0);
+			obj = (Scene::Object *) player;
 			scene.add(Scene::TYPE_PLAYER, obj);
 			
 			obj = new Scene::Object("player", -3, 1, 0);
@@ -84,16 +84,24 @@ class TestState: public State::State
 					Event::post(EVENT_QUIT);
 					break;
 				case 276: // left
-					player->x--;
+					player->angle = 3.14;
+					player->speed = 1.0;
+					player->moving = true;
 					break;
 				case 273: // up
-					player->y++;
+					player->angle = 1.57979632;
+					player->speed = 1.0;
+					player->moving = true;
 					break;
 				case 275: // right
-					player->x++;
+					player->angle = 0.0;
+					player->speed = 1.0;
+					player->moving = true;
 					break;
 				case 274: // down
-					player->y--;
+					player->angle = 4.71238898;
+					player->speed = 1.0;
+					player->moving = true;
 					break;
 				default:
 					LOG_INFO << "Key pressed: " << key << endl;
@@ -102,12 +110,17 @@ class TestState: public State::State
 		
 		void key_released(int key)
 		{
-		
+			switch (key)
+			{
+				case 276: case 273: case 275: case 274:
+					player->moving = false;
+					break;
+			}
 		}
 		
 	private:
 		Scene::Scene scene;
-		Scene::Object *player;
+		Scene::MovableObject *player;
 };
 
 //------------------------------------------------------------------------------

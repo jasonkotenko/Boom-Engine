@@ -23,7 +23,7 @@ namespace Boom
 			double s;
 			
 			gettimeofday(&t, NULL);
-			s = t.tv_sec + (t.tv_usec / 10000000.0);
+			s = t.tv_sec + (t.tv_usec / 1000000.0);
 			
 			return s;
 		}
@@ -31,7 +31,7 @@ namespace Boom
 		BaseInterface::BaseInterface()
 		{
 			tdiff = 0;
-			last_time = 0;
+			last_time = seconds();
 		}
 		
 		BaseInterface::~BaseInterface()
@@ -105,6 +105,7 @@ namespace Boom
 		{
 			double current = seconds();
 			tdiff = current - last_time;
+			//LOG_INFO << tdiff << ", " << current << ", " << last_time << endl;
 			last_time = current;
 		}
 	}

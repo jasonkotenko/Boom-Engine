@@ -13,6 +13,7 @@
 #include <map>
 
 #include "graphics.h"
+#include "interface.h"
 
 using namespace std;
 
@@ -56,6 +57,16 @@ namespace Boom
 			virtual void render(Scene *scene);
 		};
 		
+		struct MovableObject: public Object
+		{
+			double angle;
+			double speed;
+			bool   moving;
+			
+			MovableObject(const char *mesh, float x, float y, float z);
+			virtual void update(Scene *scene);
+		};
+		
 		typedef list <Object *> ObjectList;
 		typedef map <ObjectType, ObjectList> TypedObjectLists;
 		typedef map <string, Graphics::Mesh> MeshList;
@@ -73,7 +84,7 @@ namespace Boom
 				void update();
 				void render();
 			
-			private:
+			//private:
 				TypedObjectLists objects;
 				ObjectList		 objects_flat;
 				MeshList		 meshes;
