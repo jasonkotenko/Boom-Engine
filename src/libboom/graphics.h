@@ -115,19 +115,25 @@ namespace Boom
 			//! Optimize the hull to a number of lines
 			void optimize(unsigned int size);
 			
-			Point2d				center;
-			float				radius;
-			vector <Point2d>	vertices;
+			Point2d				center;		//!< The center point of the hull
+			float				radius;		//!< The radius of the hull
+			vector <Point2d>	vertices;	//!< A list of hull vertices
 		};
 
-		/*
-			
+		/// A vertex in a mesh
+		/*!
+			A mesh vertex containing a indices to the vertex, normal, and 
+			texture coordinate data.
 		*/
 		struct MeshVertex
 		{
 			int pos, normal, texture_coord;
 		};
-
+		
+		/// A polygon in a mesh
+		/*!
+			
+		*/
 		struct MeshPolygon
 		{
 			vector <MeshVertex> vertices;
@@ -157,8 +163,9 @@ namespace Boom
 		};
 		
 		/*
-			
+			Math functions...
 		*/
+		
 		double distance2d(Point2d *v1, Point2d *v2);
 		double polar_angle2d(Point2d *pole, Point2d *point);
 		double cross2d(Point2d *v1, Point2d *v2, Point2d *v3);
