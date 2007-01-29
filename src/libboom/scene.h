@@ -79,11 +79,14 @@ namespace Boom
 		struct MovableObject: public Object
 		{
 			double angle;
+			int    angle_deg;
 			double speed;
 			bool   moving;
 			
 			MovableObject(const char *mesh, float x, float y, float z);
 			virtual void update(Scene *scene);
+			virtual void render(Scene *scene);
+			virtual void update_angle(double angle);
 		};
 		
 		typedef list <Object *> ObjectList;

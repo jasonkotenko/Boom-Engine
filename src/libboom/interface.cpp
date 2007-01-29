@@ -108,5 +108,64 @@ namespace Boom
 			//LOG_INFO << tdiff << ", " << current << ", " << last_time << endl;
 			last_time = current;
 		}
+		
+		KeyboardMovement::KeyboardMovement()
+		{
+			angle = 0.0;
+			_left = _right = _up = _down = moving = false;
+		}
+		
+		void KeyboardMovement::right()
+		{
+			_right = !_right;
+			update_angle();
+			update_moving();
+		}
+		
+		void KeyboardMovement::left()
+		{
+			_left = !_left;
+			update_angle();
+			update_moving();
+		}
+		
+		void KeyboardMovement::up()
+		{
+			_up = !_up;
+			update_angle();
+			update_moving();
+		}
+		
+		void KeyboardMovement::down()
+		{
+			_down = !_down;
+			update_angle();
+			update_moving();
+		}
+		
+		void KeyboardMovement::update_angle()
+		{
+			if (_up && _left)
+				angle = 2.3562;
+			else if (_up && _right)
+				angle = 0.7854;
+			else if (_down && _left)
+				angle = 3.9270;
+			else if (_down && _right)
+				angle = 5.4978;
+			else if (_up)
+				angle = 1.5708;
+			else if (_down)
+				angle = 4.7124;
+			else if (_left)
+				angle = 3.1416;
+			else if (_right)
+				angle = 0.0;
+		}
+		
+		void KeyboardMovement::update_moving()
+		{
+			moving = _up || _down || _left || _right;
+		}
 	}
 }

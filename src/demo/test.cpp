@@ -32,6 +32,7 @@ class TestState: public State::State
 			scene.add(Scene::TYPE_LEVEL, obj);
 			
 			player = new Scene::MovableObject("player", 3, 2, 0);
+			player->speed = 3.0;
 			obj = (Scene::Object *) player;
 			scene.add(Scene::TYPE_PLAYER, obj);
 			
@@ -76,6 +77,14 @@ class TestState: public State::State
 			usleep(1);
 		}
 		
+		void lay_bomb()
+		{
+			Scene::Object *obj;
+			
+			obj = new Scene::Object("bomb", player->x, player->y, 0);
+			scene.add(Scene::TYPE_BOMB, obj);
+		}
+		
 		void key_pressed(int key)
 		{
 			switch(key)
@@ -84,24 +93,27 @@ class TestState: public State::State
 					Event::post(EVENT_QUIT);
 					break;
 				case 276: // left
-					player->angle = 3.14;
-					player->speed = 1.0;
-					player->moving = true;
+					movement.left();
+					player->update_angle(movement.angle);
+					player->moving = movement.moving;
 					break;
 				case 273: // up
-					player->angle = 1.57979632;
-					player->speed = 1.0;
-					player->moving = true;
+					movement.up();
+					player->update_angle(movement.angle);
+					player->moving = movement.moving;
 					break;
 				case 275: // right
-					player->angle = 0.0;
-					player->speed = 1.0;
-					player->moving = true;
+					movement.right();
+					player->update_angle(movement.angle);
+					player->moving = movement.moving;
 					break;
 				case 274: // down
-					player->angle = 4.71238898;
-					player->speed = 1.0;
-					player->moving = true;
+					movement.down();
+					player->update_angle(movement.angle);
+					player->moving = movement.moving;
+					break;
+				case 32: // space
+					lay_bomb();
 					break;
 				default:
 					LOG_INFO << "Key pressed: " << key << endl;
@@ -112,13 +124,31 @@ class TestState: public State::State
 		{
 			switch (key)
 			{
-				case 276: case 273: case 275: case 274:
-					player->moving = false;
+				case 276: // left
+					movement.left();
+					player->update_angle(movement.angle);
+					player->moving = movement.moving;
+					break;
+				case 273: // up
+					movement.up();
+					player->update_angle(movement.angle);
+					player->moving = movement.moving;
+					break;
+				case 275: // right
+					movement.right();
+					player->update_angle(movement.angle);
+					player->moving = movement.moving;
+					break;
+				case 274: // down
+					movement.down();
+					player->update_angle(movement.angle);
+					player->moving = movement.moving;
 					break;
 			}
 		}
 		
 	private:
+		Interface::KeyboardMovement movement;
 		Scene::Scene scene;
 		Scene::MovableObject *player;
 };

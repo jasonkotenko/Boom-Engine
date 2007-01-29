@@ -51,6 +51,26 @@ namespace Boom
 				//! Stores the result of a call to seconds to calculate time diffs
 				double last_time;
 		};
+		
+		class KeyboardMovement
+		{
+			public:
+				KeyboardMovement();
+				
+				void right();
+				void left();
+				void up();
+				void down();
+				
+				bool moving;
+				double angle;
+			
+			protected:
+				void update_angle();
+				void update_moving();
+			
+				bool _left, _right, _up, _down;
+		};
 	}
 }
 

@@ -61,6 +61,7 @@ namespace Boom
 			do_render = true;
 			collision_type = COLLISION_CONVEX_HULL;
 			angle = 0;
+			angle_deg = 0;
 			speed = 0;
 			moving = false;
 		}
@@ -73,6 +74,20 @@ namespace Boom
 				x += cos(angle) * speed * tdiff;
 				y += sin(angle) * speed * tdiff;
 			}
+		}
+		
+		//----------------------------------------------------------------------
+		void MovableObject::render(Scene *scene)
+		{
+			glRotatef(angle_deg + 90.0, 0.0, 0.0, 1.0);
+			Object::render(scene);
+		}
+		
+		//----------------------------------------------------------------------
+		void MovableObject::update_angle(double angle)
+		{
+			this->angle = angle;
+			angle_deg = angle / M_PI * 180;
 		}
 		
 		//----------------------------------------------------------------------
