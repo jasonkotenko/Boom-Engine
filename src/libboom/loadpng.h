@@ -23,6 +23,10 @@
 
 #include <png.h>
 
+/// A PNG File
+/*!
+	Stores metadata and the pixel data about a Portable Network Graphics file.
+*/
 struct PNGData
 {
 	unsigned long width, height;
@@ -31,6 +35,7 @@ struct PNGData
 	unsigned char *data;
 };
 
+//! Load a PNG from a file
 int load_png(const char *filename, PNGData &data);
 
 #endif

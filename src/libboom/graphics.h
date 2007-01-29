@@ -132,7 +132,7 @@ namespace Boom
 		
 		/// A polygon in a mesh
 		/*!
-			
+			A polygon with a list of vertices and a texture.
 		*/
 		struct MeshPolygon
 		{
@@ -140,6 +140,11 @@ namespace Boom
 			Material *material;
 		};
 		
+		/// A mesh object
+		/*!
+			A representation of a mesh consisting of vertices, normals, texture
+			coordinates, polygons, and materials.
+		*/
 		class Mesh
 		{
 			public:
@@ -150,24 +155,31 @@ namespace Boom
 				map <string, Material> materials;
 				Hull2d hull;
 				
+				//! Clear all the mesh's data
 				void clear();
+				//! Load the mesh from a file
 				void load(const char *filename);
+				//! Render the mesh at the current position in the scene
 				void render();
 			
 			private:
 				int display_list;
 				bool textured;
 				
+				//! Load the materials from a file
 				void load_materials(const char *filename);
+				//! Generate a display list for faster rendering
 				void generate_display_list();
 		};
 		
 		/*
 			Math functions...
 		*/
-		
+		//! Calculate the distance between two coplanar points
 		double distance2d(Point2d *v1, Point2d *v2);
+		//! Calculate the polar angle between a pole and a point
 		double polar_angle2d(Point2d *pole, Point2d *point);
+		//! A coplanar vector cross
 		double cross2d(Point2d *v1, Point2d *v2, Point2d *v3);
 	}
 }

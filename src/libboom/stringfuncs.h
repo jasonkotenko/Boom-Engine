@@ -10,7 +10,7 @@
 
 using namespace std;
 
-// Split a string into multiple parts
+//! Split a string into multiple parts
 void split(const string& str,
            vector<string>& tokens,
            const string& delimiters = " ");
