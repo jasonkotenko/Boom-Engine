@@ -69,6 +69,8 @@ namespace Boom
 			
 			glEnable(GL_DEPTH_TEST);
 			glEnable(GL_TEXTURE_2D);
+			
+			glEnable(GL_NORMALIZE);
 		}
 		
 		void BaseInterface::draw()
@@ -111,7 +113,7 @@ namespace Boom
 		
 		KeyboardMovement::KeyboardMovement()
 		{
-			angle = 0.0;
+			angle = 0;
 			_left = _right = _up = _down = moving = false;
 		}
 		
@@ -146,21 +148,21 @@ namespace Boom
 		void KeyboardMovement::update_angle()
 		{
 			if (_up && _left)
-				angle = 2.3562;
+				angle = 225;
 			else if (_up && _right)
-				angle = 0.7854;
+				angle = 135;
 			else if (_down && _left)
-				angle = 3.9270;
+				angle = 315;
 			else if (_down && _right)
-				angle = 5.4978;
+				angle = 45;
 			else if (_up)
-				angle = 1.5708;
+				angle = 180;
 			else if (_down)
-				angle = 4.7124;
+				angle = 0;
 			else if (_left)
-				angle = 3.1416;
+				angle = 270;
 			else if (_right)
-				angle = 0.0;
+				angle = 90;
 		}
 		
 		void KeyboardMovement::update_moving()

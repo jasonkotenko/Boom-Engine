@@ -39,10 +39,11 @@ class TestState: public State::State
 			obj = new Scene::Object("player", -3, 1, 0);
 			scene.add(Scene::TYPE_PLAYER, obj);
 			
-			obj = new Scene::Object("player", 3, -3, 0);
+			obj = (Scene::Object *) new Scene::RotatingObject("bign", 3, -3, 0);
+			obj->scale.x = obj->scale.y = obj->scale.z = 0.25;
 			scene.add(Scene::TYPE_PLAYER, obj);
 			
-			obj = new Scene::Object("bomb", -2, -1, 0);
+			obj = (Scene::Object *) new Scene::ThrobbingObject("bomb", -2, -1, 0);
 			scene.add(Scene::TYPE_BOMB, obj);
 		}
 		
@@ -81,7 +82,7 @@ class TestState: public State::State
 		{
 			Scene::Object *obj;
 			
-			obj = new Scene::Object("bomb", player->x, player->y, 0);
+			obj = (Scene::Object *) new Scene::ThrobbingObject("bomb", player->x, player->y, 0);
 			scene.add(Scene::TYPE_BOMB, obj);
 		}
 		
@@ -94,22 +95,22 @@ class TestState: public State::State
 					break;
 				case 276: // left
 					movement.left();
-					player->update_angle(movement.angle);
+					player->rotation.z = movement.angle;
 					player->moving = movement.moving;
 					break;
 				case 273: // up
 					movement.up();
-					player->update_angle(movement.angle);
+					player->rotation.z = movement.angle;
 					player->moving = movement.moving;
 					break;
 				case 275: // right
 					movement.right();
-					player->update_angle(movement.angle);
+					player->rotation.z = movement.angle;
 					player->moving = movement.moving;
 					break;
 				case 274: // down
 					movement.down();
-					player->update_angle(movement.angle);
+					player->rotation.z = movement.angle;
 					player->moving = movement.moving;
 					break;
 				case 32: // space
@@ -126,22 +127,22 @@ class TestState: public State::State
 			{
 				case 276: // left
 					movement.left();
-					player->update_angle(movement.angle);
+					player->rotation.z = movement.angle;
 					player->moving = movement.moving;
 					break;
 				case 273: // up
 					movement.up();
-					player->update_angle(movement.angle);
+					player->rotation.z = movement.angle;
 					player->moving = movement.moving;
 					break;
 				case 275: // right
 					movement.right();
-					player->update_angle(movement.angle);
+					player->rotation.z = movement.angle;
 					player->moving = movement.moving;
 					break;
 				case 274: // down
 					movement.down();
-					player->update_angle(movement.angle);
+					player->rotation.z = movement.angle;
 					player->moving = movement.moving;
 					break;
 			}

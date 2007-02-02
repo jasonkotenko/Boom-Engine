@@ -12,25 +12,31 @@ namespace Boom
 {
 	namespace Scene
 	{
-		static ObjectID id = 0;
+		static ObjectID gid = 0;
 		
 		//----------------------------------------------------------------------
 		Object::Object()
 		{
+			id = gid++;
 			x = y = z = 0;
-			do_render = true;
+			do_render = false;
 			collision_type = COLLISION_CONVEX_HULL;
+			rotation.x = rotation.y = rotation.z = 0;
+			scale.x = scale.y = scale.z = 1.0;
 		}
 		
 		//----------------------------------------------------------------------
 		Object::Object(const char *mesh, float x, float y, float z)
 		{
+			id = gid++;
 			this->mesh = mesh;
 			this->x = x;
 			this->y = y;
 			this->z = z;
 			do_render = true;
 			collision_type = COLLISION_CONVEX_HULL;
+			rotation.x = rotation.y = rotation.z = 0;
+			scale.x = scale.y = scale.z = 1.0;
 		}
 		
 		//----------------------------------------------------------------------
@@ -48,20 +54,30 @@ namespace Boom
 		//----------------------------------------------------------------------
 		void Object::render(Scene *scene)
 		{
+			//LOG_INFO << "Rendering object " << id << endl;
+			glPushMatrix();
+			glTranslatef(x, y, z);
+			if (scale.x != 1.0 || scale.y != 1.0 || scale.z != 1.0)
+				glScalef(scale.x, scale.y, scale.z);
+			if (rotation.x)
+				glRotatef(rotation.x, 1.0, 0.0, 0.0);
+			if (rotation.y)
+				glRotatef(rotation.y, 0.0, 1.0, 0.0);
+			if (rotation.z)
+				glRotatef(rotation.z, 0.0, 0.0, 1.0);
 			scene->meshes[mesh].render();
+			glPopMatrix();
 		}
 		
 		//----------------------------------------------------------------------
 		MovableObject::MovableObject(const char *mesh, float x, float y, float z)
 		{
+			Object::Object(mesh, x, y, z);
 			this->mesh = mesh;
 			this->x = x;
 			this->y = y;
 			this->z = z;
 			do_render = true;
-			collision_type = COLLISION_CONVEX_HULL;
-			angle = 0;
-			angle_deg = 0;
 			speed = 0;
 			moving = false;
 		}
@@ -71,23 +87,65 @@ namespace Boom
 		{
 			if (moving)
 			{
-				x += cos(angle) * speed * tdiff;
-				y += sin(angle) * speed * tdiff;
+				x += cos((rotation.z - 90) * M_PI / 180.0) * speed * tdiff;
+				y += sin((rotation.z - 90) * M_PI / 180.0) * speed * tdiff;
 			}
 		}
 		
 		//----------------------------------------------------------------------
-		void MovableObject::render(Scene *scene)
+		RotatingObject::RotatingObject(const char *mesh, float x, float y, 
+									   float z)
 		{
-			glRotatef(angle_deg + 90.0, 0.0, 0.0, 1.0);
-			Object::render(scene);
+			Object::Object(mesh, x, y, z);
+			this->mesh = mesh;
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			do_render = true;
+			rot_speed = 1.0;
+			rotating = true;
 		}
 		
 		//----------------------------------------------------------------------
-		void MovableObject::update_angle(double angle)
+		void RotatingObject::update(Scene *scene)
 		{
-			this->angle = angle;
-			angle_deg = angle / M_PI * 180;
+			if (rotating)
+			{
+				rotation.z += rot_speed * 30 * tdiff;
+				if (rotation.z > 360)
+					rotation.z -= 360;
+			}
+		}
+		
+		//----------------------------------------------------------------------
+		ThrobbingObject::ThrobbingObject(const char *mesh, float x, float y, 
+									   float z)
+		{
+			Object::Object(mesh, x, y, z);
+			this->mesh = mesh;
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			do_render = true;
+			throb_speed = 3.0;
+			throb_mod = 0.1;
+			throbbing = true;
+			throb_pos = 0;
+		}
+		
+		//----------------------------------------------------------------------
+		void ThrobbingObject::update(Scene *scene)
+		{
+			if (throbbing)
+			{
+				scale.x -= sin(throb_pos) * throb_mod;
+				scale.y -= sin(throb_pos) * throb_mod;
+				scale.z -= sin(throb_pos) * throb_mod;
+				throb_pos += throb_speed * tdiff;
+				scale.x += sin(throb_pos) * throb_mod;
+				scale.y += sin(throb_pos) * throb_mod;
+				scale.z += sin(throb_pos) * throb_mod;
+			}
 		}
 		
 		//----------------------------------------------------------------------
@@ -125,12 +183,10 @@ namespace Boom
 				meshes[obj->mesh] = m;
 			}
 			
-			obj->id = ++id;
-			
 			objects[type].push_back(obj);
 			objects_flat.push_back(obj);
 			
-			return id;
+			return obj->id;
 		}
 		
 		//----------------------------------------------------------------------
@@ -184,10 +240,7 @@ namespace Boom
 			{
 				if ((*obj)->do_render)
 				{
-					glPushMatrix();
-					glTranslatef((*obj)->x, (*obj)->y, (*obj)->z);
 					(*obj)->render(this);
-					glPopMatrix();
 				}
 			}
 		}

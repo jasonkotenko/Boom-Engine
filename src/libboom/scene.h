@@ -61,6 +61,8 @@ namespace Boom
 			bool 			do_render;
 			CollisionType 	collision_type;
 			ObjectID		id;
+			Point3d			rotation;
+			Point3d			scale;
 			
 			Object();
 			Object(const char *mesh, float x, float y, float z);
@@ -71,6 +73,7 @@ namespace Boom
 			//! Render the object's mesh to the scene
 			virtual void render(Scene *scene);
 		};
+		
 		/// A movable object within a scene
 		/*!
 			This represents an object which can be given a speed and angle
@@ -78,15 +81,38 @@ namespace Boom
 		*/
 		struct MovableObject: public Object
 		{
-			double angle;
-			int    angle_deg;
 			double speed;
 			bool   moving;
 			
 			MovableObject(const char *mesh, float x, float y, float z);
 			virtual void update(Scene *scene);
-			virtual void render(Scene *scene);
-			virtual void update_angle(double angle);
+		};
+		
+		/// A simple rotating object
+		/*!
+			This represents an object that simple rotates along the vertical
+			axis.
+		*/
+		struct RotatingObject: public Object
+		{
+			double rot_speed;
+			bool   rotating;
+			
+			RotatingObject(const char *mesh, float x, float y, float z);
+			virtual void update(Scene *scene);
+		};
+		
+		struct ThrobbingObject: public Object
+		{
+			double throb_speed;
+			double throb_mod;
+			bool   throbbing;
+			
+			ThrobbingObject(const char *mesh, float x, float y, float z);
+			virtual void update(Scene *scene);
+			
+			private:
+				double throb_pos;
 		};
 		
 		typedef list <Object *> ObjectList;
