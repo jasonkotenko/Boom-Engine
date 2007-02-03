@@ -118,8 +118,18 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
-		ThrobbingObject::ThrobbingObject(const char *mesh, float x, float y, 
-									   float z)
+		BobbingObject::BobbingObject()
+		{
+			Object::Object();
+			bob_speed = 3.0;
+			bob_mod = 0.1;
+			bobbing = true;
+			bob_pos = 0;
+		}
+		
+		//----------------------------------------------------------------------
+		BobbingObject::BobbingObject(const char *mesh, float x, float y, 
+									 float z)
 		{
 			Object::Object(mesh, x, y, z);
 			this->mesh = mesh;
@@ -127,8 +137,35 @@ namespace Boom
 			this->y = y;
 			this->z = z;
 			do_render = true;
-			throb_speed = 3.0;
-			throb_mod = 0.1;
+			bob_speed = 3.0;
+			bob_mod = 0.1;
+			bobbing = true;
+			bob_pos = 0;
+		}
+		
+		//----------------------------------------------------------------------
+		void BobbingObject::update(Scene *scene)
+		{
+			if (bobbing)
+			{
+				z -= sin(bob_pos) * bob_mod;
+				bob_pos += bob_speed * tdiff;
+				z += sin(bob_pos) * bob_mod;
+			}
+		}
+		
+		//----------------------------------------------------------------------
+		ThrobbingObject::ThrobbingObject(const char *mesh, float x, float y, 
+									   float z)
+		{
+			BobbingObject::BobbingObject(mesh, x, y, z);
+			this->mesh = mesh;
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			do_render = true;
+			throb_speed = 4.0;
+			throb_mod = 0.05;
 			throbbing = true;
 			throb_pos = 0;
 		}
@@ -136,6 +173,7 @@ namespace Boom
 		//----------------------------------------------------------------------
 		void ThrobbingObject::update(Scene *scene)
 		{
+			BobbingObject::update(scene);
 			if (throbbing)
 			{
 				scale.x -= sin(throb_pos) * throb_mod;

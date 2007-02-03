@@ -90,7 +90,7 @@ namespace Boom
 		
 		/// A simple rotating object
 		/*!
-			This represents an object that simple rotates along the vertical
+			This represents an object that simply rotates along the vertical
 			axis.
 		*/
 		struct RotatingObject: public Object
@@ -102,7 +102,30 @@ namespace Boom
 			virtual void update(Scene *scene);
 		};
 		
-		struct ThrobbingObject: public Object
+		/// A simple bobbing object
+		/*!
+			This represents an object that bobs up and down along the z-axis.
+		*/
+		struct BobbingObject: public Object
+		{
+			double bob_speed;
+			double bob_mod;
+			bool   bobbing;
+			
+			BobbingObject();
+			BobbingObject(const char *mesh, float x, float y, float z);
+			virtual void update(Scene *scene);
+			
+			private:
+				double bob_pos;
+		};
+		
+		/// A simple throbbing object
+		/*!
+			This represents an object that throbs (uniform scale based on a sin
+			wave) and inherits the bobbing object.
+		*/
+		struct ThrobbingObject: public BobbingObject
 		{
 			double throb_speed;
 			double throb_mod;
