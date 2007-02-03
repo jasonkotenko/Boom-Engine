@@ -77,7 +77,7 @@ namespace Boom
 	extern const char *COMPILE_TIME;
 	
 	//! Initialize all modules
-	void init();
+	void init(int &argc, char *argv[]);
 	
 	//! Cleanup all modules
 	void cleanup();

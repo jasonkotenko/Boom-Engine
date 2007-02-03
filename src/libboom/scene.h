@@ -63,15 +63,18 @@ namespace Boom
 			ObjectID		id;
 			Point3d			rotation;
 			Point3d			scale;
+			float			life;
 			
-			Object();
-			Object(const char *mesh, float x, float y, float z);
+			Object(const char *mesh = "\0", float x = 0, float y = 0,
+				   float z = 0);
 			virtual ~Object();
 			
 			//! Update the object (can be overridden to e.g. move an object)
-			virtual void update(Scene *scene);
+			virtual bool update(Scene *scene);
 			//! Render the object's mesh to the scene
 			virtual void render(Scene *scene);
+			//! Called when an object's life (timer) runs out
+			virtual bool timeout();
 		};
 		
 		/// A movable object within a scene
@@ -84,58 +87,52 @@ namespace Boom
 			double speed;
 			bool   moving;
 			
-			MovableObject(const char *mesh, float x, float y, float z);
-			virtual void update(Scene *scene);
+			MovableObject(const char *mesh = "\0", float x = 0, float y = 0, 
+						  float z = 0);
+			virtual bool update(Scene *scene);
 		};
 		
-		/// A simple rotating object
+		/// A simple animated object
 		/*!
-			This represents an object that simply rotates along the vertical
-			axis.
+			This represents an object that can rotate, bounce, throb, etc by
+			using transformations and a sin wave.
 		*/
-		struct RotatingObject: public Object
+		struct SimpleAnimatedObject: public Object
 		{
 			double rot_speed;
 			bool   rotating;
 			
-			RotatingObject(const char *mesh, float x, float y, float z);
-			virtual void update(Scene *scene);
-		};
-		
-		/// A simple bobbing object
-		/*!
-			This represents an object that bobs up and down along the z-axis.
-		*/
-		struct BobbingObject: public Object
-		{
 			double bob_speed;
 			double bob_mod;
 			bool   bobbing;
 			
-			BobbingObject();
-			BobbingObject(const char *mesh, float x, float y, float z);
-			virtual void update(Scene *scene);
-			
-			private:
-				double bob_pos;
-		};
-		
-		/// A simple throbbing object
-		/*!
-			This represents an object that throbs (uniform scale based on a sin
-			wave) and inherits the bobbing object.
-		*/
-		struct ThrobbingObject: public BobbingObject
-		{
 			double throb_speed;
 			double throb_mod;
 			bool   throbbing;
 			
-			ThrobbingObject(const char *mesh, float x, float y, float z);
-			virtual void update(Scene *scene);
+			SimpleAnimatedObject(const char *mesh = "\0", float x = 0,
+								 float y = 0, float z = 0);
+			virtual bool update(Scene *scene);
 			
-			private:
-				double throb_pos;
+			protected:
+				double sin_pos;
+		};
+		
+		/// A simple bomb
+		/*!
+			This represents a bomb in the game.
+		*/
+		struct BombObject: public SimpleAnimatedObject
+		{
+			BombObject(float x = 0, float y = 0, float z = 0);
+			virtual bool update(Scene *scene);
+			virtual void render(Scene *scene);
+			virtual bool timeout();
+			
+			protected:
+				bool  exploding;
+				float radius;
+				float current_radius;
 		};
 		
 		typedef list <Object *> ObjectList;

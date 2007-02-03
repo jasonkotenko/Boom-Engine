@@ -39,11 +39,12 @@ class TestState: public State::State
 			obj = new Scene::Object("player", -3, 1, 0);
 			scene.add(Scene::TYPE_PLAYER, obj);
 			
-			obj = (Scene::Object *) new Scene::RotatingObject("bign", 3, -3, 0);
+			obj = (Scene::Object *) new Scene::SimpleAnimatedObject("bign", 3, -3, 0);
+			((Scene::SimpleAnimatedObject *) obj)->rotating = true;
 			obj->scale.x = obj->scale.y = obj->scale.z = 0.25;
 			scene.add(Scene::TYPE_PLAYER, obj);
 			
-			obj = (Scene::Object *) new Scene::ThrobbingObject("bomb", -2, -1, 0);
+			obj = (Scene::Object *) new Scene::BombObject(-2, -1, 0);
 			scene.add(Scene::TYPE_BOMB, obj);
 		}
 		
@@ -80,10 +81,10 @@ class TestState: public State::State
 		
 		void lay_bomb()
 		{
-			Scene::Object *obj;
+			Scene::BombObject *obj;
 			
-			obj = (Scene::Object *) new Scene::ThrobbingObject("bomb", player->x, player->y, 0);
-			scene.add(Scene::TYPE_BOMB, obj);
+			obj = new Scene::BombObject(player->x, player->y, 0);
+			scene.add(Scene::TYPE_BOMB, (Scene::Object *) obj);
 		}
 		
 		void key_pressed(int key)
@@ -175,7 +176,7 @@ int main(int argc, char *argv[])
 {
 	cout << "Using BOOM version " << Boom::VERSION << " compiled on " << Boom::COMPILE_DATE << " " << Boom::COMPILE_TIME << endl;
 	
-	Boom::init();
+	Boom::init(argc, argv);
 	
 	Log::set_level(Log::LEVEL_DEBUG);
 	

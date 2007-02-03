@@ -15,17 +15,6 @@ namespace Boom
 		static ObjectID gid = 0;
 		
 		//----------------------------------------------------------------------
-		Object::Object()
-		{
-			id = gid++;
-			x = y = z = 0;
-			do_render = false;
-			collision_type = COLLISION_CONVEX_HULL;
-			rotation.x = rotation.y = rotation.z = 0;
-			scale.x = scale.y = scale.z = 1.0;
-		}
-		
-		//----------------------------------------------------------------------
 		Object::Object(const char *mesh, float x, float y, float z)
 		{
 			id = gid++;
@@ -33,10 +22,11 @@ namespace Boom
 			this->x = x;
 			this->y = y;
 			this->z = z;
-			do_render = true;
+			do_render = (mesh != NULL);
 			collision_type = COLLISION_CONVEX_HULL;
 			rotation.x = rotation.y = rotation.z = 0;
 			scale.x = scale.y = scale.z = 1.0;
+			life = -1;
 		}
 		
 		//----------------------------------------------------------------------
@@ -46,9 +36,22 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
-		void Object::update(Scene *scene)
+		bool Object::update(Scene *scene)
 		{
+			if (life > 0)
+			{
+				life -= tdiff;
+				if (life <= 0)
+					return timeout();
+			}
 			
+			return true;
+		}
+		
+		//----------------------------------------------------------------------
+		bool Object::timeout()
+		{
+			return false;
 		}
 		
 		//----------------------------------------------------------------------
@@ -72,7 +75,6 @@ namespace Boom
 		//----------------------------------------------------------------------
 		MovableObject::MovableObject(const char *mesh, float x, float y, float z)
 		{
-			Object::Object(mesh, x, y, z);
 			this->mesh = mesh;
 			this->x = x;
 			this->y = y;
@@ -83,31 +85,43 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
-		void MovableObject::update(Scene *scene)
+		bool MovableObject::update(Scene *scene)
 		{
 			if (moving)
 			{
 				x += cos((rotation.z - 90) * M_PI / 180.0) * speed * tdiff;
 				y += sin((rotation.z - 90) * M_PI / 180.0) * speed * tdiff;
 			}
+			
+			return Object::update(scene);
 		}
 		
 		//----------------------------------------------------------------------
-		RotatingObject::RotatingObject(const char *mesh, float x, float y, 
-									   float z)
+		SimpleAnimatedObject::SimpleAnimatedObject(const char *mesh, float x,
+												   float y, float z)
 		{
-			Object::Object(mesh, x, y, z);
 			this->mesh = mesh;
 			this->x = x;
 			this->y = y;
 			this->z = z;
 			do_render = true;
+			
 			rot_speed = 1.0;
-			rotating = true;
+			rotating = false;
+			
+			bob_speed = 3.0;
+			bob_mod = 0.1;
+			bobbing = false;
+			
+			throb_speed = 4.0;
+			throb_mod = 0.05;
+			throbbing = false;
+			
+			sin_pos = 0;
 		}
 		
 		//----------------------------------------------------------------------
-		void RotatingObject::update(Scene *scene)
+		bool SimpleAnimatedObject::update(Scene *scene)
 		{
 			if (rotating)
 			{
@@ -115,75 +129,104 @@ namespace Boom
 				if (rotation.z > 360)
 					rotation.z -= 360;
 			}
-		}
-		
-		//----------------------------------------------------------------------
-		BobbingObject::BobbingObject()
-		{
-			Object::Object();
-			bob_speed = 3.0;
-			bob_mod = 0.1;
-			bobbing = true;
-			bob_pos = 0;
-		}
-		
-		//----------------------------------------------------------------------
-		BobbingObject::BobbingObject(const char *mesh, float x, float y, 
-									 float z)
-		{
-			Object::Object(mesh, x, y, z);
-			this->mesh = mesh;
-			this->x = x;
-			this->y = y;
-			this->z = z;
-			do_render = true;
-			bob_speed = 3.0;
-			bob_mod = 0.1;
-			bobbing = true;
-			bob_pos = 0;
-		}
-		
-		//----------------------------------------------------------------------
-		void BobbingObject::update(Scene *scene)
-		{
 			if (bobbing)
 			{
-				z -= sin(bob_pos) * bob_mod;
-				bob_pos += bob_speed * tdiff;
-				z += sin(bob_pos) * bob_mod;
+				z -= sin(sin_pos) * bob_mod;
+				sin_pos += bob_speed * tdiff;
+				z += sin(sin_pos) * bob_mod;
 			}
+			if (throbbing)
+			{
+				scale.x -= sin(sin_pos) * throb_mod;
+				scale.y -= sin(sin_pos) * throb_mod;
+				scale.z -= sin(sin_pos) * throb_mod;
+				sin_pos += throb_speed * tdiff;
+				scale.x += sin(sin_pos) * throb_mod;
+				scale.y += sin(sin_pos) * throb_mod;
+				scale.z += sin(sin_pos) * throb_mod;
+			}
+			
+			return Object::update(scene);
 		}
 		
 		//----------------------------------------------------------------------
-		ThrobbingObject::ThrobbingObject(const char *mesh, float x, float y, 
-									   float z)
+		BombObject::BombObject(float x, float y, float z)
 		{
-			BobbingObject::BobbingObject(mesh, x, y, z);
-			this->mesh = mesh;
+			this->mesh = "bomb";
 			this->x = x;
 			this->y = y;
 			this->z = z;
 			do_render = true;
-			throb_speed = 4.0;
-			throb_mod = 0.05;
+			bobbing = true;
 			throbbing = true;
-			throb_pos = 0;
+			life = 5;
+			exploding = false;
 		}
 		
 		//----------------------------------------------------------------------
-		void ThrobbingObject::update(Scene *scene)
+		bool BombObject::update(Scene *scene)
 		{
-			BobbingObject::update(scene);
-			if (throbbing)
+			if (!exploding)
+				return SimpleAnimatedObject::update(scene);
+			else
 			{
-				scale.x -= sin(throb_pos) * throb_mod;
-				scale.y -= sin(throb_pos) * throb_mod;
-				scale.z -= sin(throb_pos) * throb_mod;
-				throb_pos += throb_speed * tdiff;
-				scale.x += sin(throb_pos) * throb_mod;
-				scale.y += sin(throb_pos) * throb_mod;
-				scale.z += sin(throb_pos) * throb_mod;
+				current_radius += tdiff * ((radius - current_radius) + 0.5) * 2;
+				if (current_radius >= radius)
+					return false;
+				return Object::update(scene);
 			}
+		}
+		
+		//----------------------------------------------------------------------
+		void BombObject::render(Scene *scene)
+		{
+			if (!exploding)
+				SimpleAnimatedObject::render(scene);
+			else
+			{
+				float percent = current_radius / radius;
+				
+				glPushMatrix();
+				glTranslatef(x, y, z + 0.5);
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+				glDisable(GL_DEPTH_TEST);
+				
+				if (percent <= 0.8)
+				{
+					float large[] = {0.7, 0.7, 1.0, 0.5 * (0.8 - percent)};
+					glMaterialfv(GL_FRONT, GL_DIFFUSE, large);
+					glutSolidSphere(current_radius * current_radius * current_radius, 16, 16);
+				}
+				
+				float medium[] = {0.8, 0.8 * percent, 0.8 * percent, 1.0 - percent};
+				glMaterialfv(GL_FRONT, GL_DIFFUSE, medium);
+				glutSolidSphere(current_radius, 16, 16);
+				
+				float small[] = {1.0, 1.0, 0.8 * (1.0 - percent), 1.0 - percent};
+				glMaterialfv(GL_FRONT, GL_DIFFUSE, small);
+				glutSolidSphere(0.5, 12, 12);
+				
+				glEnable(GL_DEPTH_TEST);
+				glDisable(GL_BLEND);
+				glPopMatrix();
+			}
+		}
+		
+		//----------------------------------------------------------------------
+		bool BombObject::timeout()
+		{
+			//LOG_INFO << "Bomb (id = " << id << ") timeout called." << endl;
+		
+			if (!exploding)
+			{
+				exploding = true;
+				radius = 2;
+				current_radius = 0.5;
+				return true;
+			}
+			
+			return false;
 		}
 		
 		//----------------------------------------------------------------------
@@ -257,16 +300,27 @@ namespace Boom
 				}
 			}
 			
-			LOG_WARNING << "Object not found for removal from scene!" << endl;
+			if (!found)
+				LOG_WARNING << "Object not found for removal from scene!"
+							<< endl;
 		}
 		
 		//----------------------------------------------------------------------
 		void Scene::update()
 		{
+			vector <ObjectID> rem_ids;
+			
 			for (ObjectList::iterator obj = objects_flat.begin();
 				 obj != objects_flat.end(); obj++)
 			{
-				(*obj)->update(this);
+				if (!(*obj)->update(this))
+					rem_ids.push_back((*obj)->id);
+			}
+			
+			for (vector <ObjectID>::iterator i = rem_ids.begin();
+				 i != rem_ids.end(); i++)
+			{
+				remove(*i);
 			}
 		}
 		

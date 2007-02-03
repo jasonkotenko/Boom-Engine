@@ -10,8 +10,9 @@ namespace Boom
 	const char *COMPILE_DATE = __DATE__;
 	const char *COMPILE_TIME = __TIME__;
 
-	void init()
+	void init(int &argc, char *argv[])
 	{
+		glutInit(&argc, argv);
 		Log::init();
 		VirtualFS::init();
 		Event::init();
