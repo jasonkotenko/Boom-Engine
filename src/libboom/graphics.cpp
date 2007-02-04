@@ -22,6 +22,21 @@ namespace Boom
 	namespace Graphics
 	{
 		//----------------------------------------------------------------------
+		Point2d::Point2d(float x, float y)
+		{
+			this->x = x;
+			this->y = y;
+		}
+		
+		//----------------------------------------------------------------------
+		Point3d::Point3d(float x, float y, float z)
+		{
+			this->x = x;
+			this->y = y;
+			this->z = z;
+		}
+		
+		//----------------------------------------------------------------------
 		void Material::set()
 		{	
 			glMaterialfv(GL_FRONT, GL_AMBIENT, &(ambient.red));
@@ -544,6 +559,12 @@ namespace Boom
 		{
 			return (v1->x - v2->x) * (v1->x - v2->x) +
 				   (v1->y - v2->y) * (v1->y - v2->y);
+		}
+		
+		//----------------------------------------------------------------------
+		double distance2d(float x1, float y1, float x2, float y2)
+		{
+			return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 		}
 		
 		//----------------------------------------------------------------------

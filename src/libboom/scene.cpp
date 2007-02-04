@@ -173,6 +173,15 @@ namespace Boom
 				current_radius += tdiff * ((radius - current_radius) + 0.5) * 2;
 				if (current_radius >= radius)
 					return false;
+				for (ObjectList::iterator i = scene->objects[TYPE_BOMB].begin();
+					 i != scene->objects[TYPE_BOMB].end(); i++)
+				{
+					if (Graphics::distance2d((*i)->x, (*i)->y, x, y) <= 
+						current_radius * current_radius)
+					{
+						(*i)->timeout();
+					}
+				}
 				return Object::update(scene);
 			}
 		}
@@ -220,6 +229,7 @@ namespace Boom
 		
 			if (!exploding)
 			{
+				life = 0;
 				exploding = true;
 				radius = 2;
 				current_radius = 0.5;
@@ -326,7 +336,9 @@ namespace Boom
 		
 		//----------------------------------------------------------------------
 		void Scene::render()
-		{	
+		{
+			camera.render();
+			
 			for (ObjectList::iterator obj = objects_flat.begin();
 				 obj != objects_flat.end(); obj++)
 			{

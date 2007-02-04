@@ -14,6 +14,7 @@ elif platform.system() == "Darwin":
 # Library objects to build and link together
 LIB_OBJECTS = """
 				boom
+				camera
 				event
 				graphics
 				interface

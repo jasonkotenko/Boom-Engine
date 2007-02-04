@@ -62,8 +62,6 @@ class TestState: public State::State
 		{
 			double current;
 			
-			gluLookAt(0, -25, 25, 0, 0, 0, 0, 0, 1);
-			
 			scene.render();
 			
 			fps++;
@@ -158,7 +156,7 @@ class TestState: public State::State
 //------------------------------------------------------------------------------
 void start()
 {
-	Interface::SDLInterface interface;
+	Interface::SDLInterface interface(800, 600);
 	TestState *state = new TestState();
 	
 	State::push(state);

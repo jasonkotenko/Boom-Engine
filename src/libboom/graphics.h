@@ -37,15 +37,19 @@ namespace Boom
 		struct Point2d
 		{
 			float x, y;
+			
+			Point2d(float x = 0, float y = 0);
 		};
 
 		/// A 3d point
 		/*!
 			A point in three dimensional space.
 		*/
-		struct Point3d
+		struct Point3d: public Point2d
 		{
-			float x, y, z;
+			float z;
+			
+			Point3d(float x = 0, float y = 0, float z = 0);
 		};
 		
 		/*
@@ -177,6 +181,8 @@ namespace Boom
 		*/
 		//! Calculate the distance between two coplanar points
 		double distance2d(Point2d *v1, Point2d *v2);
+		//! Calculate the distance between two coplanar points
+		double distance2d(float x1, float y1, float x2, float y2);
 		//! Calculate the polar angle between a pole and a point
 		double polar_angle2d(Point2d *pole, Point2d *point);
 		//! A coplanar vector cross

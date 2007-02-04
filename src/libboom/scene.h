@@ -14,6 +14,7 @@
 
 #include "graphics.h"
 #include "interface.h"
+#include "camera.h"
 
 using namespace std;
 
@@ -161,8 +162,9 @@ namespace Boom
 				void update();
 				//! Render all objects in the scene
 				void render();
-			
-			//private:
+				
+				//! The camera through which the scene is rendered
+				Camera camera;
 				//! A list of all objects in the scene sorted by type
 				TypedObjectLists objects;
 				//! An unsorted list of all objects in the scene
