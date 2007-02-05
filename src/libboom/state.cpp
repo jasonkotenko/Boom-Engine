@@ -15,6 +15,7 @@ namespace Boom
 	{
 		State *current;
 		stack <State*> state_stack;
+		stack <State*> del_stack;
 		
 		State::State()
 		{
@@ -33,13 +34,7 @@ namespace Boom
 		
 		void cleanup()
 		{
-			while(state_stack.size() > 0)
-			{
-				current = state_stack.top();
-				state_stack.pop();
-				delete current;
-				current = NULL;
-			}
+			clear();
 		}
 		
 		void push(State *state)
@@ -51,7 +46,8 @@ namespace Boom
 		void replace(State *state)
 		{
 			state_stack.pop();
-			delete current;
+			//delete current;
+			del_stack.push(current);
 			state_stack.push(state);
 			current = state;
 		}
@@ -59,7 +55,8 @@ namespace Boom
 		void pop()
 		{
 			state_stack.pop();
-			delete current;
+			//delete current;
+			del_stack.push(current);
 			if (state_stack.size() > 0)
 			{
 				current = state_stack.top();
@@ -83,6 +80,13 @@ namespace Boom
 		
 		void update()
 		{
+			while (del_stack.size() > 0)
+			{
+				State *s = del_stack.top();
+				del_stack.pop();
+				delete s;
+			}
+			
 			if (current != NULL)
 			{
 				current->update();

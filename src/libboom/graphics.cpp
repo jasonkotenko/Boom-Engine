@@ -15,7 +15,7 @@
 
 using namespace std;
 
-#define DISPLAY_MESH_HULLS = 1
+//#define DISPLAY_MESH_HULLS = 1
 
 namespace Boom
 {

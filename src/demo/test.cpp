@@ -154,10 +154,102 @@ class TestState: public State::State
 };
 
 //------------------------------------------------------------------------------
+class IntroState: public State::State
+{
+	public:
+		IntroState()
+		{
+			scene.preload("bign");
+			scene.preload("g");
+			scene.preload("u");
+			scene.preload("freesoftware");
+			
+			timer = 0;
+			
+			bign = new Scene::SimpleAnimatedObject("bign", 0, 0, 0);
+			bign->scale.x = bign->scale.y = bign->scale.z = 0.01;
+			bign->scale_to.x = bign->scale_to.y = bign->scale_to.z = 1.0;
+			bign->scale_to_scaling = true;
+			bign->rotate_to.z = 360;
+			bign->rotate_speed = 180;
+			bign->rotate_to_rotating = true;
+			scene.add(Scene::TYPE_CUSTOM, (Scene::Object *) bign);
+			
+			g = new Scene::SimpleAnimatedObject("g", -45, 0, 0);
+			g->move_to.x = -6;
+			g->move_speed = 18;
+			g->move_to_moving = true;
+			scene.add(Scene::TYPE_CUSTOM, (Scene::Object *) g);
+			
+			u = new Scene::SimpleAnimatedObject("u", 45, 0, 0);
+			u->move_to.x = 6;
+			u->move_speed = -18;
+			u->move_to_moving = true;
+			scene.add(Scene::TYPE_CUSTOM, (Scene::Object *) u);
+			
+			fs = new Scene::SimpleAnimatedObject("freesoftware", 0, 0, -10);
+			fs->rotation.x = -45;
+		}
+		
+		~IntroState() {}
+		
+		void update()
+		{
+			if (!bign->scale_to_scaling && timer == 0)
+			{
+				bign->throbbing = true;
+				scene.add(Scene::TYPE_CUSTOM, (Scene::Object *) fs);
+				timer = 0.75;
+			}
+			
+			if (timer)
+			{
+				timer -= tdiff;
+				if (timer <= 0)
+				{
+					TestState *state = new TestState();
+					Boom::State::replace(state);
+				}
+			}
+			
+			scene.update();
+		}
+		
+		void draw()
+		{
+			scene.render();
+		}
+		
+		void key_pressed(int key)
+		{
+			switch(key)
+			{
+				case 27:
+					TestState *state = new TestState();
+					Boom::State::replace(state);
+					break;
+			}
+		}
+		
+		void key_released(int key)
+		{
+			
+		}
+	
+	private:
+		Scene::Scene scene;
+		Scene::SimpleAnimatedObject *bign;
+		Scene::SimpleAnimatedObject *g, *u;
+		Scene::SimpleAnimatedObject *fs;
+		float timer;
+};
+
+//------------------------------------------------------------------------------
 void start()
 {
 	Interface::SDLInterface interface(800, 600);
-	TestState *state = new TestState();
+	//TestState *state = new TestState();
+	IntroState *state = new IntroState();
 	
 	State::push(state);
 	

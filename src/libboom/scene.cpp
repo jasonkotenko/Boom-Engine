@@ -106,7 +106,7 @@ namespace Boom
 			this->z = z;
 			do_render = true;
 			
-			rot_speed = 1.0;
+			rotate_speed = 90.0;
 			rotating = false;
 			
 			bob_speed = 3.0;
@@ -117,15 +117,24 @@ namespace Boom
 			throb_mod = 0.05;
 			throbbing = false;
 			
+			move_speed = 1.0;
+			scale_speed = 0.5;
+			
+			move_to_moving = false;
+			rotate_to_rotating = false;
+			scale_to_scaling = false;
+			
 			sin_pos = 0;
 		}
 		
 		//----------------------------------------------------------------------
 		bool SimpleAnimatedObject::update(Scene *scene)
 		{
+			float diff;
+			
 			if (rotating)
 			{
-				rotation.z += rot_speed * 30 * tdiff;
+				rotation.z += rotate_speed * tdiff;
 				if (rotation.z > 360)
 					rotation.z -= 360;
 			}
@@ -144,6 +153,99 @@ namespace Boom
 				scale.x += sin(sin_pos) * throb_mod;
 				scale.y += sin(sin_pos) * throb_mod;
 				scale.z += sin(sin_pos) * throb_mod;
+			}
+			
+			if (move_to_moving)
+			{
+				bool moved = false;
+				
+				if (abs(move_to.x - x) > 0.1)
+				{
+					x += move_speed * tdiff;
+					moved = true;
+				}
+				if (abs(move_to.y - y) > 0.1)
+				{
+					y += move_speed * tdiff;
+					moved = true;
+				}
+				if (abs(move_to.z - z) > 0.1)
+				{
+					z += move_speed * tdiff;
+					moved = true;
+				}
+				
+				if (!moved)
+					move_to_moving = false;
+			}
+			
+			if (rotate_to_rotating)
+			{
+				bool rot = false;
+				
+				if (abs(rotate_to.x - rotation.x) > 0.1)
+				{
+					rotation.x += rotate_speed * tdiff;
+					rot = true;
+					if (rotation.x >= 360)
+					{
+						rotation.x -= 360;
+						rotate_to.x -= 360;
+						if (rotate_to.x <= 0)
+							rotation.x = rotate_to.x;
+					}
+				}
+				if (abs(rotate_to.y - rotation.y) > 0.1)
+				{
+					rotation.y += rotate_speed * tdiff;
+					rot = true;
+					if (rotation.y >= 360)
+					{
+						rotation.y -= 360;
+						rotate_to.y -= 360;
+						if (rotate_to.y <= 0)
+							rotation.y = rotate_to.y;
+					}
+				}
+				if (abs(rotate_to.z - rotation.z) > 0.1)
+				{
+					rotation.z += rotate_speed * tdiff;
+					rot = true;
+					if (rotation.z >= 360)
+					{
+						rotation.z -= 360;
+						rotate_to.z -= 360;
+						if (rotate_to.z <= 0)
+							rotation.z = rotate_to.z;
+					}
+				}
+				
+				if (!rot)
+					rotate_to_rotating = false;
+			}
+			
+			if (scale_to_scaling)
+			{
+				bool scaled = false;
+				
+				if (abs(scale_to.x - scale.x) > 0.01)
+				{
+					scale.x += scale_speed * tdiff;
+					scaled = true;
+				}
+				if (abs(scale_to.y - scale.y) > 0.01)
+				{
+					scale.y += scale_speed * tdiff;
+					scaled = true;
+				}
+				if (abs(scale_to.z - scale.x) > 0.01)
+				{
+					scale.z += scale_speed * tdiff;
+					scaled = true;
+				}
+				
+				if (!scaled)
+					scale_to_scaling = false;
 			}
 			
 			return Object::update(scene);
@@ -259,7 +361,19 @@ namespace Boom
 			meshes.clear();
 		}
 		
-		//--------------------------------------------------------------------
+		//----------------------------------------------------------------------
+		void Scene::preload(string mesh)
+		{
+			Graphics::Mesh m;
+			string filename;
+			
+			filename = "Meshes/" + mesh + ".obj";
+			m.load(filename.c_str());
+			
+			meshes[mesh] = m;
+		}
+		
+		//----------------------------------------------------------------------
 		ObjectID Scene::add(ObjectType type, Object *obj)
 		{
 			MeshList::iterator pos = meshes.find(obj->mesh);

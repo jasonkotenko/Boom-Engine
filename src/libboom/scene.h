@@ -34,7 +34,7 @@ namespace Boom
 			TYPE_PLAYER,
 			TYPE_BOMB,
 			TYPE_ITEM,
-			TYPE_CUSTOM_START
+			TYPE_CUSTOM
 		};
 		
 		//! The collision detection type to use for the object
@@ -100,7 +100,7 @@ namespace Boom
 		*/
 		struct SimpleAnimatedObject: public Object
 		{
-			double rot_speed;
+			double rotate_speed;
 			bool   rotating;
 			
 			double bob_speed;
@@ -110,6 +110,17 @@ namespace Boom
 			double throb_speed;
 			double throb_mod;
 			bool   throbbing;
+			
+			Point3d move_to;
+			double  move_speed;
+			bool    move_to_moving;
+			
+			Point3d rotate_to;
+			bool    rotate_to_rotating;
+			
+			Point3d scale_to;
+			double  scale_speed;
+			bool    scale_to_scaling;
 			
 			SimpleAnimatedObject(const char *mesh = "\0", float x = 0,
 								 float y = 0, float z = 0);
@@ -153,6 +164,8 @@ namespace Boom
 				
 				//! Clear all objects from the scene
 				void clear();
+				//! Preload mesh data
+				void preload(string mesh);
 				//! Add an object to the scene
 				ObjectID add(ObjectType obj, Object *obj);
 				//! Remove an object from the scene based on it's ID
