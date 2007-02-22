@@ -1,0 +1,43 @@
+material Material_player.png
+ambient 1.0 1.0 1.0
+diffuse 1.0 1.0 1.0
+specular 0.5 0.5 0.5
+shiny 96
+alpha 0.0
+texture player.png
+
+material Plane
+ambient 0.0 0.0 0.0
+diffuse 0.64 0.64 0.64
+specular 0.5 0.5 0.5
+shiny 96
+alpha 0.0
+
+material Cube2
+ambient 0.0 0.0 0.0
+diffuse 0.0 0.64 0.0
+specular 0.5 0.5 0.5
+shiny 96
+alpha 0.0
+
+material Cube1
+ambient 0.0 0.0 0.0
+diffuse 0.64 0.0 0.0
+specular 0.5 0.5 0.5
+shiny 96
+alpha 0.0
+
+material Cube3
+ambient 0.0 0.0 0.0
+diffuse 0.0 0.0 0.64
+specular 0.5 0.5 0.5
+shiny 96
+alpha 0.0
+
+material Cube4
+ambient 0.0 0.0 0.0
+diffuse 0.64 0.0 0.64
+specular 0.5 0.5 0.5
+shiny 96
+alpha 0.0
+

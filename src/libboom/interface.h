@@ -9,6 +9,7 @@ namespace Boom
 {
 	//! The time difference since the last frame
 	extern double tdiff;
+	extern const int VIEW_ANGLE;
 
 	/// The interface namespace
 	/*!

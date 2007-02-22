@@ -118,6 +118,10 @@ class TestState: public State::State
 				default:
 					LOG_INFO << "Key pressed: " << key << endl;
 			}
+			if (player->moving)
+				player->set_animation("walking");
+			else
+				player->set_animation("default");
 		}
 		
 		void key_released(int key)
@@ -145,6 +149,10 @@ class TestState: public State::State
 					player->moving = movement.moving;
 					break;
 			}
+			if (player->moving)
+				player->set_animation("walking");
+			else
+				player->set_animation("default");
 		}
 		
 	private:
@@ -199,7 +207,7 @@ class IntroState: public State::State
 			{
 				bign->throbbing = true;
 				scene.add(Scene::TYPE_CUSTOM, (Scene::Object *) fs);
-				timer = 0.75;
+				timer = 1.5;
 			}
 			
 			if (timer)

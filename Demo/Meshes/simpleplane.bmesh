@@ -1,0 +1,2161 @@
+materials simpleplane.bmat
+
+v -5.157371 -0.350651 0.000233
+v -5.260731 -0.429962 0.000233
+v -5.381096 -0.479819 0.000233
+v -5.510264 -0.496824 0.000233
+v -5.639431 -0.479819 0.000233
+v -5.759797 -0.429962 0.000233
+v -5.863157 -0.350651 0.000233
+v -5.942468 -0.247291 0.000233
+v -5.992325 -0.126926 0.000233
+v -6.00933 0.002242 0.000233
+v -5.992325 0.13141 0.000233
+v -5.942468 0.251775 0.000233
+v -5.863157 0.355135 0.000233
+v -5.759797 0.434446 0.000233
+v -5.639432 0.484303 0.000233
+v -5.510264 0.501309 0.000233
+v -5.381096 0.484303 0.000233
+v -5.260731 0.434446 0.000233
+v -5.157371 0.355136 0.000233
+v -5.07806 0.251776 0.000233
+v -5.028203 0.13141 0.000233
+v -5.011198 0.002243 0.000233
+v -5.028203 -0.126925 0.000233
+v -5.07806 -0.247291 0.000233
+v -5.157371 -0.350651 1.480231
+v -5.26073 -0.429962 1.480231
+v -5.381095 -0.479819 1.480231
+v -5.510263 -0.496824 1.480231
+v -5.639431 -0.479819 1.480231
+v -5.759797 -0.429962 1.480231
+v -5.863157 -0.350651 1.480231
+v -5.942468 -0.247291 1.480231
+v -5.992325 -0.126925 1.480231
+v -6.00933 0.002243 1.480231
+v -5.992325 0.131411 1.480231
+v -5.942468 0.251776 1.480231
+v -5.863156 0.355136 1.480231
+v -5.759796 0.434447 1.480231
+v -5.639431 0.484304 1.480231
+v -5.510262 0.501309 1.480231
+v -5.381094 0.484303 1.480231
+v -5.260729 0.434445 1.480231
+v -5.157369 0.355134 1.480231
+v -5.078059 0.251773 1.480231
+v -5.028202 0.131407 1.480231
+v -5.011198 0.002239 1.480231
+v -5.028204 -0.126929 1.480231
+v -5.078062 -0.247294 1.480231
+v -5.510264 0.002242 1.480231
+v 5.860209 -0.350651 0.000233
+v 5.756848 -0.429962 0.000233
+v 5.636483 -0.479819 0.000233
+v 5.507315 -0.496824 0.000233
+v 5.378148 -0.479819 0.000233
+v 5.257782 -0.429962 0.000233
+v 5.154422 -0.350651 0.000233
+v 5.075111 -0.247291 0.000233
+v 5.025254 -0.126926 0.000233
+v 5.008249 0.002242 0.000233
+v 5.025254 0.13141 0.000233
+v 5.075111 0.251775 0.000233
+v 5.154422 0.355135 0.000233
+v 5.257782 0.434446 0.000233
+v 5.378147 0.484303 0.000233
+v 5.507315 0.501309 0.000233
+v 5.636483 0.484303 0.000233
+v 5.756848 0.434446 0.000233
+v 5.860208 0.355136 0.000233
+v 5.939519 0.251776 0.000233
+v 5.989376 0.13141 0.000233
+v 6.006382 0.002243 0.000233
+v 5.989376 -0.126925 0.000233
+v 5.939519 -0.247291 0.000233
+v 5.860209 -0.350651 1.480231
+v 5.756849 -0.429962 1.480231
+v 5.636484 -0.479819 1.480231
+v 5.507316 -0.496824 1.480231
+v 5.378148 -0.479819 1.480231
+v 5.257782 -0.429962 1.480231
+v 5.154422 -0.350651 1.480231
+v 5.075111 -0.247291 1.480231
+v 5.025254 -0.126925 1.480231
+v 5.008249 0.002243 1.480231
+v 5.025254 0.131411 1.480231
+v 5.075111 0.251776 1.480231
+v 5.154423 0.355136 1.480231
+v 5.257783 0.434447 1.480231
+v 5.378149 0.484304 1.480231
+v 5.507317 0.501309 1.480231
+v 5.636485 0.484303 1.480231
+v 5.75685 0.434445 1.480231
+v 5.86021 0.355134 1.480231
+v 5.93952 0.251773 1.480231
+v 5.989377 0.131407 1.480231
+v 6.006382 0.002239 1.480231
+v 5.989375 -0.126929 1.480231
+v 5.939517 -0.247294 1.480231
+v 5.507315 0.002242 1.480231
+v 0.352893 -0.351089 0.002916
+v 0.249533 -0.4304 0.002916
+v 0.129167 -0.480257 0.002916
+v -0.0 -0.497262 0.002916
+v -0.129168 -0.480257 0.002916
+v -0.249533 -0.4304 0.002916
+v -0.352894 -0.351089 0.002916
+v -0.432204 -0.247729 0.002916
+v -0.482061 -0.127364 0.002916
+v -0.499067 0.001804 0.002916
+v -0.482062 0.130972 0.002916
+v -0.432205 0.251337 0.002916
+v -0.352894 0.354697 0.002916
+v -0.249534 0.434008 0.002916
+v -0.129169 0.483865 0.002916
+v -1e-06 0.50087 0.002916
+v 0.129167 0.483865 0.002916
+v 0.249532 0.434008 0.002916
+v 0.352892 0.354697 0.002916
+v 0.432203 0.251338 0.002916
+v 0.48206 0.130972 0.002916
+v 0.499066 0.001805 0.002916
+v 0.482061 -0.127363 0.002916
+v 0.432204 -0.247729 0.002916
+v 0.352893 -0.351089 2.391057
+v 0.249533 -0.4304 2.391057
+v 0.129168 -0.480257 2.391057
+v 0.0 -0.497262 2.391057
+v -0.129168 -0.480257 2.391057
+v -0.249533 -0.4304 2.391057
+v -0.352894 -0.351089 2.391057
+v -0.432205 -0.247729 2.391057
+v -0.482062 -0.127364 2.391057
+v -0.499067 0.001805 2.391057
+v -0.482061 0.130973 2.391057
+v -0.432204 0.251338 2.391057
+v -0.352893 0.354698 2.391057
+v -0.249532 0.434009 2.391057
+v -0.129167 0.483865 2.391057
+v 1e-06 0.50087 2.391057
+v 0.129169 0.483865 2.391057
+v 0.249535 0.434007 2.391057
+v 0.352894 0.354696 2.391057
+v 0.432205 0.251335 2.391057
+v 0.482061 0.130969 2.391057
+v 0.499066 0.001801 2.391057
+v 0.48206 -0.127367 2.391057
+v 0.432202 -0.247732 2.391057
+v -0.0 0.001804 2.391057
+v 0.352893 -5.844089 0.000233
+v 0.249533 -5.923399 0.000233
+v 0.129167 -5.973256 0.000233
+v -0.0 -5.990262 0.000233
+v -0.129168 -5.973256 0.000233
+v -0.249533 -5.923399 0.000233
+v -0.352894 -5.844089 0.000233
+v -0.432204 -5.740728 0.000233
+v -0.482061 -5.620363 0.000233
+v -0.499067 -5.491195 0.000233
+v -0.482062 -5.362028 0.000233
+v -0.432205 -5.241663 0.000233
+v -0.352894 -5.138302 0.000233
+v -0.249534 -5.058991 0.000233
+v -0.129169 -5.009134 0.000233
+v -1e-06 -4.992129 0.000233
+v 0.129167 -5.009134 0.000233
+v 0.249532 -5.058991 0.000233
+v 0.352892 -5.138302 0.000233
+v 0.432203 -5.241662 0.000233
+v 0.48206 -5.362027 0.000233
+v 0.499066 -5.491195 0.000233
+v 0.482061 -5.620363 0.000233
+v 0.432204 -5.740728 0.000233
+v 0.352893 -5.844088 1.480231
+v 0.249533 -5.923399 1.480231
+v 0.129168 -5.973256 1.480231
+v 0.0 -5.990262 1.480231
+v -0.129168 -5.973257 1.480231
+v -0.249533 -5.923399 1.480231
+v -0.352894 -5.844089 1.480231
+v -0.432205 -5.740728 1.480231
+v -0.482062 -5.620363 1.480231
+v -0.499067 -5.491195 1.480231
+v -0.482061 -5.362027 1.480231
+v -0.432204 -5.241661 1.480231
+v -0.352893 -5.138301 1.480231
+v -0.249532 -5.05899 1.480231
+v -0.129167 -5.009134 1.480231
+v 1e-06 -4.992129 1.480231
+v 0.129169 -5.009135 1.480231
+v 0.249535 -5.058992 1.480231
+v 0.352894 -5.138304 1.480231
+v 0.432205 -5.241664 1.480231
+v 0.482061 -5.36203 1.480231
+v 0.499066 -5.491198 1.480231
+v 0.48206 -5.620366 1.480231
+v 0.432202 -5.740731 1.480231
+v -0.0 -5.491195 1.480231
+v 7.513988 7.47968 -0.536917
+v 7.513689 -7.513353 -0.536917
+v -7.480838 -7.513347 -0.536917
+v -7.480653 7.480736 -0.536917
+v 0.002373 -5.008839 -0.536917
+v 5.006111 0.003064 -0.536917
+v 0.001469 5.003023 -0.536917
+v -5.006936 0.001584 -0.536917
+v 0.501775 -5.505769 -0.536917
+v -0.503622 -5.498624 -0.536917
+v 5.50726 0.501434 -0.536917
+v 5.501902 -0.503576 -0.536917
+v 0.506046 5.498635 -0.536917
+v -0.49938 5.513661 -0.536917
+v -5.499386 -0.498062 -0.536917
+v -5.503997 0.496953 -0.536917
+v -3.981588 4.009877 -0.536917
+v 3.004734 2.998144 -0.536917
+v -3.995017 -3.999271 -0.536917
+v 4.005801 -3.997696 -0.536917
+v 0.000985 -6.007028 -0.536917
+v 6.011127 0.005821 -0.536917
+v 0.001488 6.011572 -0.536917
+v -6.008338 -0.003085 -0.536917
+v -4.964898 5.013291 -0.536917
+v 4.998931 4.997392 -0.536917
+v -4.999983 -5.000953 -0.536917
+v 5.002866 -4.994314 -0.536917
+v 0.000785 -7.514325 -0.536917
+v 7.513079 0.001208 -0.536917
+v 0.000738 7.480998 -0.536917
+v -7.480687 0.0001 -0.536917
+v -5.993586 6.027775 -0.536917
+v -5.994252 -5.993803 -0.536917
+v 6.008346 -5.993143 -0.536917
+v -0.500609 0.002518 -0.536917
+v 0.006455 0.502775 -0.536917
+v 0.502885 0.002261 -0.536917
+v 0.004027 -0.504288 -0.536917
+v 0.357998 5.856025 -0.536917
+v -0.356485 5.858575 -0.536917
+v 0.347502 5.150192 -0.536917
+v -0.353728 5.156327 -0.536917
+v 5.150551 0.348735 -0.536917
+v 5.150629 -0.350877 -0.536917
+v 5.85568 0.354249 -0.536917
+v 5.861271 -0.359147 -0.536917
+v 0.351573 -5.151108 -0.536917
+v -0.361604 -5.157103 -0.536917
+v 0.362501 -5.855282 -0.536917
+v -0.354504 -5.861277 -0.536917
+v 0.364428 -0.348593 -0.536917
+v 0.358946 0.35201 -0.536917
+v -0.350395 0.362662 -0.536917
+v -0.350653 -0.357074 -0.536917
+v -5.153303 -0.353836 -0.536917
+v -5.159051 0.357161 -0.536917
+v -5.857164 -0.360762 -0.536917
+v -5.862913 0.350235 -0.536917
+v 0.5 3.5 0.002738
+v 0.5 2.5 0.002738
+v -0.5 2.5 0.002738
+v -0.5 3.5 0.002738
+v -0.5 1.5 0.002738
+v -1.5 1.5 0.002738
+v -1.5 2.5 0.002738
+v 1.5 2.5 0.002738
+v 1.5 1.5 0.002738
+v 0.5 1.5 0.002738
+v 0.5 0.5 0.002738
+v -0.5 0.5 0.002738
+v 1.5 0.5 0.002738
+v -1.5 0.5 0.002738
+v -2.5 0.5 0.002738
+v -2.5 1.5 0.002738
+v 2.5 1.5 0.002738
+v 2.5 0.5 0.002738
+v 0.5 -2.5 0.002738
+v 0.5 -3.5 0.002738
+v -0.5 -3.5 0.002738
+v -0.5 -2.5 0.002738
+v -0.5 -1.5 0.002738
+v -1.5 -2.5 0.002738
+v -1.5 -1.5 0.002738
+v 1.5 -1.5 0.002738
+v 1.5 -2.5 0.002738
+v 0.5 -1.5 0.002738
+v 0.5 -0.5 0.002738
+v -0.5 -0.5 0.002738
+v 1.5 -0.5 0.002738
+v -1.5 -0.5 0.002738
+v -2.5 -1.5 0.002738
+v -2.5 -0.5 0.002738
+v 2.5 -0.5 0.002738
+v 2.5 -1.5 0.002738
+v 3.5 0.5 0.002738
+v 3.5 -0.5 0.002738
+v -3.5 -0.5 0.002738
+v -3.5 0.5 0.002738
+v 0.352893 5.155911 0.000233
+v 0.249533 5.076601 0.000233
+v 0.129167 5.026744 0.000233
+v -0.0 5.009738 0.000233
+v -0.129168 5.026744 0.000233
+v -0.249533 5.076601 0.000233
+v -0.352894 5.155911 0.000233
+v -0.432204 5.259272 0.000233
+v -0.482061 5.379637 0.000233
+v -0.499067 5.508805 0.000233
+v -0.482062 5.637972 0.000233
+v -0.432205 5.758337 0.000233
+v -0.352894 5.861698 0.000233
+v -0.249534 5.941009 0.000233
+v -0.129169 5.990866 0.000233
+v -1e-06 6.007871 0.000233
+v 0.129167 5.990866 0.000233
+v 0.249532 5.941009 0.000233
+v 0.352892 5.861698 0.000233
+v 0.432203 5.758338 0.000233
+v 0.48206 5.637973 0.000233
+v 0.499066 5.508805 0.000233
+v 0.482061 5.379637 0.000233
+v 0.432204 5.259272 0.000233
+v 0.352893 5.155912 1.480231
+v 0.249533 5.076601 1.480231
+v 0.129168 5.026744 1.480231
+v 0.0 5.009738 1.480231
+v -0.129168 5.026743 1.480231
+v -0.249533 5.076601 1.480231
+v -0.352894 5.155911 1.480231
+v -0.432205 5.259272 1.480231
+v -0.482062 5.379637 1.480231
+v -0.499067 5.508805 1.480231
+v -0.482061 5.637973 1.480231
+v -0.432204 5.758339 1.480231
+v -0.352893 5.861699 1.480231
+v -0.249532 5.94101 1.480231
+v -0.129167 5.990866 1.480231
+v 1e-06 6.007871 1.480231
+v 0.129169 5.990865 1.480231
+v 0.249535 5.941008 1.480231
+v 0.352894 5.861696 1.480231
+v 0.432205 5.758336 1.480231
+v 0.482061 5.63797 1.480231
+v 0.499066 5.508802 1.480231
+v 0.48206 5.379634 1.480231
+v 0.432202 5.259269 1.480231
+v -0.0 5.508805 1.480231
+v 8.532671 -8.532639 0.000275
+v -7.480794 7.48083 0.000275
+v -8.499982 8.50002 0.000275
+v 7.513481 -7.513451 0.000275
+v -7.480795 7.480829 0.999514
+v -8.499985 8.500016 0.999514
+v -8.499988 -8.532636 0.999514
+v -7.480799 -7.513448 0.999514
+v 8.532675 8.500012 0.999514
+v 7.513484 7.480826 0.999514
+v 7.513483 7.480828 0.000275
+v -8.499986 -8.532638 0.000275
+v -7.480797 -7.513448 0.000275
+v 8.532671 8.500015 0.000275
+v 8.532665 -8.532643 0.999514
+v 7.513478 -7.513453 0.999514
+v 8.532675 8.500012 0.000269
+v -8.499985 8.500016 0.000269
+v -8.499988 -8.532636 0.000269
+v 8.532665 -8.532643 0.000269
+vn 0.707083 0.707083 0.0
+vn 0.497818 0.497818 0.710135
+vn 0.609729 0.352031 0.710135
+vn 0.866024 0.499985 0.0
+vn 0.680044 0.182195 0.710135
+vn 0.965911 0.258797 0.0
+vn 0.704062 0.0 0.710135
+vn 1.0 0.0 0.0
+vn 0.680044 -0.182195 0.710135
+vn 0.965911 -0.258797 0.0
+vn 0.609729 -0.352031 0.710135
+vn 0.866024 -0.499985 0.0
+vn 0.497818 -0.497818 0.710135
+vn 0.707083 -0.707083 0.0
+vn 0.352031 -0.609729 0.710135
+vn 0.499985 -0.866024 0.0
+vn 0.182195 -0.680044 0.710135
+vn 0.258797 -0.965911 0.0
+vn 0.0 -0.704062 0.710135
+vn 0.0 -1.0 0.0
+vn -0.182195 -0.680044 0.710135
+vn -0.258797 -0.965911 0.0
+vn -0.352031 -0.609729 0.710135
+vn -0.499985 -0.866024 0.0
+vn -0.497818 -0.497818 0.710135
+vn -0.707083 -0.707083 0.0
+vn -0.609729 -0.352 0.710135
+vn -0.866024 -0.499985 0.0
+vn -0.680044 -0.182195 0.710135
+vn -0.965911 -0.258797 0.0
+vn -0.704062 0.0 0.710135
+vn -1.0 0.0 0.0
+vn -0.680044 0.182195 0.710135
+vn -0.965911 0.258797 0.0
+vn -0.609729 0.352031 0.710135
+vn -0.866024 0.499985 0.0
+vn -0.497818 0.497848 0.710135
+vn -0.707083 0.707083 0.0
+vn -0.352 0.609729 0.710135
+vn -0.499985 0.866024 0.0
+vn -0.182195 0.680044 0.710135
+vn -0.258797 0.965911 0.0
+vn 0.0 0.704062 0.710135
+vn 0.0 1.0 0.0
+vn 0.182226 0.680044 0.710135
+vn 0.258797 0.965911 0.0
+vn 0.352031 0.609729 0.710135
+vn 0.499985 0.866024 0.0
+vn 0.0 0.0 1.0
+vn 0.0 0.0 -1.0
+vn 1.0 -0.0 1e-06
+vn -0.0 -1.0 -1e-06
+vn -1.0 0.0 -2e-06
+vn 0.0 1.0 3e-06
+vn 0.0 1.0 1e-06
+vt 0.346202 0.004134
+vt 0.346202 -0.996317
+vt 0.307961 -0.996317
+vt 0.307961 0.004134
+vt 0.26972 -0.996317
+vt 0.26972 0.004134
+vt 0.231479 -0.996317
+vt 0.231479 0.004134
+vt 0.193238 -0.996317
+vt 0.193237 0.004134
+vt 0.154996 -0.996317
+vt 0.154996 0.004134
+vt 0.116755 -0.996317
+vt 0.116755 0.004134
+vt 0.078514 -0.996317
+vt 0.078514 0.004134
+vt 0.040273 -0.996317
+vt 0.040273 0.004134
+vt 0.958061 0.004134
+vt 0.958061 -0.996317
+vt 0.919819 -0.996317
+vt 0.91982 0.004134
+vt 0.881578 -0.996317
+vt 0.881578 0.004134
+vt 0.843337 -0.996317
+vt 0.843337 0.004134
+vt 0.805096 -0.996317
+vt 0.805096 0.004134
+vt 0.766854 -0.996317
+vt 0.766855 0.004134
+vt 0.728613 -0.996317
+vt 0.728614 0.004134
+vt 0.690372 -0.996317
+vt 0.690373 0.004134
+vt 0.652131 -0.996317
+vt 0.652131 0.004134
+vt 0.613889 -0.996317
+vt 0.61389 0.004134
+vt 0.575648 -0.996317
+vt 0.575649 0.004134
+vt 0.537407 -0.996317
+vt 0.537408 0.004134
+vt 0.499166 -0.996317
+vt 0.499167 0.004134
+vt 0.460925 -0.996317
+vt 0.460926 0.004134
+vt 0.422683 -0.996317
+vt 0.422684 0.004134
+vt 0.384442 -0.996317
+vt 0.384443 0.004134
+vt 0.5 -0.4953
+vt 0.928798 -0.742867
+vt 0.850112 -0.845412
+vt 0.978262 -0.62345
+vt 0.995133 -0.4953
+vt 0.978262 -0.367151
+vt 0.928798 -0.247733
+vt 0.850112 -0.145188
+vt 0.747566 -0.066502
+vt 0.628149 -0.017038
+vt 0.499999 -0.000166
+vt 0.371849 -0.017038
+vt 0.252432 -0.066502
+vt 0.149887 -0.145188
+vt 0.071201 -0.247734
+vt 0.021737 -0.367151
+vt 0.004866 -0.495302
+vt 0.021738 -0.623452
+vt 0.071203 -0.742868
+vt 0.149889 -0.845414
+vt 0.252435 -0.924099
+vt 0.371853 -0.973563
+vt 0.500003 -0.990433
+vt 0.628153 -0.973561
+vt 0.747569 -0.924096
+vt 0.0 -1.0
+vt 0.0 -0.0
+vt 1.0 -0.0
+vt 1.0 -1.0
+vt 0.346202 -0.000991
+vt 0.346202 -0.999567
+vt 0.307961 -0.999567
+vt 0.307961 -0.000991
+vt 0.26972 -0.999567
+vt 0.26972 -0.000991
+vt 0.231479 -0.999567
+vt 0.231479 -0.000991
+vt 0.193238 -0.999567
+vt 0.193237 -0.000991
+vt 0.154996 -0.999567
+vt 0.154996 -0.000991
+vt 0.116755 -0.999567
+vt 0.116755 -0.000991
+vt 0.078514 -0.999567
+vt 0.078514 -0.000991
+vt 0.040273 -0.999567
+vt 0.040273 -0.000991
+vt 0.958061 -0.000991
+vt 0.958061 -0.999567
+vt 0.919819 -0.999567
+vt 0.91982 -0.000991
+vt 0.881578 -0.999567
+vt 0.881578 -0.000991
+vt 0.843337 -0.999567
+vt 0.843337 -0.000991
+vt 0.805096 -0.999567
+vt 0.805096 -0.000991
+vt 0.766854 -0.999567
+vt 0.766855 -0.000991
+vt 0.728613 -0.999567
+vt 0.728614 -0.000991
+vt 0.690372 -0.999567
+vt 0.690373 -0.000991
+vt 0.652131 -0.999567
+vt 0.652131 -0.000991
+vt 0.613889 -0.999567
+vt 0.61389 -0.000991
+vt 0.575648 -0.999567
+vt 0.575649 -0.000991
+vt 0.537407 -0.999567
+vt 0.537408 -0.000991
+vt 0.499166 -0.999567
+vt 0.499167 -0.000991
+vt 0.460925 -0.999567
+vt 0.460926 -0.000991
+vt 0.422683 -0.999567
+vt 0.422684 -0.000991
+vt 0.384442 -0.999567
+vt 0.384443 -0.000991
+vt -0.846386 -1.007128
+vt -0.846385 0.009242
+vt 2.99084 0.009242
+vt 2.99084 -1.007128
+vt 2.760127 0.004927
+vt 2.760125 -1.005058
+vt -0.723001 -1.005058
+vt -0.723001 0.004927
+vt -0.86294 0.007361
+vt -0.862939 -1.004609
+vt 3.00312 -1.004609
+vt 3.003122 0.007361
+vt 2.757152 -1.004064
+vt 2.757152 0.009022
+vt -0.701257 0.009022
+vt -0.701257 -1.004064
+vt 0.940144 -0.059872
+vt 1.008123 0.008107
+vt 1.008123 1.008206
+vt 0.940144 1.076184
+vt -0.605845 -1.00369
+vt -0.605845 0.007657
+vt 2.75564 0.007657
+vt 2.75564 -1.00369
+vt 2.855543 0.002879
+vt 2.624802 -0.998817
+vt -0.769864 -0.998821
+vt -1.000605 0.002875
+vt -0.485595 0.004385
+vt 2.539537 0.004388
+vt 2.745161 -1.002345
+vt -0.691218 -1.002348
+vt -0.501018 0.012101
+vt 2.553904 0.012101
+vt 2.553904 -1.005795
+vt -0.501018 -1.005795
+vt -0.996281 0.005399
+vt -0.766088 -1.000204
+vt 2.620527 -1.000211
+vt 2.850723 0.005391
+vt -0.607353 0.006681
+vt -0.607353 -1.003641
+vt 2.751807 -1.003641
+vt 2.751808 0.006681
+vt -0.716385 0.001361
+vt 2.753878 0.001369
+vt 2.546227 -0.999447
+vt -0.508733 -0.999451
+vt 2.547464 -1.002512
+vt -0.508191 -1.002512
+vt -0.508191 0.006108
+vt 2.547464 0.006108
+
+animation default
+speed 1.0
+frame
+poly StoneGrass_stonegrass.png
+point 0 0 0
+point 24 1 1
+point 25 2 2
+point 1 3 3
+poly StoneGrass_stonegrass.png
+point 1 3 3
+point 25 2 2
+point 26 4 4
+point 2 5 5
+poly StoneGrass_stonegrass.png
+point 2 5 5
+point 26 4 4
+point 27 6 6
+point 3 7 7
+poly StoneGrass_stonegrass.png
+point 3 7 7
+point 27 6 6
+point 28 8 8
+point 4 9 9
+poly StoneGrass_stonegrass.png
+point 4 9 9
+point 28 8 8
+point 29 10 10
+point 5 11 11
+poly StoneGrass_stonegrass.png
+point 5 11 11
+point 29 10 10
+point 30 12 12
+point 6 13 13
+poly StoneGrass_stonegrass.png
+point 6 13 13
+point 30 12 12
+point 31 14 14
+point 7 15 15
+poly StoneGrass_stonegrass.png
+point 7 15 15
+point 31 14 14
+point 32 16 16
+point 8 17 17
+poly StoneGrass_stonegrass.png
+point 8 17 18
+point 32 16 19
+point 33 18 20
+point 9 19 21
+poly StoneGrass_stonegrass.png
+point 9 19 21
+point 33 18 20
+point 34 20 22
+point 10 21 23
+poly StoneGrass_stonegrass.png
+point 10 21 23
+point 34 20 22
+point 35 22 24
+point 11 23 25
+poly StoneGrass_stonegrass.png
+point 11 23 25
+point 35 22 24
+point 36 24 26
+point 12 25 27
+poly StoneGrass_stonegrass.png
+point 12 25 27
+point 36 24 26
+point 37 26 28
+point 13 27 29
+poly StoneGrass_stonegrass.png
+point 13 27 29
+point 37 26 28
+point 38 28 30
+point 14 29 31
+poly StoneGrass_stonegrass.png
+point 14 29 31
+point 38 28 30
+point 39 30 32
+point 15 31 33
+poly StoneGrass_stonegrass.png
+point 15 31 33
+point 39 30 32
+point 40 32 34
+point 16 33 35
+poly StoneGrass_stonegrass.png
+point 16 33 35
+point 40 32 34
+point 41 34 36
+point 17 35 37
+poly StoneGrass_stonegrass.png
+point 17 35 37
+point 41 34 36
+point 42 36 38
+point 18 37 39
+poly StoneGrass_stonegrass.png
+point 18 37 39
+point 42 36 38
+point 43 38 40
+point 19 39 41
+poly StoneGrass_stonegrass.png
+point 19 39 41
+point 43 38 40
+point 44 40 42
+point 20 41 43
+poly StoneGrass_stonegrass.png
+point 20 41 43
+point 44 40 42
+point 45 42 44
+point 21 43 45
+poly StoneGrass_stonegrass.png
+point 21 43 45
+point 45 42 44
+point 46 44 46
+point 22 45 47
+poly StoneGrass_stonegrass.png
+point 22 45 47
+point 46 44 46
+point 47 46 48
+point 23 47 49
+poly StoneGrass_stonegrass.png
+point 24 1 1
+point 0 0 0
+point 23 47 49
+point 47 46 48
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 25 48 51
+point 24 48 52
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 26 48 53
+point 25 48 51
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 27 48 54
+point 26 48 53
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 28 48 55
+point 27 48 54
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 29 48 56
+point 28 48 55
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 30 48 57
+point 29 48 56
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 31 48 58
+point 30 48 57
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 32 48 59
+point 31 48 58
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 33 48 60
+point 32 48 59
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 34 48 61
+point 33 48 60
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 35 48 62
+point 34 48 61
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 36 48 63
+point 35 48 62
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 37 48 64
+point 36 48 63
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 38 48 65
+point 37 48 64
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 39 48 66
+point 38 48 65
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 40 48 67
+point 39 48 66
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 41 48 68
+point 40 48 67
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 42 48 69
+point 41 48 68
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 43 48 70
+point 42 48 69
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 44 48 71
+point 43 48 70
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 45 48 72
+point 44 48 71
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 46 48 73
+point 45 48 72
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 47 48 74
+point 46 48 73
+poly SandStone_Light_sandstone_light.png
+point 48 48 50
+point 24 48 52
+point 47 48 74
+poly StoneGrass_stonegrass.png
+point 49 0 0
+point 73 1 1
+point 74 2 2
+point 50 3 3
+poly StoneGrass_stonegrass.png
+point 50 3 3
+point 74 2 2
+point 75 4 4
+point 51 5 5
+poly StoneGrass_stonegrass.png
+point 51 5 5
+point 75 4 4
+point 76 6 6
+point 52 7 7
+poly StoneGrass_stonegrass.png
+point 52 7 7
+point 76 6 6
+point 77 8 8
+point 53 9 9
+poly StoneGrass_stonegrass.png
+point 53 9 9
+point 77 8 8
+point 78 10 10
+point 54 11 11
+poly StoneGrass_stonegrass.png
+point 54 11 11
+point 78 10 10
+point 79 12 12
+point 55 13 13
+poly StoneGrass_stonegrass.png
+point 55 13 13
+point 79 12 12
+point 80 14 14
+point 56 15 15
+poly StoneGrass_stonegrass.png
+point 56 15 15
+point 80 14 14
+point 81 16 16
+point 57 17 17
+poly StoneGrass_stonegrass.png
+point 57 17 18
+point 81 16 19
+point 82 18 20
+point 58 19 21
+poly StoneGrass_stonegrass.png
+point 58 19 21
+point 82 18 20
+point 83 20 22
+point 59 21 23
+poly StoneGrass_stonegrass.png
+point 59 21 23
+point 83 20 22
+point 84 22 24
+point 60 23 25
+poly StoneGrass_stonegrass.png
+point 60 23 25
+point 84 22 24
+point 85 24 26
+point 61 25 27
+poly StoneGrass_stonegrass.png
+point 61 25 27
+point 85 24 26
+point 86 26 28
+point 62 27 29
+poly StoneGrass_stonegrass.png
+point 62 27 29
+point 86 26 28
+point 87 28 30
+point 63 29 31
+poly StoneGrass_stonegrass.png
+point 63 29 31
+point 87 28 30
+point 88 30 32
+point 64 31 33
+poly StoneGrass_stonegrass.png
+point 64 31 33
+point 88 30 32
+point 89 32 34
+point 65 33 35
+poly StoneGrass_stonegrass.png
+point 65 33 35
+point 89 32 34
+point 90 34 36
+point 66 35 37
+poly StoneGrass_stonegrass.png
+point 66 35 37
+point 90 34 36
+point 91 36 38
+point 67 37 39
+poly StoneGrass_stonegrass.png
+point 67 37 39
+point 91 36 38
+point 92 38 40
+point 68 39 41
+poly StoneGrass_stonegrass.png
+point 68 39 41
+point 92 38 40
+point 93 40 42
+point 69 41 43
+poly StoneGrass_stonegrass.png
+point 69 41 43
+point 93 40 42
+point 94 42 44
+point 70 43 45
+poly StoneGrass_stonegrass.png
+point 70 43 45
+point 94 42 44
+point 95 44 46
+point 71 45 47
+poly StoneGrass_stonegrass.png
+point 71 45 47
+point 95 44 46
+point 96 46 48
+point 72 47 49
+poly StoneGrass_stonegrass.png
+point 73 1 1
+point 49 0 0
+point 72 47 49
+point 96 46 48
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 74 48 51
+point 73 48 52
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 75 48 53
+point 74 48 51
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 76 48 54
+point 75 48 53
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 77 48 55
+point 76 48 54
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 78 48 56
+point 77 48 55
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 79 48 57
+point 78 48 56
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 80 48 58
+point 79 48 57
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 81 48 59
+point 80 48 58
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 82 48 60
+point 81 48 59
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 83 48 61
+point 82 48 60
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 84 48 62
+point 83 48 61
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 85 48 63
+point 84 48 62
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 86 48 64
+point 85 48 63
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 87 48 65
+point 86 48 64
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 88 48 66
+point 87 48 65
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 89 48 67
+point 88 48 66
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 90 48 68
+point 89 48 67
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 91 48 69
+point 90 48 68
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 92 48 70
+point 91 48 69
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 93 48 71
+point 92 48 70
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 94 48 72
+point 93 48 71
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 95 48 73
+point 94 48 72
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 96 48 74
+point 95 48 73
+poly SandStone_Light_sandstone_light.png
+point 97 48 50
+point 73 48 52
+point 96 48 74
+poly StoneGrass_stonegrass.png
+point 98 0 0
+point 122 1 1
+point 123 2 2
+point 99 3 3
+poly StoneGrass_stonegrass.png
+point 99 3 3
+point 123 2 2
+point 124 4 4
+point 100 5 5
+poly StoneGrass_stonegrass.png
+point 100 5 5
+point 124 4 4
+point 125 6 6
+point 101 7 7
+poly StoneGrass_stonegrass.png
+point 101 7 7
+point 125 6 6
+point 126 8 8
+point 102 9 9
+poly StoneGrass_stonegrass.png
+point 102 9 9
+point 126 8 8
+point 127 10 10
+point 103 11 11
+poly StoneGrass_stonegrass.png
+point 103 11 11
+point 127 10 10
+point 128 12 12
+point 104 13 13
+poly StoneGrass_stonegrass.png
+point 104 13 13
+point 128 12 12
+point 129 14 14
+point 105 15 15
+poly StoneGrass_stonegrass.png
+point 105 15 15
+point 129 14 14
+point 130 16 16
+point 106 17 17
+poly StoneGrass_stonegrass.png
+point 106 17 18
+point 130 16 19
+point 131 18 20
+point 107 19 21
+poly StoneGrass_stonegrass.png
+point 107 19 21
+point 131 18 20
+point 132 20 22
+point 108 21 23
+poly StoneGrass_stonegrass.png
+point 108 21 23
+point 132 20 22
+point 133 22 24
+point 109 23 25
+poly StoneGrass_stonegrass.png
+point 109 23 25
+point 133 22 24
+point 134 24 26
+point 110 25 27
+poly StoneGrass_stonegrass.png
+point 110 25 27
+point 134 24 26
+point 135 26 28
+point 111 27 29
+poly StoneGrass_stonegrass.png
+point 111 27 29
+point 135 26 28
+point 136 28 30
+point 112 29 31
+poly StoneGrass_stonegrass.png
+point 112 29 31
+point 136 28 30
+point 137 30 32
+point 113 31 33
+poly StoneGrass_stonegrass.png
+point 113 31 33
+point 137 30 32
+point 138 32 34
+point 114 33 35
+poly StoneGrass_stonegrass.png
+point 114 33 35
+point 138 32 34
+point 139 34 36
+point 115 35 37
+poly StoneGrass_stonegrass.png
+point 115 35 37
+point 139 34 36
+point 140 36 38
+point 116 37 39
+poly StoneGrass_stonegrass.png
+point 116 37 39
+point 140 36 38
+point 141 38 40
+point 117 39 41
+poly StoneGrass_stonegrass.png
+point 117 39 41
+point 141 38 40
+point 142 40 42
+point 118 41 43
+poly StoneGrass_stonegrass.png
+point 118 41 43
+point 142 40 42
+point 143 42 44
+point 119 43 45
+poly StoneGrass_stonegrass.png
+point 119 43 45
+point 143 42 44
+point 144 44 46
+point 120 45 47
+poly StoneGrass_stonegrass.png
+point 120 45 47
+point 144 44 46
+point 145 46 48
+point 121 47 49
+poly StoneGrass_stonegrass.png
+point 122 1 1
+point 98 0 0
+point 121 47 49
+point 145 46 48
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 123 48 51
+point 122 48 52
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 124 48 53
+point 123 48 51
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 125 48 54
+point 124 48 53
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 126 48 55
+point 125 48 54
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 127 48 56
+point 126 48 55
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 128 48 57
+point 127 48 56
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 129 48 58
+point 128 48 57
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 130 48 59
+point 129 48 58
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 131 48 60
+point 130 48 59
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 132 48 61
+point 131 48 60
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 133 48 62
+point 132 48 61
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 134 48 63
+point 133 48 62
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 135 48 64
+point 134 48 63
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 136 48 65
+point 135 48 64
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 137 48 66
+point 136 48 65
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 138 48 67
+point 137 48 66
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 139 48 68
+point 138 48 67
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 140 48 69
+point 139 48 68
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 141 48 70
+point 140 48 69
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 142 48 71
+point 141 48 70
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 143 48 72
+point 142 48 71
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 144 48 73
+point 143 48 72
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 145 48 74
+point 144 48 73
+poly SandStone_Light_sandstone_light.png
+point 146 48 50
+point 122 48 52
+point 145 48 74
+poly StoneGrass_stonegrass.png
+point 147 0 0
+point 171 1 1
+point 172 2 2
+point 148 3 3
+poly StoneGrass_stonegrass.png
+point 148 3 3
+point 172 2 2
+point 173 4 4
+point 149 5 5
+poly StoneGrass_stonegrass.png
+point 149 5 5
+point 173 4 4
+point 174 6 6
+point 150 7 7
+poly StoneGrass_stonegrass.png
+point 150 7 7
+point 174 6 6
+point 175 8 8
+point 151 9 9
+poly StoneGrass_stonegrass.png
+point 151 9 9
+point 175 8 8
+point 176 10 10
+point 152 11 11
+poly StoneGrass_stonegrass.png
+point 152 11 11
+point 176 10 10
+point 177 12 12
+point 153 13 13
+poly StoneGrass_stonegrass.png
+point 153 13 13
+point 177 12 12
+point 178 14 14
+point 154 15 15
+poly StoneGrass_stonegrass.png
+point 154 15 15
+point 178 14 14
+point 179 16 16
+point 155 17 17
+poly StoneGrass_stonegrass.png
+point 155 17 18
+point 179 16 19
+point 180 18 20
+point 156 19 21
+poly StoneGrass_stonegrass.png
+point 156 19 21
+point 180 18 20
+point 181 20 22
+point 157 21 23
+poly StoneGrass_stonegrass.png
+point 157 21 23
+point 181 20 22
+point 182 22 24
+point 158 23 25
+poly StoneGrass_stonegrass.png
+point 158 23 25
+point 182 22 24
+point 183 24 26
+point 159 25 27
+poly StoneGrass_stonegrass.png
+point 159 25 27
+point 183 24 26
+point 184 26 28
+point 160 27 29
+poly StoneGrass_stonegrass.png
+point 160 27 29
+point 184 26 28
+point 185 28 30
+point 161 29 31
+poly StoneGrass_stonegrass.png
+point 161 29 31
+point 185 28 30
+point 186 30 32
+point 162 31 33
+poly StoneGrass_stonegrass.png
+point 162 31 33
+point 186 30 32
+point 187 32 34
+point 163 33 35
+poly StoneGrass_stonegrass.png
+point 163 33 35
+point 187 32 34
+point 188 34 36
+point 164 35 37
+poly StoneGrass_stonegrass.png
+point 164 35 37
+point 188 34 36
+point 189 36 38
+point 165 37 39
+poly StoneGrass_stonegrass.png
+point 165 37 39
+point 189 36 38
+point 190 38 40
+point 166 39 41
+poly StoneGrass_stonegrass.png
+point 166 39 41
+point 190 38 40
+point 191 40 42
+point 167 41 43
+poly StoneGrass_stonegrass.png
+point 167 41 43
+point 191 40 42
+point 192 42 44
+point 168 43 45
+poly StoneGrass_stonegrass.png
+point 168 43 45
+point 192 42 44
+point 193 44 46
+point 169 45 47
+poly StoneGrass_stonegrass.png
+point 169 45 47
+point 193 44 46
+point 194 46 48
+point 170 47 49
+poly StoneGrass_stonegrass.png
+point 171 1 1
+point 147 0 0
+point 170 47 49
+point 194 46 48
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 172 48 51
+point 171 48 52
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 173 48 53
+point 172 48 51
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 174 48 54
+point 173 48 53
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 175 48 55
+point 174 48 54
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 176 48 56
+point 175 48 55
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 177 48 57
+point 176 48 56
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 178 48 58
+point 177 48 57
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 179 48 59
+point 178 48 58
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 180 48 60
+point 179 48 59
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 181 48 61
+point 180 48 60
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 182 48 62
+point 181 48 61
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 183 48 63
+point 182 48 62
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 184 48 64
+point 183 48 63
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 185 48 65
+point 184 48 64
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 186 48 66
+point 185 48 65
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 187 48 67
+point 186 48 66
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 188 48 68
+point 187 48 67
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 189 48 69
+point 188 48 68
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 190 48 70
+point 189 48 69
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 191 48 71
+point 190 48 70
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 192 48 72
+point 191 48 71
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 193 48 73
+point 192 48 72
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 194 48 74
+point 193 48 73
+poly SandStone_Light_sandstone_light.png
+point 195 48 50
+point 171 48 52
+point 194 48 74
+poly NaviMesh
+point 199 48 0
+point 227 48 0
+point 228 48 0
+point 226 48 0
+poly NaviMesh
+point 218 48 0
+point 226 48 0
+point 228 48 0
+point 220 48 0
+poly NaviMesh
+point 220 48 0
+point 228 48 0
+point 227 48 0
+point 219 48 0
+poly NaviMesh
+point 226 48 0
+point 218 48 0
+point 221 48 0
+poly NaviMesh
+point 198 48 0
+point 224 48 0
+point 229 48 0
+point 227 48 0
+poly NaviMesh
+point 219 48 0
+point 227 48 0
+point 229 48 0
+point 222 48 0
+poly NaviMesh
+point 222 48 0
+point 229 48 0
+point 224 48 0
+point 216 48 0
+poly NaviMesh
+point 197 48 0
+point 225 48 0
+point 230 48 0
+point 224 48 0
+poly NaviMesh
+point 216 48 0
+point 224 48 0
+point 230 48 0
+point 223 48 0
+poly NaviMesh
+point 223 48 0
+point 230 48 0
+point 225 48 0
+point 217 48 0
+poly NaviMesh
+point 196 48 0
+point 221 48 0
+point 225 48 0
+poly NaviMesh
+point 196 49 0
+point 221 49 0
+point 226 49 0
+poly NaviMesh
+point 217 48 0
+point 225 48 0
+point 221 48 0
+poly NaviMesh
+point 204 48 0
+point 215 48 0
+point 207 48 0
+poly NaviMesh
+point 200 48 0
+point 201 48 0
+point 233 48 0
+poly NaviMesh
+point 206 48 0
+point 213 48 0
+point 233 48 0
+poly NaviMesh
+point 208 48 0
+point 233 48 0
+point 213 48 0
+poly NaviMesh
+point 209 48 0
+point 212 48 0
+point 211 48 0
+poly NaviMesh
+point 202 48 0
+point 211 48 0
+point 232 48 0
+poly NaviMesh
+point 200 48 0
+point 234 48 0
+point 203 48 0
+poly NaviMesh
+point 203 48 0
+point 214 48 0
+point 205 48 0
+poly NaviMesh
+point 235 48 0
+point 213 48 0
+point 221 48 0
+poly NaviMesh
+point 218 48 0
+point 235 48 0
+point 221 48 0
+poly NaviMesh
+point 235 48 0
+point 208 48 0
+point 213 48 0
+poly NaviMesh
+point 236 48 0
+point 220 48 0
+point 212 48 0
+poly NaviMesh
+point 209 48 0
+point 236 48 0
+point 212 48 0
+poly NaviMesh
+point 236 48 0
+point 218 48 0
+point 220 48 0
+poly NaviMesh
+point 208 48 0
+point 237 48 0
+point 232 48 0
+poly NaviMesh
+point 237 48 0
+point 202 48 0
+point 232 48 0
+poly NaviMesh
+point 202 48 0
+point 238 48 0
+point 211 48 0
+poly NaviMesh
+point 238 48 0
+point 209 48 0
+point 211 48 0
+poly NaviMesh
+point 241 48 0
+point 221 48 0
+point 213 48 0
+poly NaviMesh
+point 206 48 0
+point 241 48 0
+point 213 48 0
+poly NaviMesh
+point 241 48 0
+point 217 48 0
+point 221 48 0
+poly NaviMesh
+point 242 48 0
+point 215 48 0
+point 223 48 0
+poly NaviMesh
+point 217 48 0
+point 242 48 0
+point 223 48 0
+poly NaviMesh
+point 242 48 0
+point 207 48 0
+point 215 48 0
+poly NaviMesh
+point 207 48 0
+point 240 48 0
+point 200 48 0
+poly NaviMesh
+point 240 48 0
+point 201 48 0
+point 200 48 0
+poly NaviMesh
+point 201 48 0
+point 239 48 0
+point 233 48 0
+poly NaviMesh
+point 239 48 0
+point 206 48 0
+point 233 48 0
+poly NaviMesh
+point 246 48 0
+point 214 48 0
+point 222 48 0
+poly NaviMesh
+point 216 48 0
+point 246 48 0
+point 222 48 0
+poly NaviMesh
+point 246 48 0
+point 205 48 0
+point 214 48 0
+poly NaviMesh
+point 245 48 0
+point 223 48 0
+point 215 48 0
+poly NaviMesh
+point 204 48 0
+point 245 48 0
+point 215 48 0
+poly NaviMesh
+point 245 48 0
+point 216 48 0
+point 223 48 0
+poly NaviMesh
+point 200 48 0
+point 243 48 0
+point 207 48 0
+poly NaviMesh
+point 243 48 0
+point 204 48 0
+point 207 48 0
+poly NaviMesh
+point 205 48 0
+point 244 48 0
+point 203 48 0
+poly NaviMesh
+point 244 48 0
+point 200 48 0
+point 203 48 0
+poly NaviMesh
+point 233 48 0
+point 247 48 0
+point 200 48 0
+poly NaviMesh
+point 247 48 0
+point 234 48 0
+point 200 48 0
+poly NaviMesh
+point 232 48 0
+point 248 48 0
+point 208 48 0
+poly NaviMesh
+point 248 48 0
+point 233 48 0
+point 208 48 0
+poly NaviMesh
+point 231 48 0
+point 249 48 0
+point 203 48 0
+poly NaviMesh
+point 249 48 0
+point 232 48 0
+point 203 48 0
+poly NaviMesh
+point 234 48 0
+point 250 48 0
+point 203 48 0
+poly NaviMesh
+point 250 48 0
+point 231 48 0
+point 203 48 0
+poly NaviMesh
+point 254 48 0
+point 212 48 0
+point 220 48 0
+poly NaviMesh
+point 219 48 0
+point 254 48 0
+point 220 48 0
+poly NaviMesh
+point 254 48 0
+point 211 48 0
+point 212 48 0
+poly NaviMesh
+point 253 48 0
+point 222 48 0
+point 214 48 0
+poly NaviMesh
+point 210 48 0
+point 253 48 0
+point 214 48 0
+poly NaviMesh
+point 253 48 0
+point 219 48 0
+point 222 48 0
+poly NaviMesh
+point 211 48 0
+point 252 48 0
+point 232 48 0
+poly NaviMesh
+point 252 48 0
+point 203 48 0
+point 232 48 0
+poly NaviMesh
+point 203 48 0
+point 251 48 0
+point 214 48 0
+poly NaviMesh
+point 251 48 0
+point 210 48 0
+point 214 48 0
+poly SandStone_Light_sandstone_light.png
+point 255 48 75
+point 258 48 76
+point 257 48 77
+point 256 48 78
+poly SandStone_Light_sandstone_light.png
+point 257 48 75
+point 261 48 76
+point 260 48 77
+point 259 48 78
+poly SandStone_Light_sandstone_light.png
+point 262 48 75
+point 256 48 76
+point 264 48 77
+point 263 48 78
+poly SandStone_Light_sandstone_light.png
+point 256 48 75
+point 257 48 76
+point 259 48 77
+point 264 48 78
+poly SandStone_Light_sandstone_light.png
+point 264 48 75
+point 259 48 76
+point 266 48 77
+point 265 48 78
+poly SandStone_Light_sandstone_light.png
+point 263 48 75
+point 264 48 76
+point 265 48 77
+point 267 48 78
+poly SandStone_Light_sandstone_light.png
+point 259 48 75
+point 260 48 76
+point 268 48 77
+point 266 48 78
+poly SandStone_Light_sandstone_light.png
+point 260 48 75
+point 270 48 76
+point 269 48 77
+point 268 48 78
+poly SandStone_Light_sandstone_light.png
+point 271 48 75
+point 263 48 76
+point 267 48 77
+point 272 48 78
+poly SandStone_Light_sandstone_light.png
+point 273 48 75
+point 276 48 76
+point 275 48 77
+point 274 48 78
+poly SandStone_Light_sandstone_light.png
+point 277 48 75
+point 279 48 76
+point 278 48 77
+point 276 48 78
+poly SandStone_Light_sandstone_light.png
+point 280 48 75
+point 282 48 76
+point 273 48 77
+point 281 48 78
+poly SandStone_Light_sandstone_light.png
+point 282 48 75
+point 277 48 76
+point 276 48 77
+point 273 48 78
+poly SandStone_Light_sandstone_light.png
+point 283 48 75
+point 284 48 76
+point 277 48 77
+point 282 48 78
+poly SandStone_Light_sandstone_light.png
+point 285 48 75
+point 283 48 76
+point 282 48 77
+point 280 48 78
+poly SandStone_Light_sandstone_light.png
+point 284 48 75
+point 286 48 76
+point 279 48 77
+point 277 48 78
+poly SandStone_Light_sandstone_light.png
+point 286 48 75
+point 288 48 76
+point 287 48 77
+point 279 48 78
+poly SandStone_Light_sandstone_light.png
+point 289 48 75
+point 285 48 76
+point 280 48 77
+point 290 48 78
+poly SandStone_Light_sandstone_light.png
+point 291 48 75
+point 272 48 76
+point 289 48 77
+point 292 48 78
+poly SandStone_Light_sandstone_light.png
+point 272 48 75
+point 267 48 76
+point 285 48 77
+point 289 48 78
+poly SandStone_Light_sandstone_light.png
+point 269 48 75
+point 294 48 76
+point 293 48 77
+point 288 48 78
+poly SandStone_Light_sandstone_light.png
+point 268 48 75
+point 269 48 76
+point 288 48 77
+point 286 48 78
+poly SandStone_Light_sandstone_light.png
+point 266 48 75
+point 268 48 76
+point 286 48 77
+point 284 48 78
+poly SandStone_Light_sandstone_light.png
+point 267 48 75
+point 265 48 76
+point 283 48 77
+point 285 48 78
+poly StoneGrass_stonegrass.png
+point 295 0 79
+point 319 1 80
+point 320 2 81
+point 296 3 82
+poly StoneGrass_stonegrass.png
+point 296 3 82
+point 320 2 81
+point 321 4 83
+point 297 5 84
+poly StoneGrass_stonegrass.png
+point 297 5 84
+point 321 4 83
+point 322 6 85
+point 298 7 86
+poly StoneGrass_stonegrass.png
+point 298 7 86
+point 322 6 85
+point 323 8 87
+point 299 9 88
+poly StoneGrass_stonegrass.png
+point 299 9 88
+point 323 8 87
+point 324 10 89
+point 300 11 90
+poly StoneGrass_stonegrass.png
+point 300 11 90
+point 324 10 89
+point 325 12 91
+point 301 13 92
+poly StoneGrass_stonegrass.png
+point 301 13 92
+point 325 12 91
+point 326 14 93
+point 302 15 94
+poly StoneGrass_stonegrass.png
+point 302 15 94
+point 326 14 93
+point 327 16 95
+point 303 17 96
+poly StoneGrass_stonegrass.png
+point 303 17 97
+point 327 16 98
+point 328 18 99
+point 304 19 100
+poly StoneGrass_stonegrass.png
+point 304 19 100
+point 328 18 99
+point 329 20 101
+point 305 21 102
+poly StoneGrass_stonegrass.png
+point 305 21 102
+point 329 20 101
+point 330 22 103
+point 306 23 104
+poly StoneGrass_stonegrass.png
+point 306 23 104
+point 330 22 103
+point 331 24 105
+point 307 25 106
+poly StoneGrass_stonegrass.png
+point 307 25 106
+point 331 24 105
+point 332 26 107
+point 308 27 108
+poly StoneGrass_stonegrass.png
+point 308 27 108
+point 332 26 107
+point 333 28 109
+point 309 29 110
+poly StoneGrass_stonegrass.png
+point 309 29 110
+point 333 28 109
+point 334 30 111
+point 310 31 112
+poly StoneGrass_stonegrass.png
+point 310 31 112
+point 334 30 111
+point 335 32 113
+point 311 33 114
+poly StoneGrass_stonegrass.png
+point 311 33 114
+point 335 32 113
+point 336 34 115
+point 312 35 116
+poly StoneGrass_stonegrass.png
+point 312 35 116
+point 336 34 115
+point 337 36 117
+point 313 37 118
+poly StoneGrass_stonegrass.png
+point 313 37 118
+point 337 36 117
+point 338 38 119
+point 314 39 120
+poly StoneGrass_stonegrass.png
+point 314 39 120
+point 338 38 119
+point 339 40 121
+point 315 41 122
+poly StoneGrass_stonegrass.png
+point 315 41 122
+point 339 40 121
+point 340 42 123
+point 316 43 124
+poly StoneGrass_stonegrass.png
+point 316 43 124
+point 340 42 123
+point 341 44 125
+point 317 45 126
+poly StoneGrass_stonegrass.png
+point 317 45 126
+point 341 44 125
+point 342 46 127
+point 318 47 128
+poly StoneGrass_stonegrass.png
+point 319 1 80
+point 295 0 79
+point 318 47 128
+point 342 46 127
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 320 48 51
+point 319 48 52
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 321 48 53
+point 320 48 51
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 322 48 54
+point 321 48 53
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 323 48 55
+point 322 48 54
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 324 48 56
+point 323 48 55
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 325 48 57
+point 324 48 56
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 326 48 58
+point 325 48 57
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 327 48 59
+point 326 48 58
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 328 48 60
+point 327 48 59
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 329 48 61
+point 328 48 60
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 330 48 62
+point 329 48 61
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 331 48 63
+point 330 48 62
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 332 48 64
+point 331 48 63
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 333 48 65
+point 332 48 64
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 334 48 66
+point 333 48 65
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 335 48 67
+point 334 48 66
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 336 48 68
+point 335 48 67
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 337 48 69
+point 336 48 68
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 338 48 70
+point 337 48 69
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 339 48 71
+point 338 48 70
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 340 48 72
+point 339 48 71
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 341 48 73
+point 340 48 72
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 342 48 74
+point 341 48 73
+poly SandStone_Light_sandstone_light.png
+point 343 48 50
+point 319 48 52
+point 342 48 74
+poly OutsideStone_stepblock.png
+point 358 50 129
+point 344 50 130
+point 357 50 131
+point 352 50 132
+poly OutsideStone_stepblock.png
+point 344 51 133
+point 358 51 134
+point 350 51 135
+point 355 51 136
+poly OutsideStone_stepblock.png
+point 355 52 137
+point 350 52 138
+point 349 52 139
+point 346 52 140
+poly OutsideStone_stepblock.png
+point 352 53 141
+point 357 53 142
+point 346 53 143
+point 349 53 144
+poly OutsideStone_stepblock.png
+point 346 49 145
+point 345 49 146
+point 356 49 147
+point 355 49 148
+poly OutsideStone_stepblock.png
+point 351 50 149
+point 356 50 150
+point 345 50 151
+point 348 50 152
+poly OutsideStone_stepblock.png
+point 350 48 153
+point 351 48 154
+point 348 48 155
+point 349 48 156
+poly OutsideStone_stepblock.png
+point 348 48 157
+point 353 48 158
+point 352 48 159
+point 349 48 160
+poly OutsideStone_stepblock.png
+point 345 51 161
+point 354 51 162
+point 353 51 163
+point 348 51 164
+poly OutsideStone_stepblock.png
+point 352 48 165
+point 353 48 166
+point 359 48 167
+point 358 48 168
+poly OutsideStone_stepblock.png
+point 347 31 169
+point 359 31 170
+point 353 31 171
+point 354 31 172
+poly OutsideStone_stepblock.png
+point 350 48 173
+point 358 48 174
+point 359 48 175
+point 351 48 176
+poly OutsideStone_stepblock.png
+point 347 54 177
+point 356 54 178
+point 351 54 179
+point 359 54 180
+poly Ground_grass-dark-center.png
+point 360 48 78
+point 361 48 75
+point 362 48 76
+point 363 48 77

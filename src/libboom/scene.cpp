@@ -19,6 +19,9 @@ namespace Boom
 		{
 			id = gid++;
 			this->mesh = mesh;
+			this->animation = "default";
+			this->frame = 0;
+			this->frame_timer = 0;
 			this->x = x;
 			this->y = y;
 			this->z = z;
@@ -38,11 +41,19 @@ namespace Boom
 		//----------------------------------------------------------------------
 		bool Object::update(Scene *scene)
 		{
+			Graphics::BMeshAnimation *anim = scene->meshes[mesh]->animations[animation];
 			if (life > 0)
 			{
 				life -= tdiff;
 				if (life <= 0)
 					return timeout();
+			}
+			frame_timer += tdiff;
+			
+			while (frame_timer >= anim->speed * 0.05)
+			{
+				frame_timer -= anim->speed * 0.05;
+				frame = (frame + 1) % anim->frames.size();
 			}
 			
 			return true;
@@ -68,8 +79,15 @@ namespace Boom
 				glRotatef(rotation.y, 0.0, 1.0, 0.0);
 			if (rotation.z)
 				glRotatef(rotation.z, 0.0, 0.0, 1.0);
-			scene->meshes[mesh].render();
+			scene->meshes[mesh]->render(animation, frame);
 			glPopMatrix();
+		}
+		
+		//----------------------------------------------------------------------
+		int Object::set_animation(string name)
+		{
+			animation = name;
+			frame = 0;
 		}
 		
 		//----------------------------------------------------------------------
@@ -302,15 +320,16 @@ namespace Boom
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 				glDisable(GL_DEPTH_TEST);
+				glDisable(GL_TEXTURE_2D);
 				
 				if (percent <= 0.8)
 				{
-					float large[] = {0.7, 0.7, 1.0, 0.5 * (0.8 - percent)};
+					float large[] = {0.6, 0.6, 1.0, 0.5 * (0.8 - percent)};
 					glMaterialfv(GL_FRONT, GL_DIFFUSE, large);
 					glutSolidSphere(current_radius * current_radius * current_radius, 16, 16);
 				}
 				
-				float medium[] = {0.8, 0.8 * percent, 0.8 * percent, 1.0 - percent};
+				float medium[] = {0.9, 0.7 * percent, 0.7 * percent, 1.0 - percent};
 				glMaterialfv(GL_FRONT, GL_DIFFUSE, medium);
 				glutSolidSphere(current_radius, 16, 16);
 				
@@ -318,6 +337,7 @@ namespace Boom
 				glMaterialfv(GL_FRONT, GL_DIFFUSE, small);
 				glutSolidSphere(0.5, 12, 12);
 				
+				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_DEPTH_TEST);
 				glDisable(GL_BLEND);
 				glPopMatrix();
@@ -364,11 +384,11 @@ namespace Boom
 		//----------------------------------------------------------------------
 		void Scene::preload(string mesh)
 		{
-			Graphics::Mesh m;
+			Graphics::BMesh *m = new Graphics::BMesh();
 			string filename;
 			
-			filename = "Meshes/" + mesh + ".obj";
-			m.load(filename.c_str());
+			filename = "Meshes/" + mesh + ".bmesh";
+			m->load(filename.c_str());
 			
 			meshes[mesh] = m;
 		}
@@ -379,11 +399,11 @@ namespace Boom
 			MeshList::iterator pos = meshes.find(obj->mesh);
 			if (pos == meshes.end())
 			{
-				Graphics::Mesh m;
+				Graphics::BMesh *m = new Graphics::BMesh();
 				string filename;
 				
-				filename = "Meshes/" + obj->mesh + ".obj";
-				m.load(filename.c_str());
+				filename = "Meshes/" + obj->mesh + ".bmesh";
+				m->load(filename.c_str());
 				
 				meshes[obj->mesh] = m;
 			}

@@ -1,0 +1,478 @@
+materials bign.bmat
+
+v -0.950503 -0.969333 0.089109
+v -0.950503 -2.969333 0.089109
+v -2.950504 -2.969333 0.089109
+v -2.914736 -0.910975 0.153551
+v -0.948513 -0.910976 3.025272
+v -0.950504 -2.969334 3.124337
+v -2.950504 -2.969333 3.124337
+v -2.914736 -0.910975 3.025272
+v -2.950504 -2.969333 6.078523
+v -2.950503 -0.969333 6.078523
+v -0.950504 -2.969334 6.078523
+v -0.950503 -0.969334 6.078523
+v 1.069453 -0.969335 3.124337
+v 1.069452 -2.969335 3.124337
+v 1.069453 -0.969335 0.069153
+v 1.069452 -2.969335 0.069153
+v 3.064158 -2.969337 0.069153
+v 3.064159 -0.969336 0.069153
+v 3.064158 -2.969337 3.124337
+v 3.064159 -0.969336 3.124337
+v 3.064158 -2.969337 6.053273
+v 3.064159 -0.969336 6.053273
+v 1.069453 -0.969335 6.053273
+v 1.069452 -2.969335 6.053273
+v 1.069454 1.044017 2.989477
+v 3.064161 1.044016 2.989477
+v 1.069454 1.044017 0.060541
+v 3.064161 1.044016 0.060541
+v 3.064162 3.057368 0.060541
+v 1.069455 3.057369 0.060541
+v 3.064162 3.057368 2.989477
+v 1.069455 3.057369 2.989477
+v 3.064162 3.057368 6.111631
+v 1.069455 3.057369 6.111631
+v 1.069454 1.044017 6.111631
+v 3.064161 1.044016 6.111631
+v -0.948512 1.044018 3.188168
+v -0.948511 3.05737 3.188168
+v -0.948512 1.044018 0.066013
+v -0.948511 3.05737 0.066013
+v -2.914735 1.044019 0.066013
+v -2.914734 3.057371 0.066013
+v -2.914734 3.057371 3.188168
+v -2.914735 1.044019 3.188168
+v -2.914735 1.044019 6.059889
+v -2.914734 3.057371 6.059889
+v -0.948512 1.044018 6.059889
+v -0.948511 3.05737 6.059889
+vn 1.0 5.6e-05 -0.000679
+vn 1.0 -1e-06 0.0
+vn -1e-06 -0.840653 0.541574
+vn -0.833889 -0.025728 -0.551332
+vn -0.825911 0.0 -0.5638
+vn 0.02904 0.99938 -0.019883
+vn 1e-06 1.0 0.0
+vn -1.0 1e-06 0.0
+vn -1e-06 -1.0 0.0
+vn -0.822978 0.0 0.568073
+vn 1.0 -0.0 0.0
+vn 0.027965 0.999426 0.019121
+vn 0.028908 0.999582 0.0
+vn 0.82548 -0.0 0.564431
+vn -0.999794 0.016825 -0.01139
+vn -1.0 0.0 0.0
+vn -0.999849 0.017374 -0.0
+vn 1.0 0.0 -0.000678
+vn 1.0 -0.000967 0.0
+vn 0.0 0.0 1.0
+vn 0.0 0.0 -1.0
+vn -0.031829 0.031829 -0.998986
+vn 0.0 1.0 0.0
+vn -0.0 -0.835705 -0.549178
+vn -0.0 -1.0 0.0
+vn 1e-06 0.999817 0.01911
+vn 0.0 0.999817 0.01911
+vn 0.822978 -0.0 -0.568073
+vn 0.007041 0.838549 -0.544781
+vn 1e-06 0.840653 -0.541574
+vn 0.0 0.835705 0.549178
+vt 0 0
+
+animation default
+speed 1.0
+frame
+poly Material
+point 4 0 0
+point 0 0 0
+point 36 0 0
+poly Material
+point 4 1 0
+point 36 1 0
+point 46 1 0
+poly Material
+point 46 2 0
+point 44 2 0
+point 7 2 0
+poly Material
+point 46 2 0
+point 7 2 0
+point 4 2 0
+poly Material
+point 5 3 0
+point 4 3 0
+point 15 3 0
+poly Material
+point 4 4 0
+point 14 4 0
+point 15 4 0
+poly Material
+point 4 5 0
+point 0 5 0
+point 3 5 0
+poly Material
+point 4 6 0
+point 3 6 0
+point 7 6 0
+poly Material.001
+point 44 7 0
+point 43 7 0
+point 7 7 0
+poly Material.001
+point 43 7 0
+point 3 7 0
+point 7 7 0
+poly Material.001
+point 36 1 0
+point 37 1 0
+point 47 1 0
+poly Material.001
+point 36 1 0
+point 47 1 0
+point 46 1 0
+poly Material.001
+point 42 7 0
+point 43 7 0
+point 44 7 0
+poly Material.001
+point 42 7 0
+point 44 7 0
+point 45 7 0
+poly Material.001
+point 41 7 0
+point 40 7 0
+point 43 7 0
+poly Material.001
+point 41 7 0
+point 43 7 0
+point 42 7 0
+poly Material.001
+point 24 8 0
+point 34 8 0
+point 36 8 0
+poly Material.001
+point 24 8 0
+point 36 8 0
+point 38 8 0
+poly Material.001
+point 34 9 0
+point 33 9 0
+point 36 9 0
+poly Material.001
+point 33 9 0
+point 37 9 0
+point 36 9 0
+poly Material.001
+point 25 1 0
+point 30 1 0
+point 32 1 0
+poly Material.001
+point 25 1 0
+point 32 1 0
+point 35 1 0
+poly Material.001
+point 26 7 0
+point 24 7 0
+point 31 7 0
+poly Material.001
+point 26 7 0
+point 31 7 0
+point 29 7 0
+poly Material.001
+point 25 1 0
+point 27 1 0
+point 28 1 0
+poly Material.001
+point 25 1 0
+point 28 1 0
+point 30 1 0
+poly Material.001
+point 21 1 0
+point 19 1 0
+point 25 1 0
+poly Material.001
+point 19 1 0
+point 27 1 0
+point 25 1 0
+poly Material.001
+point 12 7 0
+point 22 7 0
+point 24 7 0
+poly Material.001
+point 12 7 0
+point 24 7 0
+point 26 7 0
+poly Material.001
+point 12 7 0
+point 13 7 0
+point 23 7 0
+poly Material.001
+point 12 7 0
+point 23 7 0
+point 22 7 0
+poly Material.001
+point 18 10 0
+point 19 10 0
+point 21 10 0
+poly Material.001
+point 18 10 0
+point 21 10 0
+point 20 10 0
+poly Material.001
+point 16 10 0
+point 17 10 0
+point 19 10 0
+poly Material.001
+point 16 10 0
+point 19 10 0
+point 18 10 0
+poly Material.001
+point 4 11 0
+point 11 11 0
+point 12 11 0
+poly Material.001
+point 4 12 0
+point 12 12 0
+point 14 12 0
+poly Material.001
+point 11 13 0
+point 10 13 0
+point 13 13 0
+poly Material.001
+point 11 13 0
+point 13 13 0
+point 12 13 0
+poly Material.001
+point 7 14 0
+point 6 14 0
+point 9 14 0
+poly Material.001
+point 6 15 0
+point 8 15 0
+point 9 15 0
+poly Material.001
+point 2 16 0
+point 6 16 0
+point 7 16 0
+poly Material.001
+point 2 16 0
+point 7 16 0
+point 3 16 0
+poly Material.001
+point 0 17 0
+point 4 17 0
+point 1 17 0
+poly Material.001
+point 4 18 0
+point 5 18 0
+point 1 18 0
+poly Material.002
+point 46 19 0
+point 47 19 0
+point 45 19 0
+poly Material.002
+point 46 19 0
+point 45 19 0
+point 44 19 0
+poly Material.002
+point 39 20 0
+point 38 20 0
+point 41 20 0
+poly Material.002
+point 38 20 0
+point 40 20 0
+point 41 20 0
+poly Material.002
+point 34 19 0
+point 35 19 0
+point 33 19 0
+poly Material.002
+point 35 19 0
+point 32 19 0
+point 33 19 0
+poly Material.002
+point 27 20 0
+point 26 20 0
+point 29 20 0
+poly Material.002
+point 27 20 0
+point 29 20 0
+point 28 20 0
+poly Material.002
+point 22 19 0
+point 23 19 0
+point 21 19 0
+poly Material.002
+point 23 19 0
+point 20 19 0
+point 21 19 0
+poly Material.002
+point 15 20 0
+point 14 20 0
+point 17 20 0
+poly Material.002
+point 15 20 0
+point 17 20 0
+point 16 20 0
+poly Material.002
+point 11 19 0
+point 9 19 0
+point 8 19 0
+poly Material.002
+point 11 19 0
+point 8 19 0
+point 10 19 0
+poly Material.002
+point 0 20 0
+point 1 20 0
+point 2 20 0
+poly Material.002
+point 0 21 0
+point 2 21 0
+point 3 21 0
+poly Material.003
+point 37 22 0
+point 42 22 0
+point 45 22 0
+poly Material.003
+point 37 22 0
+point 45 22 0
+point 47 22 0
+poly Material.003
+point 38 8 0
+point 36 8 0
+point 43 8 0
+poly Material.003
+point 38 8 0
+point 43 8 0
+point 40 8 0
+poly Material.003
+point 37 22 0
+point 39 22 0
+point 41 22 0
+poly Material.003
+point 37 22 0
+point 41 22 0
+point 42 22 0
+poly Material.003
+point 33 6 0
+point 31 6 0
+point 37 6 0
+poly Material.003
+point 31 6 0
+point 39 6 0
+point 37 6 0
+poly Material.003
+point 24 8 0
+point 25 8 0
+point 35 8 0
+poly Material.003
+point 24 8 0
+point 35 8 0
+point 34 8 0
+poly Material.003
+point 30 22 0
+point 31 22 0
+point 33 22 0
+poly Material.003
+point 30 22 0
+point 33 22 0
+point 32 22 0
+poly Material.003
+point 28 22 0
+point 29 22 0
+point 31 22 0
+poly Material.003
+point 28 22 0
+point 31 22 0
+point 30 22 0
+poly Material.003
+point 19 23 0
+point 12 23 0
+point 26 23 0
+poly Material.003
+point 19 23 0
+point 26 23 0
+point 27 23 0
+poly Material.003
+point 13 8 0
+point 18 8 0
+point 20 8 0
+poly Material.003
+point 13 8 0
+point 20 8 0
+point 23 8 0
+poly Material.003
+point 14 6 0
+point 12 6 0
+point 19 6 0
+poly Material.003
+point 14 6 0
+point 19 6 0
+point 17 6 0
+poly Material.003
+point 13 8 0
+point 15 8 0
+point 16 8 0
+poly Material.003
+point 13 8 0
+point 16 8 0
+point 18 8 0
+poly Material.003
+point 10 24 0
+point 5 24 0
+point 13 24 0
+poly Material.003
+point 5 24 0
+point 15 24 0
+point 13 24 0
+poly Material.003
+point 4 25 0
+point 7 25 0
+point 11 25 0
+poly Material.003
+point 7 26 0
+point 9 26 0
+point 11 26 0
+poly Material.003
+point 6 24 0
+point 5 24 0
+point 10 24 0
+poly Material.003
+point 6 24 0
+point 10 24 0
+point 8 24 0
+poly Material.003
+point 1 24 0
+point 5 24 0
+point 2 24 0
+poly Material.003
+point 5 24 0
+point 6 24 0
+point 2 24 0
+poly Material
+point 31 27 0
+point 24 27 0
+point 38 27 0
+poly Material
+point 31 27 0
+point 38 27 0
+point 39 27 0
+poly Material
+point 0 28 0
+point 3 28 0
+point 36 28 0
+poly Material
+point 3 29 0
+point 43 29 0
+point 36 29 0
+poly Material
+point 22 30 0
+point 21 30 0
+point 25 30 0
+poly Material
+point 22 30 0
+point 25 30 0
+point 24 30 0

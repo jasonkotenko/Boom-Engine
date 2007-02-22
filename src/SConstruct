@@ -7,7 +7,7 @@ DEMO_LDFLAGS = "`sdl-config --libs`  `pkg-config --libs libpng sigc++-2.0`"
 # Operating system specific build options
 import platform
 if platform.system() == "Linux":
-	DEMO_LDFLAGS += " -lGL -lGLU -lglut -L/usr/X11R6/lib -lXi"
+	DEMO_LDFLAGS += " -lGL -lGLU -lglut -L/usr/X11R6/lib"
 elif platform.system() == "Darwin":
 	DEMO_LDFLAGS += " -framework OpenGL -framework GLUT"
 
@@ -37,3 +37,5 @@ SharedLibrary("libboom/libboom", objs)
 
 # Build the demo
 Program("demo/test.cpp", CPPPATH="libboom", CCFLAGS=DEMO_CFLAGS, LINKFLAGS=DEMO_LDFLAGS, LIBPATH="libboom", LIBS="boom")
+
+Program("tools/bmeshview.cpp", CPPPATH="libboom", CCFLAGS=DEMO_CFLAGS, LINKFLAGS=DEMO_LDFLAGS, LIBPATH="libboom", LIBS="boom")

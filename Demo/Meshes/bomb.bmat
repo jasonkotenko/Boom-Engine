@@ -1,0 +1,14 @@
+material Fuse
+ambient 0.0 0.0 0.0
+diffuse 0.74373 0.74373 0.74373
+specular 0.373904 0.373904 0.373904
+shiny 125
+alpha 0.0
+
+material Bomb
+ambient 0.0 0.0 0.0
+diffuse 0.158958 0.158958 0.158958
+specular 1.129282 1.129282 1.129282
+shiny 96
+alpha 0.0
+

@@ -59,6 +59,9 @@ namespace Boom
 		struct Object: public Graphics::Point3d
 		{
 			string 			mesh;
+			string			animation;
+			int				frame;
+			double			frame_timer;
 			bool 			do_render;
 			CollisionType 	collision_type;
 			ObjectID		id;
@@ -76,6 +79,8 @@ namespace Boom
 			virtual void render(Scene *scene);
 			//! Called when an object's life (timer) runs out
 			virtual bool timeout();
+			//! Set an animation
+			virtual int set_animation(string name);
 		};
 		
 		/// A movable object within a scene
@@ -149,7 +154,7 @@ namespace Boom
 		
 		typedef list <Object *> ObjectList;
 		typedef map <ObjectType, ObjectList> TypedObjectLists;
-		typedef map <string, Graphics::Mesh> MeshList;
+		typedef map <string, Graphics::BMesh*> MeshList;
 		
 		/// A three dimensional scene
 		/*!

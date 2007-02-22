@@ -1,0 +1,27 @@
+material Default
+ambient 0 0 0
+diffuse 0.5 0.5 0.5
+specular 0.5 0.5 0.5
+shiny 96.0
+alpha 1.0
+
+material Red
+ambient 0 0 0
+diffuse 1.0 0 0
+specular 0.5 0.5 0.5
+shiny 96.0
+alpha 1.0
+
+material Green
+ambient 0 0 0
+diffuse 0 1.0 0
+specular 0.5 0.5 0.5
+shiny 96.0
+alpha 1.0
+
+material Blue
+ambient 0 0 0
+diffuse 0 0 1.0
+specular 0.5 0.5 0.5
+shiny 96.0
+alpha 1.0

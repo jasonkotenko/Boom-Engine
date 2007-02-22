@@ -1,0 +1,7 @@
+material Material
+ambient 0.5 0.5 0.5
+diffuse 0.0 0.0 0.8
+specular 0.5 0.5 0.5
+shiny 96
+alpha 0.0
+

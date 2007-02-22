@@ -176,6 +176,61 @@ namespace Boom
 				void generate_display_list();
 		};
 		
+		struct BMeshPoint
+		{
+			Point3d *vertex;
+			Point3d *normal;
+			Point2d *texture_coord;
+			
+			BMeshPoint();
+		};
+		
+		struct BMeshPoly
+		{
+			Material *material;
+			vector <BMeshPoint*> points;
+			
+			BMeshPoly(Material *material = NULL);
+		};
+		
+		struct BMeshFrame
+		{
+			vector <BMeshPoly*> polys;
+			int display_list;
+			
+			void generate_display_list();
+		};
+		
+		struct BMeshAnimation
+		{
+			string name;
+			float speed;
+			vector <BMeshFrame*> frames;
+			
+			BMeshAnimation(string name = "default");
+		};
+		
+		struct BMesh
+		{
+			vector <Point3d> vertices;
+			vector <Point3d> normals;
+			vector <Point2d> texture_coords;
+			
+			map <string, Material> materials;
+			
+			map <string, BMeshAnimation*> animations;
+			
+			~BMesh();
+			void load(const char *filename);
+			void render(string animation = "default", int frame = 0);
+			
+			private:
+				void load_materials(const char *filename);
+				void generate_display_lists();
+				
+				bool textured;
+		};
+		
 		/*
 			Math functions...
 		*/

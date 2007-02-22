@@ -1,0 +1,39 @@
+material StoneGrass_stonegrass.png
+ambient 1.0 1.0 1.0
+diffuse 1.0 1.0 1.0
+specular 0.157522 0.157522 0.157522
+shiny 53
+alpha 0.0
+texture stonegrass.png
+
+material SandStone_Light_sandstone_light.png
+ambient 1.0 1.0 1.0
+diffuse 1.0 1.0 1.0
+specular 0.157522 0.157522 0.157522
+shiny 53
+alpha 0.0
+texture sandstone_light.png
+
+material NaviMesh
+ambient 1.0 1.0 1.0
+diffuse 1.0 1.0 1.0
+specular 0.130318 0.130318 0.130318
+shiny 53
+alpha 0.0
+
+material OutsideStone_stepblock.png
+ambient 1.0 1.0 1.0
+diffuse 1.0 1.0 1.0
+specular 0.26769 0.26769 0.26769
+shiny 125
+alpha 0.0
+texture stepblock.png
+
+material Ground_grass-dark-center.png
+ambient 1.0 1.0 1.0
+diffuse 1.0 1.0 1.0
+specular 0.057951 0.057951 0.057951
+shiny 59
+alpha 0.0
+texture grass-dark-center.png
+

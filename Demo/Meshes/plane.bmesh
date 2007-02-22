@@ -1,0 +1,20 @@
+materials default
+
+v -1 0 -1
+v -1 0 1
+v 1 0 1
+v 1 0 -1
+
+vn 0 1 0
+
+vt 0 0
+
+animation Default
+speed 1.0
+frame
+poly Default
+point 0 0 0
+point 1 0 0
+point 2 0 0
+point 3 0 0
+

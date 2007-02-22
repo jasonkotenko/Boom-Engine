@@ -13,6 +13,8 @@ using namespace Boom;
 
 namespace Boom
 {
+	const int VIEW_ANGLE = 25.0;
+	
 	double tdiff;
 	
 	namespace Interface
@@ -99,7 +101,7 @@ namespace Boom
 			glViewport(0, 0, width, height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			gluPerspective(25.0, float(width)/float(height), 10.0, 100.0);
+			gluPerspective(VIEW_ANGLE, float(width)/float(height), 1.0, 500.0);
 			glMatrixMode(GL_MODELVIEW);
 		}
 		
