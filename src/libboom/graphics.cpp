@@ -389,6 +389,34 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
+		BMeshPoly::~BMeshPoly()
+		{
+			vector <BMeshPoint*>::iterator i;
+			
+			for (i = points.begin(); i != points.end(); i++)
+			{
+				delete *i;
+			}
+			
+			points.clear();
+		}
+		
+		//----------------------------------------------------------------------
+		BMeshFrame::~BMeshFrame()
+		{
+			vector <BMeshPoly*>::iterator i;
+			
+			for (i = polys.begin(); i != polys.end(); i++)
+			{
+				delete *i;
+			}
+			
+			polys.clear();
+			
+			glDeleteLists(display_list, 1);
+		}
+		
+		//----------------------------------------------------------------------
 		void BMeshFrame::generate_display_list()
 		{
 			Material *last = NULL;
@@ -434,9 +462,33 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
+		BMeshAnimation::~BMeshAnimation()
+		{
+			vector <BMeshFrame*>::iterator i;
+			
+			for (i = frames.begin(); i != frames.end(); i++)
+			{
+				delete *i;
+			}
+			
+			frames.clear();
+		}
+		
+		//----------------------------------------------------------------------
 		BMesh::~BMesh()
 		{
-		
+			map <string, BMeshAnimation*>::iterator i;
+			
+			for (i = animations.begin(); i != animations.end(); i++)
+			{
+				delete i->second;
+			}
+			
+			vertices.clear();
+			normals.clear();
+			texture_coords.clear();
+			materials.clear();
+			animations.clear();
 		}
 		
 		//----------------------------------------------------------------------
@@ -737,6 +789,25 @@ namespace Boom
 				glCallList(animations[animation]->frames[frame]->display_list);
 				glEnable(GL_TEXTURE_2D);
 			}
+		}
+		
+		//----------------------------------------------------------------------
+		Point3d BMesh::get_size()
+		{
+			Point3d low, high;
+			vector <Graphics::Point3d>::iterator i;
+			
+			for (i = vertices.begin(); i != vertices.end(); i++)
+			{
+				if (i->x < low.x)  low.x = i->x;
+				if (i->y < low.y)  low.y = i->y;
+				if (i->z < low.z)  low.z = i->z;
+				if (i->x > high.x) high.x = i->x;
+				if (i->y > high.y) high.y = i->y;
+				if (i->z > high.z) high.z = i->z;
+			}
+			
+			return Point3d(high.x - low.x, high.y - low.y, high.z - low.z);
 		}
 		
 		//----------------------------------------------------------------------

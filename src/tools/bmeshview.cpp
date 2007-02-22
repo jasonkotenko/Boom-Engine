@@ -22,29 +22,13 @@ class ModelViewState: public State::State
 			this->mesh->animation = animation;
 			scene.add(Scene::TYPE_CUSTOM, (Scene::Object *) this->mesh);
 			
-			Graphics::Point3d low, high;
-			Graphics::BMeshFrame *frame = scene.meshes[mesh]->animations["default"]->frames[0];
+			Point3d size = scene.meshes[mesh]->get_size();
 			
-			vector <Graphics::Point3d>::iterator i;
-			
-			for (i = scene.meshes[mesh]->vertices.begin(); i != scene.meshes[mesh]->vertices.end(); i++)
-			{
-				if (i->x < low.x)  low.x = i->x;
-				if (i->y < low.y)  low.y = i->y;
-				if (i->z < low.z)  low.z = i->z;
-				if (i->x > high.x) high.x = i->x;
-				if (i->y > high.y) high.y = i->y;
-				if (i->z > high.z) high.z = i->z;
-			}
-			
-			float biggest_diff = high.x - low.x;
-			if (high.y - low.y > biggest_diff)
-				biggest_diff = high.y - low.y;
-			if (high.z - low.z > biggest_diff)
-				biggest_diff = high.z - low.z;
-			
-			//LOG_DEBUG << "Low: " << low.x << ", " << low.y << ", " << low.z << endl;
-			//LOG_DEBUG << "High: " << high.x << ", " << high.y << ", " << high.z << endl;
+			float biggest_diff = size.x;
+			if (size.y > biggest_diff)
+				biggest_diff = size.y;
+			if (size.z > biggest_diff)
+				biggest_diff = size.z;
 			
 			//LOG_DEBUG << "Biggest diff is " << biggest_diff << endl;
 			
@@ -54,7 +38,7 @@ class ModelViewState: public State::State
 			
 			scene.camera.pos.y = -distance;
 			scene.camera.pos.z = distance;
-			scene.camera.lookat.z = (high.z - low.z) / 2.0;
+			scene.camera.lookat.z = (size.z) / 2.0;
 		}
 		
 		~ModelViewState()
@@ -78,6 +62,9 @@ class ModelViewState: public State::State
 			{
 				case 27:
 					Event::post(EVENT_QUIT);
+					break;
+				case 32:
+					mesh->rotating = !mesh->rotating;
 					break;
 			}
 		}

@@ -176,6 +176,10 @@ namespace Boom
 				void generate_display_list();
 		};
 		
+		/// A point in a mesh
+		/*!
+			A point with links to a vertex, normal, and texture coordinate.
+		*/
 		struct BMeshPoint
 		{
 			Point3d *vertex;
@@ -185,22 +189,39 @@ namespace Boom
 			BMeshPoint();
 		};
 		
+		/// A polygon in a mesh
+		/*!
+			A polygon with a material and list of points
+		*/
 		struct BMeshPoly
 		{
 			Material *material;
 			vector <BMeshPoint*> points;
 			
 			BMeshPoly(Material *material = NULL);
+			~BMeshPoly();
 		};
 		
+		/// A frame in an animation
+		/*!
+			This holds data pertaining to a single frame in an animation of a 
+			mesh.
+		*/
 		struct BMeshFrame
 		{
 			vector <BMeshPoly*> polys;
 			int display_list;
 			
+			~BMeshFrame();
+			//! Generate a display list for this frame to speed up rendering
 			void generate_display_list();
 		};
 		
+		//! An animation in a mesh
+		/*!
+			This stores a set of frames that make up an animation when cycled
+			through.
+		*/
 		struct BMeshAnimation
 		{
 			string name;
@@ -208,8 +229,14 @@ namespace Boom
 			vector <BMeshFrame*> frames;
 			
 			BMeshAnimation(string name = "default");
+			~BMeshAnimation();
 		};
 		
+		/// A mesh object
+		/*!
+			A mesh object made up of vertices, normals, texture coordinates,
+			materials, and animations.
+		*/
 		struct BMesh
 		{
 			vector <Point3d> vertices;
@@ -217,15 +244,20 @@ namespace Boom
 			vector <Point2d> texture_coords;
 			
 			map <string, Material> materials;
-			
 			map <string, BMeshAnimation*> animations;
 			
 			~BMesh();
+			//! Load the mesh from a file
 			void load(const char *filename);
+			//! Render the mesh to the screen
 			void render(string animation = "default", int frame = 0);
+			//! Return the width, height, and depth of the object
+			Point3d get_size();
 			
 			private:
+				//! Load materials from a file
 				void load_materials(const char *filename);
+				//! Generate display lists for all frames in the mesh
 				void generate_display_lists();
 				
 				bool textured;
