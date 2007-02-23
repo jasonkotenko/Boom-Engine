@@ -302,6 +302,35 @@ namespace Boom
 						(*i)->timeout();
 					}
 				}
+				
+				ObjectList del;
+				for (ObjectList::iterator i = scene->objects[TYPE_PLAYER].begin();
+					 i != scene->objects[TYPE_PLAYER].end(); i++)
+				{
+					if (Graphics::distance2d((*i)->x, (*i)->y, x, y) <=
+						current_radius * current_radius)
+					{
+						LOG_DEBUG << "Killing object " << (*i)->id << endl;
+						del.push_back(*i);
+					}
+				}
+				
+				for (ObjectList::iterator i = scene->objects[TYPE_ITEM].begin();
+					 i != scene->objects[TYPE_ITEM].end(); i++)
+				{
+					if (Graphics::distance2d((*i)->x, (*i)->y, x, y) <=
+						current_radius * current_radius)
+					{
+						LOG_DEBUG << "Killing object " << (*i)->id << endl;
+						del.push_back(*i);
+					}
+				}
+				
+				for (ObjectList::iterator i = del.begin(); i != del.end(); i++)
+				{
+					scene->remove((*i)->id);
+				}
+				
 				return Object::update(scene);
 			}
 		}
