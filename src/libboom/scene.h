@@ -68,6 +68,7 @@ namespace Boom
 			Point3d			rotation;
 			Point3d			scale;
 			float			life;
+			ObjectType		type;
 			
 			Object(const char *mesh = "\0", float x = 0, float y = 0,
 				   float z = 0);

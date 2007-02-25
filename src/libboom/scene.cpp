@@ -105,10 +105,48 @@ namespace Boom
 		//----------------------------------------------------------------------
 		bool MovableObject::update(Scene *scene)
 		{
+			float newx = x;
+			float newy = y;
+			ObjectList::iterator i;
+			bool collision = false;
+			float distance, radius;
+			
 			if (moving)
 			{
-				x += cos((rotation.z - 90) * M_PI / 180.0) * speed * tdiff;
-				y += sin((rotation.z - 90) * M_PI / 180.0) * speed * tdiff;
+				newx += cos((rotation.z - 90) * M_PI / 180.0) * speed * tdiff;
+				newy += sin((rotation.z - 90) * M_PI / 180.0) * speed * tdiff;
+				
+				using namespace Graphics;
+				
+				for (i = scene->objects_flat.begin(); i != scene->objects_flat.end();
+					 i++)
+				{
+					// Don't get against ourself or the level
+					if ((*i)->id == id || (*i)->type == TYPE_LEVEL)
+						continue;
+					// See if the objects' radii are within each other
+					distance = distance2d((*i)->x, (*i)->y, newx, newy);
+					radius = scene->meshes[(*i)->mesh]->radius + 
+							 scene->meshes[mesh]->radius;
+					if (distance <= radius * 0.6)
+					{
+						// Are we moving into or out of the object?
+						if (distance <= distance2d((*i)->x, (*i)->y, x, y))
+						{
+							// TODO: if this is an item we don't have a collision
+							// Need to pick up the item and modify player stats
+							// For now this is just a collision no matter what
+							collision = true;
+							break;
+						}
+					}
+				}
+				
+				if (!collision)
+				{
+					x = newx;
+					y = newy;
+				}
 			}
 			
 			return Object::update(scene);
@@ -437,6 +475,7 @@ namespace Boom
 				meshes[obj->mesh] = m;
 			}
 			
+			obj->type = type;
 			objects[type].push_back(obj);
 			objects_flat.push_back(obj);
 			

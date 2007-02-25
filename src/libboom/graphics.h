@@ -246,6 +246,8 @@ namespace Boom
 			map <string, Material> materials;
 			map <string, BMeshAnimation*> animations;
 			
+			float radius;
+			
 			~BMesh();
 			//! Load the mesh from a file
 			void load(const char *filename);
@@ -260,7 +262,7 @@ namespace Boom
 				//! Generate display lists for all frames in the mesh
 				void generate_display_lists();
 				
-				bool textured;
+				bool  textured;
 		};
 		
 		/*

@@ -758,6 +758,12 @@ namespace Boom
 		
 			LOG_DEBUG << "Generating display lists..." << endl;
 			generate_display_lists();
+			
+			Point3d tmpsize = get_size();
+			radius = (tmpsize.x > tmpsize.y) ? tmpsize.x : tmpsize.y;
+			radius = radius / 2.0;
+			
+			//LOG_DEBUG << "Mesh radius is " << radius << endl;
 		}
 		
 		//----------------------------------------------------------------------
