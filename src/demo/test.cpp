@@ -46,6 +46,9 @@ class TestState: public State::State
 			
 			obj = (Scene::Object *) new Scene::BombObject(-2, -1, 0);
 			scene.add(Scene::TYPE_BOMB, obj);
+			
+			obj = (Scene::Object *) new Scene::Item(-2, 3, 0);
+			scene.add(Scene::TYPE_ITEM, obj);
 		}
 		
 		~TestState() {}

@@ -153,6 +153,23 @@ namespace Boom
 				float current_radius;
 		};
 		
+		enum ItemType {SPEED_INCREASE, SPEED_DECREASE};
+		
+		/// An item that can modify a player
+		/*!
+			Represents an item that can modify the attributes of a player,
+			such as the speed at which the player moves or the size of the
+			player's bomb explosions.
+		*/
+		struct Item: public SimpleAnimatedObject
+		{
+			Item(float x = 0, float y = 0, float z = 0);
+			void apply(Object *player);
+			
+			protected:
+				ItemType item_type;
+		};
+		
 		typedef list <Object *> ObjectList;
 		typedef map <ObjectType, ObjectList> TypedObjectLists;
 		typedef map <string, Graphics::BMesh*> MeshList;

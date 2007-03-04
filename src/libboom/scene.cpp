@@ -107,6 +107,7 @@ namespace Boom
 		{
 			float newx = x;
 			float newy = y;
+			ObjectList remove;
 			ObjectList::iterator i;
 			bool collision = false;
 			float distance, radius;
@@ -136,11 +137,23 @@ namespace Boom
 							// TODO: if this is an item we don't have a collision
 							// Need to pick up the item and modify player stats
 							// For now this is just a collision no matter what
-							collision = true;
-							break;
+							if (type == TYPE_PLAYER && (*i)->type == TYPE_ITEM)
+							{
+								// Apply to user
+								((Item *) (*i))->apply(this);
+								remove.push_back(*i);
+							}
+							else
+							{
+								collision = true;
+								break;
+							}
 						}
 					}
 				}
+				
+				for (i = remove.begin(); i != remove.end(); i++)
+					scene->remove((*i)->id);
 				
 				if (!collision)
 				{
@@ -426,6 +439,30 @@ namespace Boom
 			}
 			
 			return false;
+		}
+		
+		//----------------------------------------------------------------------
+		Item::Item(float x, float y, float z)
+		{
+			this->mesh = "bomb";
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			do_render = true;
+			bobbing = true;
+			rotating = true;
+			item_type = SPEED_INCREASE;
+		}
+		
+		//----------------------------------------------------------------------
+		void Item::apply(Object *player)
+		{
+			switch(item_type)
+			{
+				case SPEED_INCREASE:
+					((MovableObject *) player)->speed += 1.0;
+					break;
+			}
 		}
 		
 		//----------------------------------------------------------------------
