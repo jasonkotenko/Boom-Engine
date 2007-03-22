@@ -33,6 +33,7 @@ namespace Boom
 			TYPE_LEVEL,
 			TYPE_PLAYER,
 			TYPE_BOMB,
+			TYPE_BLOCK,
 			TYPE_ITEM,
 			TYPE_CUSTOM
 		};
@@ -46,8 +47,24 @@ namespace Boom
 			COLLISION_EXACT					// Per-polygon detection
 		};
 		
+		//! A list of item types currently supported
+		enum ItemType { FASTER,
+						SLOWER,
+						EXTRA_BOMB,
+						BIGGER_BOMBS,
+						SMALLER_BOMBS,
+						BOMB_LONG_LIFE,
+						BOMB_SHORT_LIFE,
+						ITEM_TYPE_COUNT };
+		
 		//! Generates a unique ID for each object in the scene
 		typedef unsigned long ObjectID;
+		
+		//! Default life of a bomb
+		const float DEFAULT_BOMB_LIFE = 5.0;
+		
+		//! Default size of an explosion
+		const float DEFAULT_BOMB_SIZE = 2.0;
 		
 		class Scene;
 		
@@ -147,13 +164,23 @@ namespace Boom
 			virtual void render(Scene *scene);
 			virtual bool timeout();
 			
+			float radius;
+			
 			protected:
 				bool  exploding;
-				float radius;
 				float current_radius;
 		};
 		
-		enum ItemType {SPEED_INCREASE, SPEED_DECREASE};
+		/// A destructable block
+		/*!
+			Represents a destructable block in the scene. When destroyed, a
+			block will leave a random item behind.
+		*/
+		struct BlockObject: public Object
+		{
+			BlockObject(float x = 0, float y = 0, float z = 0);
+			virtual void spawn_item(Scene *scene, ObjectID parent);
+		};
 		
 		/// An item that can modify a player
 		/*!
@@ -166,8 +193,27 @@ namespace Boom
 			Item(float x = 0, float y = 0, float z = 0);
 			void apply(Object *player);
 			
+			ObjectID parent;
+			
 			protected:
 				ItemType item_type;
+		};
+		
+		/// A player
+		/*!
+			...
+		*/
+		struct Player: public MovableObject
+		{
+			Player(float x = 0, float y = 0, float z = 0);
+			void lay_bomb(Scene *scene);
+			
+			int   bomb_bag;	 //< How many bombs a player can lay at once
+			float bomb_size; //< Size of the bomb's explosion
+			float bomb_life; //< How long until a bomb explodes
+			
+			protected:
+				int bombs_laid;
 		};
 		
 		typedef list <Object *> ObjectList;

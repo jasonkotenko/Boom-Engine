@@ -330,8 +330,9 @@ namespace Boom
 			do_render = true;
 			bobbing = true;
 			throbbing = true;
-			life = 5;
+			life = DEFAULT_BOMB_LIFE;
 			exploding = false;
+			radius = DEFAULT_BOMB_SIZE;
 		}
 		
 		//----------------------------------------------------------------------
@@ -372,7 +373,21 @@ namespace Boom
 					if (Graphics::distance2d((*i)->x, (*i)->y, x, y) <=
 						current_radius * current_radius)
 					{
+						if (((Item *)(*i))->parent == id)
+							continue;
 						LOG_DEBUG << "Killing object " << (*i)->id << endl;
+						del.push_back(*i);
+					}
+				}
+				
+				for (ObjectList::iterator i = scene->objects[TYPE_BLOCK].begin();
+					 i != scene->objects[TYPE_BLOCK].end(); i++)
+				{
+					if (Graphics::distance2d((*i)->x, (*i)->y, x, y) <=
+						current_radius * current_radius)
+					{
+						LOG_DEBUG << "Killing object " << (*i)->id << endl;
+						((BlockObject *) (*i))->spawn_item(scene, id);
 						del.push_back(*i);
 					}
 				}
@@ -433,7 +448,6 @@ namespace Boom
 			{
 				life = 0;
 				exploding = true;
-				radius = 2;
 				current_radius = 0.5;
 				return true;
 			}
@@ -444,25 +458,99 @@ namespace Boom
 		//----------------------------------------------------------------------
 		Item::Item(float x, float y, float z)
 		{
-			this->mesh = "bomb";
 			this->x = x;
 			this->y = y;
 			this->z = z;
 			do_render = true;
 			bobbing = true;
 			rotating = true;
-			item_type = SPEED_INCREASE;
+			item_type = static_cast<ItemType> (rand() % ITEM_TYPE_COUNT);
+			switch (item_type)
+			{
+				case EXTRA_BOMB:
+					mesh = "item_extra_bomb";
+				default:
+					mesh = "item_test";
+			}
+			parent = 0;
 		}
 		
 		//----------------------------------------------------------------------
 		void Item::apply(Object *player)
 		{
+			Player *p = (Player *) player;
+			
 			switch(item_type)
 			{
-				case SPEED_INCREASE:
-					((MovableObject *) player)->speed += 1.0;
+				case FASTER:
+					p->speed += 1.0;
+					break;
+				case SLOWER:
+					if (p->speed > 1.0)
+						p->speed -= 1.0;
+					break;
+				case EXTRA_BOMB:
+					p->bomb_bag++;
+					break;
+				case BIGGER_BOMBS:
+					p->bomb_size += 0.5;
+					break;
+				case SMALLER_BOMBS:
+					p->bomb_size = 1.0;
+					break;
+				case BOMB_LONG_LIFE:
+					p->bomb_life += 2.0;
+					break;
+				case BOMB_SHORT_LIFE:
+					if (p->bomb_life > 2.0)
+						p->bomb_life -= 2.0;
 					break;
 			}
+		}
+		
+		//----------------------------------------------------------------------
+		BlockObject::BlockObject(float x, float y, float z)
+		{
+			mesh = "block";
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			do_render = true;
+		}
+		
+		//----------------------------------------------------------------------
+		void BlockObject::spawn_item(Scene *scene, ObjectID parent)
+		{
+			Item *i = new Item(x, y, z);
+			
+			i->parent = parent;			
+			scene->add(TYPE_ITEM, (Object *) i);
+		}
+		
+		//----------------------------------------------------------------------
+		Player::Player(float x, float y, float z)
+		{
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			mesh = "player";
+			bomb_bag = 2;
+			bomb_size = DEFAULT_BOMB_SIZE;
+			bomb_life = DEFAULT_BOMB_LIFE;
+			bombs_laid = 0;
+		}
+		
+		//----------------------------------------------------------------------
+		void Player::lay_bomb(Scene *scene)
+		{
+			BombObject *obj = new BombObject(x, y, 0);
+			
+			obj->radius = bomb_size;
+			obj->life = bomb_life;
+			obj->bob_speed *= 2.0 - (bomb_life / DEFAULT_BOMB_LIFE);
+			obj->throb_speed *= 2.0 - (bomb_life / DEFAULT_BOMB_LIFE);
+			
+			scene->add(TYPE_BOMB, (Object *) obj);
 		}
 		
 		//----------------------------------------------------------------------

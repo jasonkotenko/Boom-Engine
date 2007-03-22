@@ -1,0 +1,259 @@
+materials block.bmat
+
+v 0.0 0.0 0.004168
+v -0.0 -0.0 0.994142
+v 0.494987 -0.0 0.499155
+v -0.0 -0.494987 0.499155
+v -0.494987 0.0 0.499155
+v 0.0 0.494987 0.499155
+v 0.37124 -0.0 0.127915
+v 0.0 0.37124 0.127915
+v 0.37124 0.37124 0.499155
+v -0.0 -0.37124 0.127915
+v 0.37124 -0.37124 0.499155
+v -0.37124 0.0 0.127915
+v -0.37124 -0.37124 0.499155
+v -0.37124 0.37124 0.499155
+v 0.37124 -0.0 0.870395
+v 0.0 0.37124 0.870395
+v -0.0 -0.37124 0.870395
+v -0.37124 0.0 0.870395
+v 0.274993 0.274993 0.224163
+v 0.274993 -0.274993 0.224163
+v -0.274993 -0.274993 0.224163
+v -0.274993 0.274993 0.224163
+v 0.274993 0.274993 0.774148
+v 0.274993 -0.274993 0.774148
+v -0.274993 -0.274993 0.774148
+v -0.274993 0.274993 0.774148
+vn 0.0 1.0 0.0
+vn -0.707083 0.707083 0.0
+vn -0.577349 0.577349 0.577349
+vn 0.0 0.707083 0.707083
+vn 0.0 0.707083 -0.707083
+vn -0.577349 0.577349 -0.577349
+vn 0.707083 0.707083 0.0
+vn 0.577349 0.577349 -0.577349
+vn 0.577349 0.577349 0.577349
+vn -1.0 0.0 0.0
+vn -0.707083 0.0 -0.707083
+vn -0.707083 0.0 0.707083
+vn -0.707083 -0.707083 0.0
+vn -0.577349 -0.577349 0.577349
+vn -0.577349 -0.577349 -0.577349
+vn 0.0 -1.0 0.0
+vn 0.0 -0.707083 -0.707083
+vn 0.0 -0.707083 0.707083
+vn 0.707083 -0.707083 0.0
+vn 0.577349 -0.577349 0.577349
+vn 0.577349 -0.577349 -0.577349
+vn 1.0 0.0 0.0
+vn 0.707083 0.0 -0.707083
+vn 0.707083 0.0 0.707083
+vn 0.0 0.0 1.0
+vn 0.0 0.0 -1.0
+vt 0.5 -0.5
+vt 0.011577 -0.5
+vt 0.138205 -0.861795
+vt 0.5 -0.988423
+vt 0.5 -0.011577
+vt 0.138205 -0.138205
+vt 0.988423 -0.5
+vt 0.861795 -0.138205
+vt 0.861795 -0.861795
+
+animation default
+speed 1.0
+frame
+poly Stone_sandstone_light.png
+point 5 0 0
+point 13 1 1
+point 25 2 2
+poly Stone_sandstone_light.png
+point 5 0 0
+point 25 2 2
+point 15 3 3
+poly Stone_sandstone_light.png
+point 5 0 0
+point 7 4 4
+point 21 5 5
+poly Stone_sandstone_light.png
+point 5 0 0
+point 21 5 5
+point 13 1 1
+poly Stone_sandstone_light.png
+point 5 0 0
+point 8 6 6
+point 18 7 7
+poly Stone_sandstone_light.png
+point 5 0 0
+point 18 7 7
+point 7 4 4
+poly Stone_sandstone_light.png
+point 5 0 0
+point 15 3 3
+point 22 8 8
+poly Stone_sandstone_light.png
+point 5 0 0
+point 22 8 8
+point 8 6 6
+poly Stone_sandstone_light.png
+point 4 9 0
+point 13 1 6
+point 21 5 7
+poly Stone_sandstone_light.png
+point 4 9 0
+point 21 5 7
+point 11 10 4
+poly Stone_sandstone_light.png
+point 4 9 0
+point 17 11 3
+point 25 2 8
+poly Stone_sandstone_light.png
+point 4 9 0
+point 25 2 8
+point 13 1 6
+poly Stone_sandstone_light.png
+point 4 9 0
+point 12 12 1
+point 24 13 2
+poly Stone_sandstone_light.png
+point 4 9 0
+point 24 13 2
+point 17 11 3
+poly Stone_sandstone_light.png
+point 4 9 0
+point 11 10 4
+point 20 14 5
+poly Stone_sandstone_light.png
+point 4 9 0
+point 20 14 5
+point 12 12 1
+poly Stone_sandstone_light.png
+point 3 15 0
+point 12 12 1
+point 20 14 5
+poly Stone_sandstone_light.png
+point 3 15 0
+point 20 14 5
+point 9 16 4
+poly Stone_sandstone_light.png
+point 3 15 0
+point 16 17 3
+point 24 13 2
+poly Stone_sandstone_light.png
+point 3 15 0
+point 24 13 2
+point 12 12 1
+poly Stone_sandstone_light.png
+point 3 15 0
+point 10 18 6
+point 23 19 8
+poly Stone_sandstone_light.png
+point 3 15 0
+point 23 19 8
+point 16 17 3
+poly Stone_sandstone_light.png
+point 3 15 0
+point 9 16 4
+point 19 20 7
+poly Stone_sandstone_light.png
+point 3 15 0
+point 19 20 7
+point 10 18 6
+poly Stone_sandstone_light.png
+point 2 21 0
+point 10 18 1
+point 19 20 5
+poly Stone_sandstone_light.png
+point 2 21 0
+point 19 20 5
+point 6 22 4
+poly Stone_sandstone_light.png
+point 2 21 0
+point 14 23 3
+point 23 19 2
+poly Stone_sandstone_light.png
+point 2 21 0
+point 23 19 2
+point 10 18 1
+poly Stone_sandstone_light.png
+point 2 21 0
+point 8 6 6
+point 22 8 8
+poly Stone_sandstone_light.png
+point 2 21 0
+point 22 8 8
+point 14 23 3
+poly Stone_sandstone_light.png
+point 2 21 0
+point 6 22 4
+point 18 7 7
+poly Stone_sandstone_light.png
+point 2 21 0
+point 18 7 7
+point 8 6 6
+poly Stone_sandstone_light.png
+point 1 24 0
+point 16 17 4
+point 23 19 7
+poly Stone_sandstone_light.png
+point 1 24 0
+point 23 19 7
+point 14 23 6
+poly Stone_sandstone_light.png
+point 1 24 0
+point 17 11 1
+point 24 13 5
+poly Stone_sandstone_light.png
+point 1 24 0
+point 24 13 5
+point 16 17 4
+poly Stone_sandstone_light.png
+point 1 24 0
+point 15 3 3
+point 25 2 2
+poly Stone_sandstone_light.png
+point 1 24 0
+point 25 2 2
+point 17 11 1
+poly Stone_sandstone_light.png
+point 1 24 0
+point 14 23 6
+point 22 8 8
+poly Stone_sandstone_light.png
+point 1 24 0
+point 22 8 8
+point 15 3 3
+poly Stone_sandstone_light.png
+point 0 25 0
+point 11 10 1
+point 21 5 2
+poly Stone_sandstone_light.png
+point 0 25 0
+point 21 5 2
+point 7 4 3
+poly Stone_sandstone_light.png
+point 0 25 0
+point 9 16 4
+point 20 14 5
+poly Stone_sandstone_light.png
+point 0 25 0
+point 20 14 5
+point 11 10 1
+poly Stone_sandstone_light.png
+point 0 25 0
+point 6 22 6
+point 19 20 7
+poly Stone_sandstone_light.png
+point 0 25 0
+point 19 20 7
+point 9 16 4
+poly Stone_sandstone_light.png
+point 0 25 0
+point 7 4 3
+point 18 7 8
+poly Stone_sandstone_light.png
+point 0 25 0
+point 18 7 8
+point 6 22 6

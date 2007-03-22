@@ -1,0 +1,8 @@
+material Item_item1.png
+ambient 1.0 1.0 1.0
+diffuse 1.0 1.0 1.0
+specular 0.5 0.5 0.5
+shiny 96
+alpha 0.0
+texture item1.png
+

@@ -2,7 +2,7 @@
 LIB_CFLAGS = "`sdl-config --cflags` `pkg-config --cflags libpng sigc++-2.0`"
 
 DEMO_CFLAGS = LIB_CFLAGS + " -Ilibboom"
-DEMO_LDFLAGS = "`sdl-config --libs`  `pkg-config --libs libpng sigc++-2.0`"
+DEMO_LDFLAGS = "`sdl-config --libs` -lSDL_mixer `pkg-config --libs libpng sigc++-2.0`"
 
 # Operating system specific build options
 import platform
@@ -13,6 +13,7 @@ elif platform.system() == "Darwin":
 
 # Library objects to build and link together
 LIB_OBJECTS = """
+				audio
 				boom
 				camera
 				event

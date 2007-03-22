@@ -1,0 +1,1186 @@
+materials item_extra_bomb.bmat
+
+v 0.269222 -0.001031 0.444954
+v 0.249012 0.100574 0.444954
+v 0.191457 0.186711 0.444954
+v 0.10532 0.244266 0.444954
+v 0.003714 0.264477 0.444954
+v -0.097891 0.244266 0.444954
+v -0.184028 0.186711 0.444954
+v -0.241583 0.100574 0.444954
+v -0.241583 0.070815 0.5168
+v -0.184028 0.131723 0.577708
+v -0.097891 0.17242 0.618405
+v 0.003714 0.186711 0.632696
+v 0.10532 0.17242 0.618405
+v 0.191457 0.131723 0.577708
+v 0.249012 0.070815 0.5168
+v 0.249012 -0.001031 0.54656
+v 0.191457 -0.001031 0.632696
+v 0.10532 -0.001031 0.690251
+v 0.003714 -0.001031 0.710462
+v -0.097891 -0.001031 0.690251
+v -0.184028 -0.001031 0.632696
+v -0.241583 -0.001031 0.54656
+v -0.241583 -0.072877 0.5168
+v -0.184028 -0.133785 0.577708
+v -0.097891 -0.174483 0.618405
+v 0.003714 -0.188774 0.632696
+v 0.10532 -0.174483 0.618405
+v 0.191457 -0.133785 0.577708
+v 0.249012 -0.072877 0.5168
+v 0.249012 -0.102637 0.444954
+v 0.191457 -0.188774 0.444954
+v 0.10532 -0.246329 0.444954
+v 0.003714 -0.266539 0.444954
+v -0.097891 -0.246329 0.444954
+v -0.184028 -0.188774 0.444954
+v -0.241583 -0.102637 0.444954
+v -0.261793 -0.001031 0.444954
+v -0.241583 -0.072877 0.373108
+v -0.184028 -0.133785 0.3122
+v -0.097891 -0.174483 0.271503
+v 0.003714 -0.188774 0.257212
+v 0.10532 -0.174483 0.271503
+v 0.191457 -0.133785 0.3122
+v 0.249012 -0.072877 0.373108
+v 0.249012 -0.001031 0.343349
+v 0.191457 -0.001031 0.257212
+v 0.10532 -0.001031 0.199657
+v 0.003714 -0.001031 0.179446
+v -0.097891 -0.001031 0.199657
+v -0.184028 -0.001031 0.257212
+v -0.241583 -0.001031 0.343349
+v -0.241583 0.070815 0.373108
+v -0.184028 0.131723 0.3122
+v -0.097891 0.17242 0.271503
+v 0.003714 0.186711 0.257212
+v 0.10532 0.17242 0.271503
+v 0.191457 0.131723 0.3122
+v 0.249012 0.070815 0.373108
+v -0.030299 -0.071498 0.514461
+v -0.024825 -0.099092 0.460173
+v -0.070587 -0.096321 0.419717
+v -0.121823 -0.065955 0.433549
+v -0.127297 -0.038361 0.487836
+v -0.081535 -0.041133 0.528292
+v -0.128908 -0.282116 0.611574
+v -0.123434 -0.30971 0.557287
+v -0.169196 -0.306938 0.516831
+v -0.220432 -0.276572 0.530662
+v -0.225906 -0.248978 0.58495
+v -0.180144 -0.25175 0.625405
+v -0.076061 -0.068727 0.474005
+v -0.190425 -0.312993 0.586634
+v 0.381871 0.389818 0.102567
+v 0.377898 -0.385844 0.102567
+v -0.377898 -0.381871 0.102567
+v -0.393791 0.385845 0.102567
+v 0.381871 0.389818 0.179496
+v 0.377898 -0.385845 0.179496
+v -0.377898 -0.381871 0.179496
+v -0.393791 0.385844 0.179496
+v -0.0 -0.481205 0.102567
+v 0.501072 -0.0 0.102567
+v 0.0 0.473258 0.102567
+v -0.481205 0.0 0.102567
+v 0.501072 -0.0 0.179496
+v -0.0 -0.481205 0.179496
+v -0.481205 0.0 0.179496
+v 0.0 0.473258 0.179496
+v 0.0 0.0 0.102567
+v -0.0 -0.0 0.179496
+v 0.113455 -0.294457 0.102567
+v -0.113455 -0.294457 0.102567
+v 0.302404 0.105508 0.102567
+v 0.302404 -0.109482 0.102567
+v 0.113455 0.294457 0.102567
+v -0.113455 0.294457 0.102567
+v -0.290484 -0.109482 0.102567
+v -0.290484 0.105509 0.102567
+v 0.302404 0.105508 0.179496
+v 0.302404 -0.109482 0.179496
+v 0.113455 -0.294457 0.179496
+v -0.113455 -0.294457 0.179496
+v -0.290484 -0.109482 0.179496
+v -0.290484 0.105508 0.179496
+v 0.113455 0.294457 0.179496
+v -0.113455 0.294457 0.179496
+v 0.0 -0.109482 0.102567
+v 0.113455 0.0 0.102567
+v 0.0 0.105508 0.102567
+v -0.113455 0.0 0.102567
+v -0.113455 -0.0 0.179496
+v 0.0 0.105508 0.179496
+v 0.113455 -0.0 0.179496
+v -0.0 -0.109482 0.179496
+v 0.113455 -0.109482 0.102567
+v 0.113455 0.105508 0.102567
+v -0.113455 -0.109482 0.102567
+v -0.113455 0.105508 0.102567
+v -0.113455 0.105508 0.179496
+v 0.113455 0.105508 0.179496
+v -0.113455 -0.109482 0.179496
+v 0.113455 -0.109482 0.179496
+vn -0.977599 0.194456 0.080546
+vn 0.977599 0.194457 0.080546
+vn 0.977599 0.080547 0.194456
+vn -0.977599 0.080546 0.194456
+vn -0.977599 -0.080546 0.194456
+vn 0.977599 -0.080547 0.194456
+vn 0.977599 -0.194456 0.080546
+vn -0.977599 -0.194457 0.080546
+vn -0.977599 -0.194457 -0.080547
+vn 0.977599 -0.194456 -0.080547
+vn 0.977599 -0.080546 -0.194457
+vn -0.977599 -0.080547 -0.194457
+vn -0.977599 0.080547 -0.194456
+vn 0.977599 0.080547 -0.194456
+vn 0.977599 0.194457 -0.080546
+vn -0.977599 0.194456 -0.080546
+vn -0.810291 0.541419 -0.224263
+vn -0.525289 0.786151 -0.325634
+vn -0.180744 0.908663 -0.376381
+vn -0.180744 0.908663 -0.37638
+vn 0.180744 0.908663 -0.37638
+vn 0.525289 0.786151 -0.325634
+vn 0.810291 0.541419 -0.224263
+vn 0.810291 0.224263 -0.541419
+vn 0.525289 0.325635 -0.786151
+vn 0.52529 0.325634 -0.786151
+vn 0.180744 0.376381 -0.908663
+vn -0.180744 0.376381 -0.908663
+vn -0.525289 0.325635 -0.786151
+vn -0.810291 0.224263 -0.541419
+vn -0.810291 -0.224263 -0.541419
+vn -0.525289 -0.325634 -0.786151
+vn -0.180744 -0.37638 -0.908663
+vn 0.180744 -0.37638 -0.908663
+vn 0.180744 -0.37638 -0.908664
+vn 0.525289 -0.325634 -0.786151
+vn 0.52529 -0.325634 -0.786151
+vn 0.810291 -0.224263 -0.541419
+vn 0.810291 -0.541419 -0.224263
+vn 0.525289 -0.786151 -0.325635
+vn 0.180744 -0.908663 -0.376381
+vn -0.180744 -0.908663 -0.376381
+vn -0.52529 -0.786151 -0.325635
+vn -0.810291 -0.541419 -0.224263
+vn -0.810291 -0.541419 0.224263
+vn -0.52529 -0.786151 0.325634
+vn -0.180744 -0.908663 0.376381
+vn 0.180744 -0.908663 0.376381
+vn 0.525289 -0.786151 0.325634
+vn 0.810291 -0.541419 0.224263
+vn 0.810291 -0.224263 0.541419
+vn 0.525289 -0.325635 0.786151
+vn 0.52529 -0.325634 0.786151
+vn 0.180744 -0.376381 0.908663
+vn -0.180744 -0.376381 0.908663
+vn -0.52529 -0.325634 0.786151
+vn -0.525289 -0.325634 0.786151
+vn -0.810291 -0.224263 0.541419
+vn -0.810291 0.224263 0.541419
+vn -0.525289 0.325634 0.786151
+vn -0.525289 0.325635 0.786151
+vn -0.180744 0.376381 0.908663
+vn 0.180744 0.376381 0.908663
+vn 0.525289 0.325634 0.786151
+vn 0.810291 0.224263 0.541419
+vn 0.810291 0.541419 0.224263
+vn 0.525289 0.786151 0.325634
+vn 0.180744 0.908663 0.376381
+vn -0.180744 0.908663 0.376381
+vn -0.525289 0.786151 0.325634
+vn -0.810291 0.541419 0.224263
+vn 0.391275 0.835714 -0.385339
+vn 0.242928 -0.854631 0.458902
+vn 0.012664 -0.996503 -0.082597
+vn -0.541723 -0.807107 -0.234767
+vn -0.865845 -0.475839 0.154563
+vn -0.63558 -0.333968 0.696063
+vn -0.081193 -0.523364 0.848232
+vn 0.380423 0.234387 0.894618
+vn -0.535486 0.547291 0.643217
+vn -0.535485 0.547291 0.643217
+vn -0.915909 0.312903 -0.251401
+vn -0.915909 0.312904 -0.251401
+vn -0.380422 -0.234388 -0.894618
+vn -0.380423 -0.234387 -0.894618
+vn 0.535486 -0.547291 -0.643217
+vn 0.915909 -0.312903 0.251401
+vn 0.915909 -0.312904 0.251401
+vn 0.309939 0.950756 2e-06
+vn 0.309939 0.950757 2e-06
+vn -0.844361 0.535775 1e-06
+vn 0.844361 0.535775 1e-06
+vn 0.844361 0.535775 0.0
+vn -0.334772 0.942299 2e-06
+vn -0.938315 -0.345781 -1e-06
+vn -0.938315 -0.34578 -2e-06
+vn -0.484072 0.875028 -0.0
+vn -0.497846 -0.867265 -1e-06
+vn -0.497846 -0.867265 -0.0
+vn -0.952171 0.305566 -1e-06
+vn 0.313856 -0.949471 1e-06
+vn 0.313856 -0.949471 0.0
+vn -0.85464 -0.519221 -1e-06
+vn -0.85464 -0.519221 -2e-06
+vn 0.85464 -0.519221 1e-06
+vn -0.32663 -0.945152 -3e-06
+vn 0.964656 0.263514 3e-06
+vn 0.964656 0.263514 2e-06
+vn 0.482645 -0.875816 -2e-06
+vn 0.469038 0.883178 2e-06
+vn 0.469038 0.883178 1e-06
+vn 0.963087 -0.269192 -2e-06
+vn 0.0 0.0 1.0
+vn 0.0 0.0 -1.0
+vt 0.5606 -0.818307
+vt 0.5606 -0.486381
+vt 0.892525 -0.486381
+vt 0.892525 -0.818307
+vt 0.736116 -0.244353
+vt 0.736116 -0.060334
+vt 0.920134 -0.060334
+vt 0.920134 -0.244353
+vt 0.716779 -0.806658
+vt 0.716779 -0.904279
+vt 0.619158 -0.904279
+vt 0.619158 -0.806658
+vt 0.275373 -0.818377
+vt 0.275373 -0.915998
+vt 0.177752 -0.915998
+vt 0.177752 -0.818377
+
+animation default
+speed 1.0
+frame
+poly Item_item1.png
+point 36 0 0
+point 8 0 1
+point 7 0 2
+poly Item_item1.png
+point 14 1 0
+point 0 1 1
+point 1 1 2
+poly Item_item1.png
+point 15 2 0
+point 0 2 1
+point 14 2 2
+poly Item_item1.png
+point 36 3 0
+point 21 3 1
+point 8 3 2
+poly Item_item1.png
+point 36 4 0
+point 22 4 1
+point 21 4 2
+poly Item_item1.png
+point 28 5 0
+point 0 5 1
+point 15 5 2
+poly Item_item1.png
+point 29 6 0
+point 0 6 1
+point 28 6 2
+poly Item_item1.png
+point 36 7 0
+point 35 7 1
+point 22 7 2
+poly Item_item1.png
+point 36 8 0
+point 37 8 1
+point 35 8 2
+poly Item_item1.png
+point 43 9 0
+point 0 9 1
+point 29 9 2
+poly Item_item1.png
+point 44 10 0
+point 0 10 1
+point 43 10 2
+poly Item_item1.png
+point 36 11 0
+point 50 11 1
+point 37 11 2
+poly Item_item1.png
+point 36 12 0
+point 51 12 1
+point 50 12 2
+poly Item_item1.png
+point 57 13 0
+point 0 13 1
+point 44 13 2
+poly Item_item1.png
+point 1 14 0
+point 0 14 1
+point 57 14 2
+poly Item_item1.png
+point 36 15 0
+point 7 15 1
+point 51 15 2
+poly Item_item1.png
+point 51 16 0
+point 7 16 1
+point 6 16 2
+poly Item_item1.png
+point 51 16 0
+point 6 16 2
+point 52 16 3
+poly Item_item1.png
+point 52 17 0
+point 6 17 1
+point 5 17 2
+poly Item_item1.png
+point 52 17 0
+point 5 17 2
+point 53 17 3
+poly Item_item1.png
+point 53 18 0
+point 5 18 1
+point 4 18 2
+poly Item_item1.png
+point 53 19 0
+point 4 19 2
+point 54 19 3
+poly Item_item1.png
+point 54 20 0
+point 4 20 1
+point 3 20 2
+poly Item_item1.png
+point 54 20 0
+point 3 20 2
+point 55 20 3
+poly Item_item1.png
+point 55 21 0
+point 3 21 1
+point 2 21 2
+poly Item_item1.png
+point 55 21 0
+point 2 21 2
+point 56 21 3
+poly Item_item1.png
+point 56 22 0
+point 2 22 1
+point 1 22 2
+poly Item_item1.png
+point 56 22 0
+point 1 22 2
+point 57 22 3
+poly Item_item1.png
+point 45 23 0
+point 56 23 1
+point 57 23 2
+poly Item_item1.png
+point 45 23 0
+point 57 23 2
+point 44 23 3
+poly Item_item1.png
+point 46 24 0
+point 55 24 1
+point 56 24 2
+poly Item_item1.png
+point 46 25 0
+point 56 25 2
+point 45 25 3
+poly Item_item1.png
+point 47 26 0
+point 54 26 1
+point 55 26 2
+poly Item_item1.png
+point 47 26 0
+point 55 26 2
+point 46 26 3
+poly Item_item1.png
+point 48 27 0
+point 53 27 1
+point 54 27 2
+poly Item_item1.png
+point 48 27 0
+point 54 27 2
+point 47 27 3
+poly Item_item1.png
+point 49 28 0
+point 52 28 1
+point 53 28 2
+poly Item_item1.png
+point 49 28 0
+point 53 28 2
+point 48 28 3
+poly Item_item1.png
+point 50 29 0
+point 51 29 1
+point 52 29 2
+poly Item_item1.png
+point 50 29 0
+point 52 29 2
+point 49 29 3
+poly Item_item1.png
+point 37 30 0
+point 50 30 1
+point 49 30 2
+poly Item_item1.png
+point 37 30 0
+point 49 30 2
+point 38 30 3
+poly Item_item1.png
+point 38 31 0
+point 49 31 1
+point 48 31 2
+poly Item_item1.png
+point 38 31 0
+point 48 31 2
+point 39 31 3
+poly Item_item1.png
+point 39 32 0
+point 48 32 1
+point 47 32 2
+poly Item_item1.png
+point 39 32 0
+point 47 32 2
+point 40 32 3
+poly Item_item1.png
+point 40 33 0
+point 47 33 1
+point 46 33 2
+poly Item_item1.png
+point 40 34 0
+point 46 34 2
+point 41 34 3
+poly Item_item1.png
+point 41 35 0
+point 46 35 1
+point 45 35 2
+poly Item_item1.png
+point 41 36 0
+point 45 36 2
+point 42 36 3
+poly Item_item1.png
+point 42 37 0
+point 45 37 1
+point 44 37 2
+poly Item_item1.png
+point 42 37 0
+point 44 37 2
+point 43 37 3
+poly Item_item1.png
+point 30 38 0
+point 42 38 1
+point 43 38 2
+poly Item_item1.png
+point 30 38 0
+point 43 38 2
+point 29 38 3
+poly Item_item1.png
+point 31 39 0
+point 41 39 1
+point 42 39 2
+poly Item_item1.png
+point 31 39 0
+point 42 39 2
+point 30 39 3
+poly Item_item1.png
+point 32 40 0
+point 40 40 1
+point 41 40 2
+poly Item_item1.png
+point 32 40 0
+point 41 40 2
+point 31 40 3
+poly Item_item1.png
+point 33 41 0
+point 39 41 1
+point 40 41 2
+poly Item_item1.png
+point 33 41 0
+point 40 41 2
+point 32 41 3
+poly Item_item1.png
+point 34 42 0
+point 38 42 1
+point 39 42 2
+poly Item_item1.png
+point 34 42 0
+point 39 42 2
+point 33 42 3
+poly Item_item1.png
+point 35 43 0
+point 37 43 1
+point 38 43 2
+poly Item_item1.png
+point 35 43 0
+point 38 43 2
+point 34 43 3
+poly Item_item1.png
+point 22 44 0
+point 35 44 1
+point 34 44 2
+poly Item_item1.png
+point 22 44 0
+point 34 44 2
+point 23 44 3
+poly Item_item1.png
+point 23 45 0
+point 34 45 1
+point 33 45 2
+poly Item_item1.png
+point 23 45 0
+point 33 45 2
+point 24 45 3
+poly Item_item1.png
+point 24 46 0
+point 33 46 1
+point 32 46 2
+poly Item_item1.png
+point 24 46 0
+point 32 46 2
+point 25 46 3
+poly Item_item1.png
+point 25 47 0
+point 32 47 1
+point 31 47 2
+poly Item_item1.png
+point 25 47 0
+point 31 47 2
+point 26 47 3
+poly Item_item1.png
+point 26 48 0
+point 31 48 1
+point 30 48 2
+poly Item_item1.png
+point 26 48 0
+point 30 48 2
+point 27 48 3
+poly Item_item1.png
+point 27 49 0
+point 30 49 1
+point 29 49 2
+poly Item_item1.png
+point 27 49 0
+point 29 49 2
+point 28 49 3
+poly Item_item1.png
+point 16 50 0
+point 27 50 1
+point 28 50 2
+poly Item_item1.png
+point 16 50 0
+point 28 50 2
+point 15 50 3
+poly Item_item1.png
+point 17 51 0
+point 26 51 1
+point 27 51 2
+poly Item_item1.png
+point 17 52 0
+point 27 52 2
+point 16 52 3
+poly Item_item1.png
+point 18 53 0
+point 25 53 1
+point 26 53 2
+poly Item_item1.png
+point 18 53 0
+point 26 53 2
+point 17 53 3
+poly Item_item1.png
+point 19 54 0
+point 24 54 1
+point 25 54 2
+poly Item_item1.png
+point 19 54 0
+point 25 54 2
+point 18 54 3
+poly Item_item1.png
+point 20 55 0
+point 23 55 1
+point 24 55 2
+poly Item_item1.png
+point 20 56 0
+point 24 56 2
+point 19 56 3
+poly Item_item1.png
+point 21 57 0
+point 22 57 1
+point 23 57 2
+poly Item_item1.png
+point 21 57 0
+point 23 57 2
+point 20 57 3
+poly Item_item1.png
+point 8 58 0
+point 21 58 1
+point 20 58 2
+poly Item_item1.png
+point 8 58 0
+point 20 58 2
+point 9 58 3
+poly Item_item1.png
+point 9 59 0
+point 20 59 1
+point 19 59 2
+poly Item_item1.png
+point 9 60 0
+point 19 60 2
+point 10 60 3
+poly Item_item1.png
+point 10 61 0
+point 19 61 1
+point 18 61 2
+poly Item_item1.png
+point 10 61 0
+point 18 61 2
+point 11 61 3
+poly Item_item1.png
+point 11 62 0
+point 18 62 1
+point 17 62 2
+poly Item_item1.png
+point 11 62 0
+point 17 62 2
+point 12 62 3
+poly Item_item1.png
+point 12 63 0
+point 17 63 1
+point 16 63 2
+poly Item_item1.png
+point 12 63 0
+point 16 63 2
+point 13 63 3
+poly Item_item1.png
+point 13 64 0
+point 16 64 1
+point 15 64 2
+poly Item_item1.png
+point 13 64 0
+point 15 64 2
+point 14 64 3
+poly Item_item1.png
+point 2 65 0
+point 13 65 1
+point 14 65 2
+poly Item_item1.png
+point 2 65 0
+point 14 65 2
+point 1 65 3
+poly Item_item1.png
+point 3 66 0
+point 12 66 1
+point 13 66 2
+poly Item_item1.png
+point 3 66 0
+point 13 66 2
+point 2 66 3
+poly Item_item1.png
+point 4 67 0
+point 11 67 1
+point 12 67 2
+poly Item_item1.png
+point 4 67 0
+point 12 67 2
+point 3 67 3
+poly Item_item1.png
+point 5 68 0
+point 10 68 1
+point 11 68 2
+poly Item_item1.png
+point 5 68 0
+point 11 68 2
+point 4 68 3
+poly Item_item1.png
+point 6 69 0
+point 9 69 1
+point 10 69 2
+poly Item_item1.png
+point 6 69 0
+point 10 69 2
+point 5 69 3
+poly Item_item1.png
+point 7 70 0
+point 8 70 1
+point 9 70 2
+poly Item_item1.png
+point 7 70 0
+point 9 70 2
+point 6 70 3
+poly Item_item1.png
+point 70 71 4
+point 58 71 5
+point 59 71 6
+poly Item_item1.png
+point 71 72 4
+point 65 72 5
+point 64 72 6
+poly Item_item1.png
+point 70 71 4
+point 59 71 5
+point 60 71 6
+poly Item_item1.png
+point 71 73 4
+point 66 73 5
+point 65 73 6
+poly Item_item1.png
+point 70 71 4
+point 60 71 5
+point 61 71 6
+poly Item_item1.png
+point 71 74 4
+point 67 74 5
+point 66 74 6
+poly Item_item1.png
+point 70 71 4
+point 61 71 5
+point 62 71 6
+poly Item_item1.png
+point 71 75 4
+point 68 75 5
+point 67 75 6
+poly Item_item1.png
+point 70 71 4
+point 62 71 5
+point 63 71 6
+poly Item_item1.png
+point 71 76 4
+point 69 76 5
+point 68 76 6
+poly Item_item1.png
+point 63 71 4
+point 58 71 5
+point 70 71 6
+poly Item_item1.png
+point 71 77 4
+point 64 77 5
+point 69 77 6
+poly Item_item1.png
+point 64 78 4
+point 58 78 5
+point 63 78 6
+poly Item_item1.png
+point 64 78 4
+point 63 78 6
+point 69 78 7
+poly Item_item1.png
+point 62 79 4
+point 68 79 5
+point 69 79 6
+poly Item_item1.png
+point 62 80 4
+point 69 80 6
+point 63 80 7
+poly Item_item1.png
+point 61 81 4
+point 67 81 5
+point 68 81 6
+poly Item_item1.png
+point 61 82 4
+point 68 82 6
+point 62 82 7
+poly Item_item1.png
+point 60 83 4
+point 66 83 5
+point 67 83 6
+poly Item_item1.png
+point 60 84 4
+point 67 84 6
+point 61 84 7
+poly Item_item1.png
+point 59 85 4
+point 65 85 5
+point 66 85 6
+poly Item_item1.png
+point 59 85 4
+point 66 85 6
+point 60 85 7
+poly Item_item1.png
+point 58 86 4
+point 64 86 5
+point 65 86 6
+poly Item_item1.png
+point 58 87 4
+point 65 87 6
+point 59 87 7
+poly Item_item1.png
+point 95 88 8
+point 75 88 9
+point 79 88 10
+poly Item_item1.png
+point 95 89 8
+point 79 89 10
+point 105 89 11
+poly Item_item1.png
+point 82 90 8
+point 95 90 9
+point 87 90 11
+poly Item_item1.png
+point 95 90 9
+point 105 90 10
+point 87 90 11
+poly Item_item1.png
+point 94 91 8
+point 82 91 9
+point 87 91 10
+poly Item_item1.png
+point 94 92 8
+point 87 92 10
+point 104 92 11
+poly Item_item1.png
+point 72 93 8
+point 94 93 9
+point 104 93 10
+poly Item_item1.png
+point 72 93 8
+point 104 93 10
+point 76 93 11
+poly Item_item1.png
+point 103 94 8
+point 79 94 9
+point 97 94 11
+poly Item_item1.png
+point 79 95 9
+point 75 95 10
+point 97 95 11
+poly Item_item1.png
+point 86 96 8
+point 103 96 9
+point 83 96 11
+poly Item_item1.png
+point 103 96 9
+point 97 96 10
+point 83 96 11
+poly Item_item1.png
+point 102 97 8
+point 86 97 9
+point 83 97 10
+poly Item_item1.png
+point 102 98 8
+point 83 98 10
+point 96 98 11
+poly Item_item1.png
+point 78 99 8
+point 102 99 9
+point 96 99 10
+poly Item_item1.png
+point 78 99 8
+point 96 99 10
+point 74 99 11
+poly Item_item1.png
+point 101 100 8
+point 78 100 9
+point 74 100 10
+poly Item_item1.png
+point 101 101 8
+point 74 101 10
+point 91 101 11
+poly Item_item1.png
+point 85 102 8
+point 101 102 9
+point 91 102 10
+poly Item_item1.png
+point 85 103 8
+point 91 103 10
+point 80 103 11
+poly Item_item1.png
+point 100 104 8
+point 85 104 9
+point 80 104 10
+poly Item_item1.png
+point 100 104 8
+point 80 104 10
+point 90 104 11
+poly Item_item1.png
+point 77 105 8
+point 100 105 9
+point 90 105 10
+poly Item_item1.png
+point 77 105 8
+point 90 105 10
+point 73 105 11
+poly Item_item1.png
+point 99 106 8
+point 77 106 9
+point 73 106 10
+poly Item_item1.png
+point 99 107 8
+point 73 107 10
+point 93 107 11
+poly Item_item1.png
+point 84 108 8
+point 99 108 9
+point 93 108 10
+poly Item_item1.png
+point 84 108 8
+point 93 108 10
+point 81 108 11
+poly Item_item1.png
+point 98 109 8
+point 84 109 9
+point 81 109 10
+poly Item_item1.png
+point 98 110 8
+point 81 110 10
+point 92 110 11
+poly Item_item1.png
+point 92 111 8
+point 72 111 9
+point 76 111 10
+poly Item_item1.png
+point 92 111 8
+point 76 111 10
+point 98 111 11
+poly Item_item1.png
+point 99 112 12
+point 121 112 13
+point 100 112 14
+poly Item_item1.png
+point 99 112 12
+point 100 112 14
+point 77 112 15
+poly Item_item1.png
+point 121 112 12
+point 113 112 13
+point 100 112 15
+poly Item_item1.png
+point 113 112 13
+point 85 112 14
+point 100 112 15
+poly Item_item1.png
+point 84 112 12
+point 112 112 13
+point 99 112 15
+poly Item_item1.png
+point 112 112 13
+point 121 112 14
+point 99 112 15
+poly Item_item1.png
+point 112 112 12
+point 89 112 13
+point 113 112 14
+poly Item_item1.png
+point 112 112 12
+point 113 112 14
+point 121 112 15
+poly Item_item1.png
+point 113 112 12
+point 120 112 13
+point 101 112 14
+poly Item_item1.png
+point 113 112 12
+point 101 112 14
+point 85 112 15
+poly Item_item1.png
+point 120 112 12
+point 102 112 13
+point 101 112 15
+poly Item_item1.png
+point 102 112 13
+point 78 112 14
+point 101 112 15
+poly Item_item1.png
+point 89 112 12
+point 110 112 13
+point 120 112 14
+poly Item_item1.png
+point 89 112 12
+point 120 112 14
+point 113 112 15
+poly Item_item1.png
+point 110 112 12
+point 86 112 13
+point 102 112 14
+poly Item_item1.png
+point 110 112 12
+point 102 112 14
+point 120 112 15
+poly Item_item1.png
+point 98 112 12
+point 119 112 13
+point 112 112 14
+poly Item_item1.png
+point 98 112 12
+point 112 112 14
+point 84 112 15
+poly Item_item1.png
+point 119 112 12
+point 111 112 13
+point 89 112 14
+poly Item_item1.png
+point 119 112 12
+point 89 112 14
+point 112 112 15
+poly Item_item1.png
+point 76 112 12
+point 104 112 13
+point 98 112 15
+poly Item_item1.png
+point 104 112 13
+point 119 112 14
+point 98 112 15
+poly Item_item1.png
+point 104 112 12
+point 87 112 13
+point 111 112 14
+poly Item_item1.png
+point 104 112 12
+point 111 112 14
+point 119 112 15
+poly Item_item1.png
+point 111 112 12
+point 118 112 13
+point 110 112 14
+poly Item_item1.png
+point 111 112 12
+point 110 112 14
+point 89 112 15
+poly Item_item1.png
+point 118 112 12
+point 103 112 13
+point 110 112 15
+poly Item_item1.png
+point 103 112 13
+point 86 112 14
+point 110 112 15
+poly Item_item1.png
+point 87 112 12
+point 105 112 13
+point 111 112 15
+poly Item_item1.png
+point 105 112 13
+point 118 112 14
+point 111 112 15
+poly Item_item1.png
+point 105 112 12
+point 79 112 13
+point 103 112 14
+poly Item_item1.png
+point 105 112 12
+point 103 112 14
+point 118 112 15
+poly Item_item1.png
+point 95 113 12
+point 117 113 13
+point 97 113 14
+poly Item_item1.png
+point 95 113 12
+point 97 113 14
+point 75 113 15
+poly Item_item1.png
+point 117 113 12
+point 109 113 13
+point 97 113 15
+poly Item_item1.png
+point 109 113 13
+point 83 113 14
+point 97 113 15
+poly Item_item1.png
+point 82 113 12
+point 108 113 13
+point 95 113 15
+poly Item_item1.png
+point 108 113 13
+point 117 113 14
+point 95 113 15
+poly Item_item1.png
+point 108 113 12
+point 88 113 13
+point 109 113 14
+poly Item_item1.png
+point 108 113 12
+point 109 113 14
+point 117 113 15
+poly Item_item1.png
+point 109 113 12
+point 116 113 13
+point 96 113 14
+poly Item_item1.png
+point 109 113 12
+point 96 113 14
+point 83 113 15
+poly Item_item1.png
+point 116 113 12
+point 91 113 13
+point 96 113 15
+poly Item_item1.png
+point 91 113 13
+point 74 113 14
+point 96 113 15
+poly Item_item1.png
+point 88 113 12
+point 106 113 13
+point 116 113 14
+poly Item_item1.png
+point 88 113 12
+point 116 113 14
+point 109 113 15
+poly Item_item1.png
+point 106 113 12
+point 80 113 13
+point 91 113 14
+poly Item_item1.png
+point 106 113 12
+point 91 113 14
+point 116 113 15
+poly Item_item1.png
+point 94 113 12
+point 115 113 13
+point 108 113 14
+poly Item_item1.png
+point 94 113 12
+point 108 113 14
+point 82 113 15
+poly Item_item1.png
+point 115 113 12
+point 107 113 13
+point 88 113 14
+poly Item_item1.png
+point 115 113 12
+point 88 113 14
+point 108 113 15
+poly Item_item1.png
+point 72 113 12
+point 92 113 13
+point 94 113 15
+poly Item_item1.png
+point 92 113 13
+point 115 113 14
+point 94 113 15
+poly Item_item1.png
+point 92 113 12
+point 81 113 13
+point 107 113 14
+poly Item_item1.png
+point 92 113 12
+point 107 113 14
+point 115 113 15
+poly Item_item1.png
+point 107 113 12
+point 114 113 13
+point 106 113 14
+poly Item_item1.png
+point 107 113 12
+point 106 113 14
+point 88 113 15
+poly Item_item1.png
+point 114 113 12
+point 90 113 13
+point 106 113 15
+poly Item_item1.png
+point 90 113 13
+point 80 113 14
+point 106 113 15
+poly Item_item1.png
+point 81 113 12
+point 93 113 13
+point 107 113 15
+poly Item_item1.png
+point 93 113 13
+point 114 113 14
+point 107 113 15
+poly Item_item1.png
+point 93 113 12
+point 73 113 13
+point 90 113 14
+poly Item_item1.png
+point 93 113 12
+point 90 113 14
+point 114 113 15

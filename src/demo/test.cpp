@@ -31,7 +31,7 @@ class TestState: public State::State
 			obj = new Scene::Object("simpleplane", 0, 0, 0);
 			scene.add(Scene::TYPE_LEVEL, obj);
 			
-			player = new Scene::MovableObject("player", 3, 2, 0);
+			player = new Scene::Player(3, 2, 0);
 			player->speed = 3.0;
 			obj = (Scene::Object *) player;
 			scene.add(Scene::TYPE_PLAYER, obj);
@@ -47,8 +47,19 @@ class TestState: public State::State
 			obj = (Scene::Object *) new Scene::BombObject(-2, -1, 0);
 			scene.add(Scene::TYPE_BOMB, obj);
 			
-			obj = (Scene::Object *) new Scene::Item(-2, 3, 0);
-			scene.add(Scene::TYPE_ITEM, obj);
+			obj = (Scene::Object *) new Scene::BlockObject(-1, 4, 0);
+			scene.add(Scene::TYPE_BLOCK, obj);
+			
+			obj = (Scene::Object *) new Scene::BlockObject(-1, -4, 0);
+			scene.add(Scene::TYPE_BLOCK, obj);
+			
+			obj = (Scene::Object *) new Scene::BlockObject(3, -1, 0);
+			scene.add(Scene::TYPE_BLOCK, obj);
+			
+			obj = (Scene::Object *) new Scene::BlockObject(-3, -2, 0);
+			scene.add(Scene::TYPE_BLOCK, obj);
+			
+			Audio::play_music("../Demo/Sounds/Menu.ogg");
 		}
 		
 		~TestState() {}
@@ -80,14 +91,6 @@ class TestState: public State::State
 			usleep(1);
 		}
 		
-		void lay_bomb()
-		{
-			Scene::BombObject *obj;
-			
-			obj = new Scene::BombObject(player->x, player->y, 0);
-			scene.add(Scene::TYPE_BOMB, (Scene::Object *) obj);
-		}
-		
 		void key_pressed(int key)
 		{
 			switch(key)
@@ -116,7 +119,7 @@ class TestState: public State::State
 					player->moving = movement.moving;
 					break;
 				case 32: // space
-					lay_bomb();
+					player->lay_bomb(&scene);
 					break;
 				default:
 					LOG_INFO << "Key pressed: " << key << endl;
@@ -161,7 +164,7 @@ class TestState: public State::State
 	private:
 		Interface::KeyboardMovement movement;
 		Scene::Scene scene;
-		Scene::MovableObject *player;
+		Scene::Player *player;
 };
 
 //------------------------------------------------------------------------------

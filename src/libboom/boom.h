@@ -58,6 +58,7 @@
 #include "log.h"
 #include "vfs.h"
 #include "event.h"
+#include "audio.h"
 #include "graphics.h"
 #include "scene.h"
 #include "state.h"
