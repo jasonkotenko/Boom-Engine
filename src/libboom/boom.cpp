@@ -12,6 +12,7 @@ namespace Boom
 
 	void init(int &argc, char *argv[])
 	{
+		srand(time(NULL));
 		glutInit(&argc, argv);
 		Log::init();
 		VirtualFS::init();

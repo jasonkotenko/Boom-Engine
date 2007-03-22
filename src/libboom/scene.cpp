@@ -484,26 +484,33 @@ namespace Boom
 			{
 				case FASTER:
 					p->speed += 1.0;
+					LOG_DEBUG << "Picked up speed increase" << endl;
 					break;
 				case SLOWER:
 					if (p->speed > 1.0)
 						p->speed -= 1.0;
+					LOG_DEBUG << "Picked up speed decrease" << endl;
 					break;
 				case EXTRA_BOMB:
 					p->bomb_bag++;
+					LOG_DEBUG << "Picked up extra bomb" << endl;
 					break;
 				case BIGGER_BOMBS:
 					p->bomb_size += 0.5;
+					LOG_DEBUG << "Picked up bigger bombs" << endl;
 					break;
 				case SMALLER_BOMBS:
 					p->bomb_size = 1.0;
+					LOG_DEBUG << "Picked up smaller bombs" << endl;
 					break;
 				case BOMB_LONG_LIFE:
 					p->bomb_life += 2.0;
+					LOG_DEBUG << "Picked up longer bomb life" << endl;
 					break;
 				case BOMB_SHORT_LIFE:
 					if (p->bomb_life > 2.0)
 						p->bomb_life -= 2.0;
+					LOG_DEBUG << "Picked up shorter bomb life" << endl;
 					break;
 			}
 		}
