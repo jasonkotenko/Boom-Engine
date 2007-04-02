@@ -561,6 +561,48 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
+		AIPlayer::AIPlayer(float x, float y, float z)
+		{
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			mesh = "player";
+			bomb_bag = 2;
+			bomb_size = DEFAULT_BOMB_SIZE;
+			bomb_life = DEFAULT_BOMB_LIFE;
+			bombs_laid = 0;
+			current_action = NONE;
+			target = NULL;
+		}
+		
+		//----------------------------------------------------------------------
+		bool AIPlayer::update(Scene *scene)
+		{
+			ObjectList::iterator obj;
+			float closest_distance = 99999;
+			
+			// Find closest player and chase him
+			for (obj = scene->objects[TYPE_PLAYER].begin();
+				 obj != scene->objects[TYPE_PLAYER].end(); obj++)
+			{
+				if (distance2d((*obj)->x, (*obj)->y, x, y) < closest_distance)
+				{
+					target = (*obj);
+					closest_distance = distance2d((*obj)->x, (*obj)->y, x, y);
+				}
+			}
+			
+			rotation.z = polar_angle2d(x, y, target->x, target->y);
+			moving = true;
+			speed = 1.0;
+			
+			LOG_DEBUG << "Target is " << target->id << endl;
+			LOG_DEBUG << "Rotation is " << rotation.z << endl;
+			
+			return Player::update(scene);
+		}
+		
+		//----------------------------------------------------------------------
 		Scene::Scene()
 		{
 		

@@ -36,7 +36,8 @@ class TestState: public State::State
 			obj = (Scene::Object *) player;
 			scene.add(Scene::TYPE_PLAYER, obj);
 			
-			obj = new Scene::Object("player", -3, 1, 0);
+			//obj = new Scene::Object("player", -3, 1, 0);
+			obj = (Scene::Object *) new Scene::AIPlayer(-3, 1, 0);
 			scene.add(Scene::TYPE_PLAYER, obj);
 			
 			obj = (Scene::Object *) new Scene::SimpleAnimatedObject("bign", 3, -3, 0);

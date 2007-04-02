@@ -997,7 +997,7 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
-		double distance2d(Point2d *v1, Point2d *v2)
+		double distance2d(const Point2d *v1, const Point2d *v2)
 		{
 			return (v1->x - v2->x) * (v1->x - v2->x) +
 				   (v1->y - v2->y) * (v1->y - v2->y);
@@ -1010,7 +1010,7 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
-		double polar_angle2d(Point2d *pole, Point2d *point)
+		double polar_angle2d(const Point2d *pole, const Point2d *point)
 		{
 			double dx, dy, angle;
 			
@@ -1023,7 +1023,20 @@ namespace Boom
 		}
 		
 		//----------------------------------------------------------------------
-		double cross2d(Point2d *v1, Point2d *v2, Point2d *v3)
+		double polar_angle2d(float x1, float y1, float x2, float y2)
+		{
+			double dx, dy, angle;
+			
+			dx = double(x2) - x1;
+			dy = double(y2) - y1;
+			
+			angle = atan2(dy, dx) + M_PI;
+						
+			return angle;
+		}
+		
+		//----------------------------------------------------------------------
+		double cross2d(const Point2d *v1, const Point2d *v2, const Point2d *v3)
 		{
 			return ((v2->x - v1->x) * (v3->y - v1->y)) -
 				   ((v3->x - v1->x) * (v2->y - v1->y));

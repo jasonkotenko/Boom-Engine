@@ -269,13 +269,15 @@ namespace Boom
 			Math functions...
 		*/
 		//! Calculate the distance between two coplanar points
-		double distance2d(Point2d *v1, Point2d *v2);
+		double distance2d(const Point2d *v1, const Point2d *v2);
 		//! Calculate the distance between two coplanar points
 		double distance2d(float x1, float y1, float x2, float y2);
 		//! Calculate the polar angle between a pole and a point
-		double polar_angle2d(Point2d *pole, Point2d *point);
+		double polar_angle2d(const Point2d *pole, const Point2d *point);
+		//! Calculate the polar angle between a pole and a point
+		double polar_angle2d(float x1, float y1, float x2, float y2);
 		//! A coplanar vector cross
-		double cross2d(Point2d *v1, Point2d *v2, Point2d *v3);
+		double cross2d(const Point2d *v1, const Point2d *v2, const Point2d *v3);
 	}
 }
 

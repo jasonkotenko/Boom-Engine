@@ -191,7 +191,7 @@ namespace Boom
 		struct Item: public SimpleAnimatedObject
 		{
 			Item(float x = 0, float y = 0, float z = 0);
-			void apply(Object *player);
+			virtual void apply(Object *player);
 			
 			ObjectID parent;
 			
@@ -206,7 +206,7 @@ namespace Boom
 		struct Player: public MovableObject
 		{
 			Player(float x = 0, float y = 0, float z = 0);
-			void lay_bomb(Scene *scene);
+			virtual void lay_bomb(Scene *scene);
 			
 			int   bomb_bag;	 //< How many bombs a player can lay at once
 			float bomb_size; //< Size of the bomb's explosion
@@ -214,6 +214,22 @@ namespace Boom
 			
 			protected:
 				int bombs_laid;
+		};
+		
+		enum AIAction { NONE, ESCAPE, CHASE };
+		
+		/// An AI controlled player
+		/*!
+			...
+		*/
+		struct AIPlayer: public Player
+		{
+			AIPlayer(float x = 0, float y = 0, float z = 0);
+			virtual bool update(Scene *scene);
+			
+			protected:
+				AIAction current_action;
+				Object	 *target;
 		};
 		
 		typedef list <Object *> ObjectList;
