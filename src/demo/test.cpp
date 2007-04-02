@@ -32,7 +32,6 @@ class TestState: public State::State
 			scene.add(Scene::TYPE_LEVEL, obj);
 			
 			player = new Scene::Player(3, 2, 0);
-			player->speed = 3.0;
 			obj = (Scene::Object *) player;
 			scene.add(Scene::TYPE_PLAYER, obj);
 			

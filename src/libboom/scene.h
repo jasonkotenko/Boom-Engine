@@ -66,6 +66,9 @@ namespace Boom
 		//! Default size of an explosion
 		const float DEFAULT_BOMB_SIZE = 2.0;
 		
+		//! Default speed of players
+		const float DEFAULT_PLAYER_SPEED = 3.0;
+		
 		class Scene;
 		
 		/// An static object within a scene
@@ -206,6 +209,7 @@ namespace Boom
 		struct Player: public MovableObject
 		{
 			Player(float x = 0, float y = 0, float z = 0);
+			virtual bool update(Scene *scene);
 			virtual void lay_bomb(Scene *scene);
 			
 			int   bomb_bag;	 //< How many bombs a player can lay at once
@@ -230,6 +234,9 @@ namespace Boom
 			protected:
 				AIAction current_action;
 				Object	 *target;
+				float	 decision_timer;
+				
+				void select_action(Scene *scene);
 		};
 		
 		typedef list <Object *> ObjectList;

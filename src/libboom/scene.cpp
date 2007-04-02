@@ -541,10 +541,21 @@ namespace Boom
 			this->y = y;
 			this->z = z;
 			mesh = "player";
+			speed = DEFAULT_PLAYER_SPEED;
 			bomb_bag = 2;
 			bomb_size = DEFAULT_BOMB_SIZE;
 			bomb_life = DEFAULT_BOMB_LIFE;
 			bombs_laid = 0;
+		}
+		
+		//----------------------------------------------------------------------
+		bool Player::update(Scene *scene)
+		{
+			if (moving && animation != "walking")
+				set_animation("walking");
+			else if (!moving && animation != "default")
+				set_animation("default");
+			return MovableObject::update(scene);
 		}
 		
 		//----------------------------------------------------------------------
@@ -567,23 +578,67 @@ namespace Boom
 			this->y = y;
 			this->z = z;
 			mesh = "player";
+			speed = DEFAULT_PLAYER_SPEED;
 			bomb_bag = 2;
 			bomb_size = DEFAULT_BOMB_SIZE;
 			bomb_life = DEFAULT_BOMB_LIFE;
 			bombs_laid = 0;
 			current_action = NONE;
 			target = NULL;
+			decision_timer = 0;
 		}
 		
 		//----------------------------------------------------------------------
 		bool AIPlayer::update(Scene *scene)
 		{
+			decision_timer += tdiff;
+			if (decision_timer > 0.1)
+			{
+				decision_timer = 0;
+				select_action(scene);
+			}
+			
+			switch(current_action)
+			{
+				case ESCAPE:
+					// Update the angle we are running to catch something
+					rotation.z = polar_angle2d(x, y, target->x, target->y)
+								 / M_PI * 180 + 90.0;
+					break;
+				case CHASE:
+					// Update the angle we are running to catch something
+					rotation.z = polar_angle2d(x, y, target->x, target->y)
+								 / M_PI * 180 - 90.0;
+					break;
+			}
+			
+			return Player::update(scene);
+		}
+		
+		//---------------------------------------------------------------------
+		void AIPlayer::select_action(Scene *scene)
+		{
 			ObjectList::iterator obj;
 			float closest_distance = 99999;
 			
-			// Find closest player and chase him
-			for (obj = scene->objects[TYPE_PLAYER].begin();
-				 obj != scene->objects[TYPE_PLAYER].end(); obj++)
+			target = NULL;
+			current_action = NONE;
+			
+			// Run away from a bomb?
+			for (obj = scene->objects[TYPE_BOMB].begin();
+				 obj != scene->objects[TYPE_BOMB].end(); obj++)
+			{
+				if (distance2d((*obj)->x, (*obj)->y, x, y) < ((BombObject *)(*obj))->radius)
+				{
+					target = (*obj);
+					current_action = ESCAPE;
+					return;
+				}
+			}
+			
+			// Find and pick up the closest item
+			for (obj = scene->objects[TYPE_ITEM].begin();
+				 obj != scene->objects[TYPE_ITEM].end(); obj++)
 			{
 				if (distance2d((*obj)->x, (*obj)->y, x, y) < closest_distance)
 				{
@@ -591,15 +646,38 @@ namespace Boom
 					closest_distance = distance2d((*obj)->x, (*obj)->y, x, y);
 				}
 			}
+			if (target != NULL)
+			{
+				current_action = CHASE;
+				return;
+			}
 			
-			rotation.z = polar_angle2d(x, y, target->x, target->y);
+			// Find closest player and bomb or chase him
+			for (obj = scene->objects[TYPE_PLAYER].begin();
+				 obj != scene->objects[TYPE_PLAYER].end(); obj++)
+			{
+				if ((*obj)->id == id)
+					continue;
+				
+				if (distance2d((*obj)->x, (*obj)->y, x, y) < closest_distance)
+				{
+					target = (*obj);
+					closest_distance = distance2d((*obj)->x, (*obj)->y, x, y);
+				}
+			}
+			if (closest_distance >= bomb_size)
+			{
+				current_action = CHASE;
+			}
+			else
+			{
+				lay_bomb(scene);
+				current_action = ESCAPE;
+			}
+			
 			moving = true;
-			speed = 1.0;
 			
-			LOG_DEBUG << "Target is " << target->id << endl;
-			LOG_DEBUG << "Rotation is " << rotation.z << endl;
-			
-			return Player::update(scene);
+			//LOG_DEBUG << "Target is " << target->id << endl;
 		}
 		
 		//----------------------------------------------------------------------
