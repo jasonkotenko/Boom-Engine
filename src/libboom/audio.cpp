@@ -19,7 +19,7 @@ namespace Boom
 			Mix_CloseAudio();
 		}
 		
-		void play_music(string filename)
+		void play_music(string filename, int loops)
 		{
 			if (music)
 			{
@@ -28,7 +28,7 @@ namespace Boom
 			}
 			
 			music = Mix_LoadMUS(filename.c_str());
-			Mix_PlayMusic(music, -1);
+			Mix_PlayMusic(music, loops);
 		}
 	}
 }

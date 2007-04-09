@@ -467,6 +467,9 @@ namespace Boom
 			item_type = static_cast<ItemType> (rand() % ITEM_TYPE_COUNT);
 			switch (item_type)
 			{
+				/*
+					TODO: add different models for items
+				*/
 				case EXTRA_BOMB:
 					mesh = "item_extra_bomb";
 				default:

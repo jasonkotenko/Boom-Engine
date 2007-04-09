@@ -204,27 +204,32 @@ namespace Boom
 		
 		/// A player
 		/*!
-			...
+			A convenience object for a player that can lay bombs, based on the
+			simple movable object above.
 		*/
 		struct Player: public MovableObject
 		{
 			Player(float x = 0, float y = 0, float z = 0);
 			virtual bool update(Scene *scene);
+			
+			//! Lay a bomb at the player's current position
 			virtual void lay_bomb(Scene *scene);
 			
-			int   bomb_bag;	 //< How many bombs a player can lay at once
-			float bomb_size; //< Size of the bomb's explosion
-			float bomb_life; //< How long until a bomb explodes
+			int   bomb_bag;	//< How many bombs a player can lay at once
+			float bomb_size;	//< Size of the bomb's explosion
+			float bomb_life;	//< How long until a bomb explodes
 			
 			protected:
-				int bombs_laid;
+				int bombs_laid;	//< Number of active bombs
 		};
 		
+		//! The current action of an AI player
 		enum AIAction { NONE, ESCAPE, CHASE };
 		
 		/// An AI controlled player
 		/*!
-			...
+			A subclass of the player object to create a simple artificial
+			intelligence.
 		*/
 		struct AIPlayer: public Player
 		{
@@ -232,11 +237,11 @@ namespace Boom
 			virtual bool update(Scene *scene);
 			
 			protected:
-				AIAction current_action;
-				Object	 *target;
-				float	 decision_timer;
+				AIAction current_action;	//< None, escaping, chasing, etc
+				Object	 *target;			//< Who the action relates to
+				float	 decision_timer;	//< When to make new decisions
 				
-				void select_action(Scene *scene);
+				void select_action(Scene *scene);	//< Decide what to do
 		};
 		
 		typedef list <Object *> ObjectList;

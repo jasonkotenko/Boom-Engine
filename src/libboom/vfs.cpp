@@ -4,7 +4,6 @@
 
 #include <vector>
 #include <unistd.h>
-#include <bzlib.h>
 
 #include "log.h"
 #include "vfs.h"

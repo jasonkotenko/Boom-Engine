@@ -10,6 +10,7 @@ Build requirements
 ------------------
 freeglut3-dev
 libsdl1.2-dev
+libsdl1.2-mixer-dev
 libpng12-dev
 libsigc++-2.0-dev
 scons
@@ -17,3 +18,7 @@ scons
 Building
 --------
 Just type 'scons' into a terminal. Use 'scons -c' to clean.
+
+Running
+-------
+There is no installation procedure yet, so to run the demo please use the included run.sh and rundemo.sh scripts. e.g. './rundemo.sh' to run the demo, './run.sh tools/bmeshview player walking' to run the mesh viewer so that the library is loaded properly.

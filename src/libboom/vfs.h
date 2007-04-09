@@ -11,8 +11,6 @@
 #include <fstream>
 #include <streambuf>
 
-#include "tarfile.h"
-
 using namespace std;
 
 namespace Boom
