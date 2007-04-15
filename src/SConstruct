@@ -21,6 +21,7 @@ LIB_OBJECTS = """
 				interface
 				loadpng
 				log
+				menu
 				scene
 				sdl_interface
 				state

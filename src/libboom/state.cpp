@@ -52,18 +52,21 @@ namespace Boom
 			current = state;
 		}
 		
-		void pop()
+		void pop(int count)
 		{
-			state_stack.pop();
-			//delete current;
-			del_stack.push(current);
-			if (state_stack.size() > 0)
+			for (int x = 0; x < count; x++)
 			{
-				current = state_stack.top();
-			}
-			else
-			{
-				current = NULL;
+				state_stack.pop();
+				//delete current;
+				del_stack.push(current);
+				if (state_stack.size() > 0)
+				{
+					current = state_stack.top();
+				}
+				else
+				{
+					current = NULL;
+				}
 			}
 		}
 		

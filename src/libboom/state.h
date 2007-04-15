@@ -58,7 +58,7 @@ namespace Boom
 		//! Replace the current top state with a new state
 		void replace(State *state);
 		//! Pop the top of the stack
-		void pop();
+		void pop(int count = 1);
 		//! Clear the stack
 		void clear();
 		

@@ -19,6 +19,68 @@ const double FPS_PRINT_DELAY = 5.0;
 double fps_timer;
 int fps;
 
+class PausedMenuState: public State::State
+{
+	public:
+		PausedMenuState()
+		{
+			this->game = Boom::State::current;
+			menu.title = "Game Paused";
+			menu.add_item("Resume");
+			menu.add_item("Exit to menu");
+		}
+		
+		void update()
+		{
+			
+		}
+		
+		void draw()
+		{
+			game->draw();
+			menu.draw();
+		}
+		
+		void key_pressed(int key)
+		{
+			Interface::MenuKeyAction action;
+			
+			action = menu.key_pressed(key);
+			
+			if (action == Interface::MENU_KEY_SELECTED)
+			{
+				int item = menu.get_selected();
+				switch(item)
+				{
+					case 0:
+						Boom::State::pop();
+						break;
+					case 1:
+						Boom::State::pop(2);
+						break;
+				}
+			}
+			else
+			{
+				switch(key)
+				{
+					case 27:
+						Boom::State::pop();
+						break;
+				}
+			}
+		}
+		
+		void key_released(int key)
+		{
+			
+		}
+	
+	private:
+		State::State *game;
+		Interface::Menu menu;
+};
+
 //------------------------------------------------------------------------------
 class TestState: public State::State
 {
@@ -93,10 +155,14 @@ class TestState: public State::State
 		
 		void key_pressed(int key)
 		{
+			PausedMenuState *state;
+			
 			switch(key)
 			{
 				case 27:
-					Event::post(EVENT_QUIT);
+					//Event::post(EVENT_QUIT);
+					state = new PausedMenuState();
+					Boom::State::push(state);
 					break;
 				case 276: // left
 					movement.left();
@@ -167,6 +233,67 @@ class TestState: public State::State
 		Scene::Player *player;
 };
 
+class MainMenuState: public State::State
+{
+	public:
+		MainMenuState()
+		{
+			menu.title = "Boom Engine";
+			menu.add_item("Begin Demo");
+			menu.add_item("Exit");
+		}
+		
+		void update()
+		{
+			
+		}
+		
+		void draw()
+		{
+			menu.draw();
+		}
+		
+		void key_pressed(int key)
+		{
+			Interface::MenuKeyAction action;
+			
+			action = menu.key_pressed(key);
+			
+			if (action == Interface::MENU_KEY_SELECTED)
+			{
+				TestState *state;
+				int item = menu.get_selected();
+				switch(item)
+				{
+					case 0:
+						state = new TestState();
+						Boom::State::push(state);
+						break;
+					case 1:
+						Event::post(EVENT_QUIT);
+						break;
+				}
+			}
+			else
+			{
+				switch(key)
+				{
+					case 27:
+						Event::post(EVENT_QUIT);
+						break;
+				}
+			}
+		}
+		
+		void key_released(int key)
+		{
+			
+		}
+	
+	private:
+		Interface::Menu menu;
+};
+
 //------------------------------------------------------------------------------
 class IntroState: public State::State
 {
@@ -221,7 +348,7 @@ class IntroState: public State::State
 				timer -= tdiff;
 				if (timer <= 0)
 				{
-					TestState *state = new TestState();
+					MainMenuState *state = new MainMenuState();
 					Boom::State::replace(state);
 				}
 			}
@@ -239,7 +366,7 @@ class IntroState: public State::State
 			switch(key)
 			{
 				case 27:
-					TestState *state = new TestState();
+					MainMenuState *state = new MainMenuState();
 					Boom::State::replace(state);
 					break;
 			}
