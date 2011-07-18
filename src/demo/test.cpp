@@ -77,7 +77,7 @@ class PausedMenuState: public State::State
 		}
 	
 	private:
-		State::State *game;
+		Boom::State::State *game;
 		Interface::Menu menu;
 };
 

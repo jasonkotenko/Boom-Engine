@@ -264,7 +264,7 @@ namespace Boom
 				//! Preload mesh data
 				void preload(string mesh);
 				//! Add an object to the scene
-				ObjectID add(ObjectType obj, Object *obj);
+				ObjectID add(ObjectType type, Object *obj);
 				//! Remove an object from the scene based on it's ID
 				void remove(ObjectID id);
 				
